@@ -11,6 +11,8 @@ make_population <-function(n){
     diam = round(runif(n,10,50),1)
     )
   
+  res$ht <- round(5+(res$diam-10)*0.5,1)
+  
   res$radio_fijo <- 15
   res$area_fijo <-  pi*(res$radio_fijo^2)/10000
   res$fac_exp_fijo<- 1/res$area_fijo
@@ -33,13 +35,13 @@ sample <- sampling_points(10)
 space <- br()
 plot_type <- radioButtons("tipo", "Tipo de parcela:",
                           c("Radio fijo 15 m" = "fijo",
-                            "Radios anidados d<15 10m, d>=15 10m " = "variable",
+                            "Radios anidados d<15 10m, d>=15 10m " = "anidado",
                             "Relascopio BAF=1" = "relascopio"),)
 pop_size <- sliderInput("N",
                         "Número de árboles",
                         value = 20,
                         min = 1,
-                        max = 500)
+                        max = 200)
 samp_size <- sliderInput("n",
                          "Número de parcelas",
                          value = 10,
@@ -51,8 +53,10 @@ reps <-sliderInput("r",
                    min = 1,
                    max = 200)
 reset <- actionButton("reset", "Regenera poblacion")
+muestra <- actionButton("muestra", "Toma una muestra",color="darkgreen",alpha=0.4)
+n_muestras <- actionButton("n_muestras", "Toma n muestras",color="blue",alpha=0.4)
 controls <- list(pop_size,space,
-                 samp_size,space,reps,space,reset)
+                 samp_size,space,reps,space,reset,space,muestra,space,n_muestras)
 
 
 # Define UI for random distribution app ----
@@ -65,9 +69,12 @@ ui <- page_navbar(
   sidebar=sidebar(controls,open="always"),
   tabsetPanel(type = "tabs",
            tabPanel("Población",
-                    plotOutput("plot_poblacion",width=500,height=500),
-                    br(),
-                    tableOutput('poblacion')),
+                    fluidRow(splitLayout(
+                      style = "border: 1px solid silver:", cellWidths = c(800,500),
+                      plotOutput("plot_poblacion",width=700,height=700),
+                      tableOutput('poblacion')
+                    ))
+                  ),
            tabPanel("Muestras",
                     fluidRow(splitLayout(
                       style = "border: 1px solid silver:", cellWidths = c(500,500,500),
@@ -75,14 +82,15 @@ ui <- page_navbar(
                       plotOutput("plot_variable",width=500,height=500),
                       plotOutput("plot_relascopio",width=500,height=500)
                     ))),
-           tabPanel("Estimaciones", 
-                    plot_type,
-                    br(),
-                    DT::dataTableOutput('muestras'),
-                    br(),
-                    plotOutput("plot_selected1",width=500,height=500),
-                    br(),
-                    plotOutput("plot_selected2",width=500,height=500)),
+           tabPanel("Estimaciones",
+                    fluidRow(splitLayout(
+                      style = "border: 1px solid silver:", cellWidths = c(500,500,500),
+                      plot_type,
+                      plotOutput("plot_selected1",width=500,height=500),
+                      plotOutput("plot_selected2",width=500,height=500)
+                    )),
+                    fluidRow(DT::dataTableOutput('muestras'))
+                    ),
            tabPanel("Distribución muestral",
                     plotOutput("dist_parcela",width=500,height=500),
                     br(),
@@ -118,14 +126,15 @@ server <- function(input, output) {
     # Generate an HTML table view of the data ----
   output$poblacion <- renderTable({
     reset()
-    forest_data
+    forest_data[,c(1:4)]
   })
   
   output$plot_poblacion<-renderPlot({
     gg_plot()+
-      geom_label(aes(x=x,y=y-5,label=diam))+
+      geom_label(aes(x=x,y=y-3,label=diam),size=3,fill="darkgreen",alpha=0.3)+
+      geom_label(aes(x=x,y=y-8,label=ht),size=3,fill="blue",alpha=0.3)+
       xlim(c(-20,120)) + ylim(c(-20,120))+
-      ggtitle("Radio fijo 15 m")
+      ggtitle("Población")
   })
   
   output$plot_fijo <- renderPlot({
@@ -155,12 +164,33 @@ server <- function(input, output) {
 
   output$plot_selected1 <- renderPlot({
     reset()
-    type <- input$tipo
+    input$tipo
     N <- input$N
     n <- input$n
-    plot(forest_data$x,forest_data$y,
-         main = paste("Parcelas ", type, sep = ""),
-         pch=20)
+    cat(paste(input$tipo,"\n"))
+    if(input$tipo=="fijo"){
+      a<-gg_plot()+
+        geom_circle(aes(x0=x,y0=y,r=radio_fijo,fill=radio_fijo),alpha=0.2)+
+        xlim(c(-20,120)) + ylim(c(-20,120))+
+        guides(fill = guide_colourbar("radio",position = "bottom"))+
+        ggtitle("Radio fijo 15m")
+    }
+    if(input$tipo=="anidado"){
+      cat("hola",sep = "\n")
+      a<-gg_plot()+
+        geom_circle(aes(x0=x,y0=y,r=radio_variable,fill=radio_variable),alpha=0.2)+
+        xlim(c(-20,120)) + ylim(c(-20,120))+
+        guides(fill = guide_colourbar("radio",position = "bottom"))+
+        ggtitle("Radios anidados d<15 cm 10, d>=15 cm 20m")
+    }
+    if(input$tipo=="relascopio"){
+      a<-gg_plot()+
+        geom_circle(aes(x0=x,y0=y,r=radio_relascopio,fill=radio_relascopio),alpha=0.2)+
+        xlim(c(-20,120)) + ylim(c(-20,120))+
+        guides(fill = guide_colourbar("radio",position = "bottom"))+
+        ggtitle("Relascopio BAF=1")
+    }
+    a
   })
   
   output$plotaverage<- renderPlot({
