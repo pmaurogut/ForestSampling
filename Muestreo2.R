@@ -5,6 +5,7 @@ library(ggforce)
 library(dplyr)
 library(purrr)
 library(DT)
+
 make_population <-function(N,L){
 
   A<-(L*L)/10000
@@ -254,7 +255,10 @@ server <- function(input, output) {
       # ggtitle("Población")
   })
   
-  output$parametros_interes <- renderTable({parametros_interes(forest_data,input$lado)})
+  output$parametros_interes <- renderTable({
+    reset()
+    parametros_interes(forest_data,input$lado)
+    })
   
   output$plot_fijo <- renderPlot({
     all <- input$all_trees
