@@ -46,8 +46,11 @@ get_points <- function(population,point,type){
     res$type <- gsub("radio_","",type)
     res$x0 <- point$x
     res$y0 <- point$y
-    names_res <- colnames(population)
-    res[,c("Parcela","type","x0","y0",names_res)]
+    res$gi_m2 <- (pi*(1/4)*res$diam^2)/10000
+    res<-res[,c("Parcela","type","x0","y0","x","y","diam","ht","gi_m2",type)]
+    res$area_parecela_ha<-(pi*res[,type]^2)/10000
+    res$EXP_FAC <- 1/res$area_parecela_ha
+    return(res)
   }
   
 }
@@ -116,8 +119,8 @@ sample_data <- sampling_points(10,100)
 space <- br()
 plot_type <- radioButtons("tipo", "Tipo de parcela:",
                           c("Radio fijo 15 m" = "fijo",
-                            "Radios anidados d<15 10m, d>=15 10m " = "anidado",
-                            "Relascopio BAF=1" = "relascopio"),)
+                            "Radios anidados d<15 10m, d>=15 10m " = "variable",
+                            "Relascopio BAF=1" = "relascopio"),selected = "fijo")
 
 lado <- sliderInput("lado","Lado (m)",value = 100,min = 100,max = 500,step=50)
 
@@ -175,21 +178,44 @@ ui <- page_navbar(
                       )
                     )
                   ),
+            # tabPanel("Estimación una parcela",
+            #         column(3,
+            #               fluidRow(plot_type),
+            #               fluidRow(textOutput("Placeholder1"))
+            #               ),
+            #         column(6,
+            #               fluidRow(
+            #                 fluidRow(plotOutput("plot_selected1",width=500,height=500)),
+            #                 fluidRow(plotOutput("plot_selected2",width=500,height=500))
+            #                 )),
+            #         column(3,
+            #                textOutput("Placeholder2")
+            #                 )
+            #   ),    
+           
+           
+          
            tabPanel("Estimación una parcela",
                     fluidRow(splitLayout(
-                      style = "border: 1px solid silver:", cellWidths = c(500,500,500),
+                      style = "border: 1px solid silver:", cellWidths = c(500,500,500,200),
                       plot_type,
                       plotOutput("plot_selected1",width=500,height=500),
-                      plotOutput("plot_selected2",width=500,height=500)
+                      plotOutput("plot_selected2",width=500,height=500),
+                      tableOutput("parametros_interes2")
                     )),
-                    fluidRow(DT::dataTableOutput('muestras'))
+                    fluidRow(splitLayout(
+                      style = "border: 1px solid silver:", cellWidths = c(800,350,350),
+                        tableOutput('muestra'),
+                        textOutput("Placeholder"),
+                        textOutput("Placeholder2")
+                      ))
                   ),
            tabPanel("Estimación múltiples parcelas",
                     fluidRow(splitLayout(
                       style = "border: 1px solid silver:", cellWidths = c(500,500,500),
                       plot_type,
-                      plotOutput("plot_selected1",width=500,height=500),
-                      plotOutput("plot_selected2",width=500,height=500)
+                      plotOutput("plot_selected3",width=500,height=500),
+                      plotOutput("plot_selected4",width=500,height=500)
                     )),
                     fluidRow(DT::dataTableOutput('muestras'))
            ),
@@ -301,8 +327,6 @@ server <- function(input, output) {
     plot_selection(gg_plot(),selected,"radio_relascopio",tree_center = FALSE)
   })
 
-  
-
   output$plot_selected1 <- renderPlot({
     reset()
     input$tipo
@@ -311,14 +335,48 @@ server <- function(input, output) {
     reset_sample()
     field <- switch(input$tipo,
                     fijo = "radio_fijo",
-                    anidado = "radio_variable",
+                    variable = "radio_variable",
+                    relascopio = "radio_relascopio"
+    )
+    selected <- get_points(forest_data,sample_data[1,],field)
+    plot_selection(gg_plot(),selected,field,tree_center = TRUE)
+  })
+
+  output$plot_selected2 <- renderPlot({
+    reset()
+    input$tipo
+    N <- input$N
+    n <- input$n
+    reset_sample()
+    field <- switch(input$tipo,
+                    fijo = "radio_fijo",
+                    variable = "radio_variable",
                     relascopio = "radio_relascopio"
     )
     selected <- get_points(forest_data,sample_data[1,],field)
     plot_selection(gg_plot(),selected,field,tree_center = FALSE)
   })
   
+  output$muestra <- renderTable({
+    reset()
+    input$tipo
+    N <- input$N
+    n <- input$n
+    reset_sample()
+    field <- switch(input$tipo,
+                    fijo = "radio_fijo",
+                    variable = "radio_variable",
+                    relascopio = "radio_relascopio"
+    )
+    get_points(forest_data,sample_data[1,],field)
+  })
+  output$parametros_interes2<-renderTable({
+    reset()
+    parametros_interes(forest_data,input$lado)
+  })
+  
   output$plotaverage<- renderPlot({
+    
     reset()
     type <- input$tipo
     N <- input$N
