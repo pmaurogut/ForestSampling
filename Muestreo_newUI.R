@@ -70,7 +70,7 @@ get_n_points <- function(population,points,type){
   map_dfr(res,function(x){x})
 }
 
-parametros_interes <- function(poblacion, lado){
+parametros_interes <- function(poblacion, lado,rotate=TRUE){
   A<-lado*lado/10000
   res<-data.frame(
     Area_ha = A,
@@ -87,11 +87,16 @@ parametros_interes <- function(poblacion, lado){
   }else{
     res$Ho<-10
   }
-  names<- colnames(res)
-  res <- as.data.frame(t(res))
-  colnames(res)<-"Valor"
-  res$parametro<-names
-  res
+  if(rotate){
+    names<- colnames(res)
+    res <- as.data.frame(t(res))
+    colnames(res)<-"Valor"
+    res$parametro<-names
+    res
+  }else{
+    res
+  }
+  
 }
 
 estimacion <- function(sample,lado,rotate=TRUE){
@@ -364,6 +369,10 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     
     reset_accum<-reactive({
       input$reset_pop
+      input$lado
+      input$N
+      input$tipo
+      input$tipo1
       field <- switch(input$tipo,
                       fijo = "r_fijo",
                       variable = "r_variable",
@@ -385,12 +394,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     })
 
     observeEvent(input$muestra,add_accum())
-    # observeEvent(input$N,reset())
-    # observeEvent(input$lado,reset())
-    # 
-    # observeEvent(input$tipo,reset_sample())
-    # observeEvent(input$tipo2,reset_sample())
-    
+
     ##### Population #####
     
     output$poblacion <- renderTable({
@@ -523,9 +527,11 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     output$plot_res1 <- renderPlot({
       reset()
       reset_sample()
-      par_int <- parametros_interes(forest_data,input$lado)
+      par_int <- parametros_interes(forest_data,input$lado,rotate=FALSE)
+      print(par_int)
       est$Parc <- 1:dim(est)[1]
-      ggplot(est,aes(x=G))+geom_histogram()+geom_vline(data=,xintercept=par_int$G)
+      print(est)
+      ggplot(est,aes(x=G))+geom_histogram()+geom_vline(data=par_int,aes(xintercept=G),col="red")
       
     })
 
