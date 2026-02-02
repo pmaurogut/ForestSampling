@@ -82,10 +82,13 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
   res$G <- res$Total_G/A
   res$h_media <- mean(poblacion$ht)
   res$dg <- sqrt(mean(poblacion$diam^2))
+  poblacion <- poblacion[order(poblacion$diam,decreasing=TRUE),]
+  
   if(res$N<100){
-    res$Ho<-10
+    res$Ho<-mean(poblacion$ht)
   }else{
-    res$Ho<-10
+    k <- round(dim(poblacion)[1]*(100/res$N))
+    res$Ho<-mean(poblacion[1:k,"ht"])
   }
   if(rotate){
     names<- colnames(res)
@@ -133,7 +136,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
     last <- which(sample$cum_sum>100)[1]
     s2 <- sample[1:last,]
     s2[last,"EXP_FAC"]<-s2[last,]$cum_sum-100
-    res$Ho<-sum(s2$EXP_FAC*sample$ht)/sum(s2$EXP_FAC)
+    res$Ho<-sum(s2$EXP_FAC*s2$ht)/sum(s2$EXP_FAC)
     
   }else{
     res$Ho <- sum(sample$EXP_FAC*sample$ht)/sum(sample$EXP_FAC)
@@ -157,8 +160,8 @@ n_estimaciones<-function(sample,lado,rotate=FALSE){
 plot_selection <- function(p,selected,samp_points,type,tree_center=TRUE,all=FALSE){
   
   title <- switch(type,
-                  r_fijo = "Radio fijo 15 m",
-                  r_variable = "R anidados d<15 cm 10, d>=15 cm 20m",
+                  r_fijo = "Radio fijo 15m",
+                  r_variable = "R anidados d<15cm 10m, d>=15cm 20m",
                   r_relascopio = "Relascopio BAF=1"
   )
   if(all){
@@ -206,11 +209,12 @@ plot_n_selections <- function(p,selected,samp_points,type,tree_center=TRUE,all=F
 
 
 forest_data <- make_population(20,100)
-samp_points <- sampling_points(10,100)
+samp_points <- sampling_points(1,100)
 sample <- get_points(forest_data,samp_points[1,],"r_fijo")
 sample_n <- get_n_points(forest_data,samp_points,"r_fijo")
 est <- estimacion(sample,100,rotate=FALSE)
-n_est <- n_estimaciones(sample_n,100,rotate=FALSE)
+est_n <- n_estimaciones(sample_n,100,rotate=FALSE)
+par_int <- parametros_interes(forest_data,lado = 100,rotate = TRUE)
 
 space <- br()
 plot_type <- radioButtons("tipo", "Tipo de Parc:",
@@ -286,7 +290,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       nav_panel("Estimación una Parcela",
           layout_columns(col_widths=c(5,4,3),
                      card(card_header("Tipo de Parcela"),
-                         plot_type,
+                         plot_type2,
                          tableOutput('tabla_interes2'),
                          tableOutput('muestra'),
                          
@@ -305,7 +309,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       nav_panel("Estimación múltiples Parcelas",
                 layout_columns(col_widths=c(5,4,3),
                       card(card_header("Estimación múltiples Parcelass"),
-                        plot_type2,
+                        plot_type,
                         tableOutput('tabla_interes3'),
                         tableOutput('n_muestras')
                       ),
@@ -328,10 +332,19 @@ controls <- list(lado,pop_size,samp_size,reps,space,
   server <- function(input, output) {
     
     
+    data<-reactiveValues(forest_data=forest_data,par_int=par_int,
+                         samp_points=samp_points,est=est,est_n=NULL)
+    
+    
     gg_plot <- reactive({
+      input$reset_pop
+      input$N
+      input$lado
+      reset_pop()
+
       lado <- input$lado
       rect <- data.frame(x=c(0,0,lado,lado,0),y=c(0,lado,lado,0,0))
-      ggplot(forest_data()) +
+      ggplot(data$forest_data) +
         geom_polygon(data=rect,aes(x=x,y=y),col="red",fill="darkgreen",alpha=0.1)+
         geom_circle(aes(x0=x,y0=y,r=diam/20),col="black")+
         xlim(c(-20,input$lado+20)) + ylim(c(-20,input$lado+20))+
@@ -341,73 +354,66 @@ controls <- list(lado,pop_size,samp_size,reps,space,
         theme(axis.title = element_blank())
     })
     
-    forest_data <- reactive({
+    reset_pop <- reactive({
+      
       input$reset_pop
       input$N
       input$lado
+      
       N <- input$N
       lado <- input$lado
-      make_population(N,lado)
+      new_pop <- make_population(N,lado)
+      new_points <- sampling_points(input$n,input$lado)
+      
+      data$forest_data <- new_pop
+      data$par_int <-  parametros_interes(new_pop,input$lado)
+      data$samp_points<-new_points
+ 
     })
     
-    par_int <- reactive({
-      input$reset_pop
-      input$N
-      input$lado
-      N <- input$N
-      lado <- input$lado
-      parametros_interes(forest_data(),input$lado)
-    })
     
-    samp_points<-reactive({
-      input$muestra
+    
+    reset_estimate<-reactive({
       input$tipo
-      input$tipo2
-      input$n
-      input$reset_pop
-      input$N
-      input$lado
-      reset_est()
-      sampling_points(input$n,input$lado)
-    })
-    
-    est<-reactiveValues(est=NULL,est_n=NULL)
-    
-    reset_est<-reactive({
-      input$tipo
-      input$tipo2
-      input$n
-      input$reset_pop
-      input$N
-      input$lado
-      est$est<-NULL
-      est$est_n<-NULL
+      field <- switch(input$tipo,
+                      fijo = "r_fijo",
+                      variable = "r_variable",
+                      relascopio = "r_relascopio"
+      )
+      data$samp_points <- sampling_points(input$n,input$lado)
+      data$est <- estimacion(get_points(data$forest_data,data$samp_points[1,],field),input$lado,rotate=FALSE)
+      data$est$Parc <- dim(data$est)[1]:1
+      data$est <- data$est[order(data$est$Parc),]
+      
     })
     
     
-    add_accum<-reactive({
+    add_estimate<-reactive({
       input$muestra
       field <- switch(input$tipo,
                       fijo = "r_fijo",
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      points<-samp_points()
-      est$est <- rbind(estimacion(get_points(forest_data(),points[1,],field),input$lado,rotate=FALSE),
-                       est$est)
-      est$est_n <- rbind(n_estimaciones(get_n_points(forest_data(),points,field),input$lado,rotate=FALSE),
-                       est$est_n)
-      est$est$Parc <- dim(est$est)[1]:1
-      est$est <- est$est[order(est$est$Parc),]
-      est$est_n <- est$est_n[order(est$est_n$Parc),]
+      new_points <- sampling_points(input$n,input$lado)
+      data$samp_points <- rbind(new_points,data$samp_points)
+      data$est <- rbind(estimacion(get_points(data$forest_data,new_points,field),input$lado,rotate=FALSE),
+                       data$est)
+      data$est$Parc <- dim(data$est)[1]:1
+      data$est <- data$est[order(data$est$Parc),]
+      
     })
 
-    observeEvent(input$muestra,add_accum())
+    observeEvent(input$muestra,add_estimate())
+    observeEvent(input$tipo,reset_estimate())
+    observeEvent(input$N,reset_estimate())
+    observeEvent(input$lado,reset_estimate())
+    observeEvent(input$reset_pop,reset_estimate())
 
     ##### Population #####
     
     output$poblacion <- renderTable({
-      forest_data()[,c(1:5)]
+      data$forest_data[,c(1:5)]
     })
     
     output$plot_poblacion<-renderPlot({
@@ -419,48 +425,49 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     })
     
     output$tabla_interes1 <- renderTable({
-      par_int()
+      data$par_int
     })
     
     ##### Seleccion #####
     output$plot_fijo <- renderPlot({
       all <- input$all_trees
-      selected <- get_points(forest_data(),samp_points()[1,],"r_fijo")
-      plot_selection(gg_plot(),selected,samp_points(),"r_fijo",all=all)
+      print(data$samp_points[1,])
+      selected <- get_points(data$forest_data,data$samp_points[1,],"r_fijo")
+      plot_selection(gg_plot(),selected,data$samp_points,"r_fijo",all=all)
     })
     
     output$plot_variable <- renderPlot({
       all <- input$all_trees
-      selected <- get_points(forest_data(),samp_points()[1,],"r_variable")
-      plot_selection(gg_plot(),selected,samp_points(),"r_variable",all=all)
+      selected <- get_points(data$forest_data,data$samp_points[1,],"r_variable")
+      plot_selection(gg_plot(),selected,data$samp_points,"r_variable",all=all)
     })
     
     output$plot_relascopio <- renderPlot({
       all <- input$all_trees
-      selected <- get_points(forest_data(),samp_points()[1,],"r_relascopio")
-      plot_selection(gg_plot(),selected,samp_points(),"r_relascopio",all=all)
+      selected <- get_points(data$forest_data,data$samp_points[1,],"r_relascopio")
+      plot_selection(gg_plot(),selected,data$samp_points,"r_relascopio",all=all)
     })
     
     
     output$plot_fijo2 <- renderPlot({
-      selected <- get_points(forest_data(),samp_points()[1,],"r_fijo")
-      plot_selection(gg_plot(),selected,samp_points(),"r_fijo",tree_center = FALSE)
+      selected <- get_points(data$forest_data,data$samp_points[1,],"r_fijo")
+      plot_selection(gg_plot(),selected,data$samp_points,"r_fijo",tree_center = FALSE)
     })
     
     output$plot_variable2 <- renderPlot({
-      selected <- get_points(forest_data(),samp_points()[1,],"r_variable")
-      plot_selection(gg_plot(),selected,samp_points(),"r_variable",tree_center = FALSE)
+      selected <- get_points(data$forest_data,data$samp_points[1,],"r_variable")
+      plot_selection(gg_plot(),selected,data$samp_points,"r_variable",tree_center = FALSE)
       
     })
     
     output$plot_relascopio2 <- renderPlot({
-      selected <- get_points(forest_data(),samp_points()[1,],"r_relascopio")
-      plot_selection(gg_plot(),selected,samp_points(),"r_relascopio",tree_center = FALSE)
+      selected <- get_points(data$forest_data,data$samp_points[1,],"r_relascopio")
+      plot_selection(gg_plot(),selected,data$samp_points,"r_relascopio",tree_center = FALSE)
     })
     
     ##### One plot #####
     output$tabla_interes2<-renderTable({
-      par_int()
+      data$par_int
     })
     output$muestra <- renderTable({
       field <- switch(input$tipo,
@@ -468,7 +475,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      samp<-get_points(forest_data(),samp_points()[1,],field)
+      samp<-get_points(data$forest_data,data$samp_points[1,],field)
       samp[,-c(2:5)]
     })
     
@@ -478,26 +485,20 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      selected <- get_points(forest_data(),samp_points()[1,],field)
-      plot_selection(gg_plot(),selected,samp_points(),type=field,tree_center = FALSE)
+      selected <- get_points(data$forest_data,data$samp_points[1,],field)
+      plot_selection(gg_plot(),selected,data$samp_points,type=field,tree_center = FALSE)
     })
     
     output$estimacion1<-renderTable({
-      field <- switch(input$tipo,
-                      fijo = "r_fijo",
-                      variable = "r_variable",
-                      relascopio = "r_relascopio"
-      )
-      selected <- get_points(forest_data(),samp_points()[1,],field)
-      est$est[1,]
+      data$est[1,]
     })
 
     output$tabla_acc <- renderTable({
-      est$est
+      data$est
     })
     
     output$plot_res1 <- renderPlot({
-      p_int <- par_int()
+      p_int <- data$par_int
       names<-p_int$parametro
       p_int <- data.frame(t(p_int[,1,drop=FALSE]))
       colnames(p_int )<-names
@@ -509,16 +510,16 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       p <- ggplot(p_int)+
         geom_vline(aes(xintercept=G),col="red")+ylim(c(0,1.5))+xlim(c(-0.1*max,2.1*max))
       
-      if(!is.null(est$est)){
+      if(!is.null(data$est)){
         variation <- data.frame(
-          mean=mean(est$est$G),
-          sd = sd(est$est$G)
+          mean=mean(data$est$G),
+          sd = sd(data$est$G)
         )
         variation$xmin <- variation$mean + variation$sd*2
         variation$xmax <- variation$mean-variation$sd*2
-        variation$xmin2 <- min(est$est$G)
-        variation$xmax2 <- max(est$est$G)
-        p <- p + geom_point(data=est$est,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
+        variation$xmin2 <- min(data$est$G)
+        variation$xmax2 <- max(data$est$G)
+        p <- p + geom_point(data=data$est,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
                     geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
                     geom_point(data=variation,aes(x=mean,y=1),col="blue",size=5)
       }
@@ -532,7 +533,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       N <- input$N
       n <- input$n
       
-      plot(forest_data()$x,forest_data()$y,
+      plot(data$forest_data$x,data$forest_data$y,
            main = paste("Parcs ", type, sep = ""),
            pch=20)
     })
@@ -543,7 +544,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      samp<-get_n_points(forest_data(),samp_points(),field)
+      samp<-get_n_points(data$forest_data,data$samp_points,field)
       samp[,-c(2:5)]
     })
     
@@ -553,13 +554,10 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      selected <- get_n_points(forest_data(),samp_points,field)
-      plot_n_selections(gg_plot(),selected,samp_points(),type=field,tree_center = TRUE)
+      selected <- get_n_points(data$forest_data,samp_points,field)
+      plot_n_selections(gg_plot(),selected,data$samp_points,type=field,tree_center = TRUE)
     })
-    
-    output$plot_selected_n1 <- renderTable({
-      est$est_n
-    })
+  
     # 
     # output$plot_selected_n2 <- renderPlot({
     #   reset()
@@ -578,7 +576,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     
     
     output$tabla_interes3<-renderTable({
-      par_int()
+      data$par_int
     })
     
     output$plotaverage_n<- renderPlot({
@@ -597,7 +595,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     
     # Generate a summary of the data ----
     output$distmuest <- renderPrint({
-      summary(forest_data())
+      summary(data$forest_data)
     })
     
     
