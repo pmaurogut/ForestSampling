@@ -175,7 +175,7 @@ plot_selection <- function(p,selected,samp_points,type,tree_center=TRUE,all=FALS
       selected2 <- selected |> group_by(!! sym(type)) |> filter(row_number()==1) |> ungroup()
       p <- p  + geom_circle(data=selected2,aes(x0=x0,y0=y0,r=.data[[type]]),fill="purple",alpha=0.2)  
     }
-    p <- p +geom_point(data=selected,aes(x=x,y=y),shape=20,col="green")
+    p <- p + geom_circle(data=selected,aes(x0=x,y0=y,r=diam/20),col="green",fill="darkgreen",lwd=0.5)
   }
   p <- p + geom_point(data=samp_points[1,],aes(x=x,y=y),shape=13,col="red",size=4)
   p <- p + guides(fill=FALSE)+ggtitle(title)
@@ -200,7 +200,7 @@ plot_n_selections <- function(p,selected,samp_points,type,tree_center=TRUE,all=F
       selected2 <- selected |> group_by(Parc,!! sym(type)) |> filter(row_number()==1) |> ungroup()
       p <- p  + geom_circle(data=selected2,aes(x0=x0,y0=y0,r=.data[[type]],fill= factor(Parc)),alpha=0.2)  
     }
-    p <- p +geom_point(data=selected,aes(x=x,y=y,col=factor(Parc)),shape=20)
+    p <- p + geom_circle(data=selected,aes(x0=x,y0=y,r=diam/20),col=green,fill=factor(Parc))
   }
   p <- p + geom_point(data=samp_points,aes(x=x,y=y),shape=13,col="red",size=4)
   p <- p + guides(fill=FALSE,color=FALSE)+ggtitle(title)
@@ -256,13 +256,12 @@ controls <- list(lado,pop_size,samp_size,reps,space,
 
 
 
-# Define UI for random distribution app ----
-##### UI #####
+
+#### UI ####
 {
   ui <- page_sidebar(
     
     title = "Muestreo forestal",
-    # Sidebar layout with input and output definitions ----
     sidebar=sidebar(title = "Opciones población y muestra",controls,open="always"),
     
     navset_card_underline(
@@ -290,7 +289,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       nav_panel("Estimación una Parcela",
           layout_columns(col_widths=c(5,4,3),
                      card(card_header("Tipo de Parcela"),
-                         plot_type2,
+                         layout_columns(plot_type,parametro_interes),
                          tableOutput('tabla_interes2'),
                          tableOutput('muestra'),
                          
@@ -309,7 +308,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       nav_panel("Estimación múltiples Parcelas",
                 layout_columns(col_widths=c(5,4,3),
                       card(card_header("Estimación múltiples Parcelass"),
-                        plot_type,
+                        plot_type2,
                         tableOutput('tabla_interes3'),
                         tableOutput('n_muestras')
                       ),
@@ -323,15 +322,35 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                           tableOutput("estimacion_n")
                       )
                 )
-        )
+        ),
+      
+      nav_panel("Distribución muestral y errores",
+                layout_columns(col_widths=c(5,4,3),
+                               card(card_header("Estimación múltiples Parcelass"),
+                                    plot_type2,
+                                    tableOutput('tabla_interes3'),
+                                    tableOutput('n_muestras')
+                               ),
+                               card(card_header("Selección árboles"),
+                                    plotOutput("plot_selected_n1",width=500,height=500),
+                                    plotOutput("tabla_estimacion_n",width=500,height=500)
+                               ),
+                               card(card_header("Estimaciones"),
+                                    plotOutput("plot_res_n1",width=500,height=500),
+                                    plotOutput("plot_res_n2",width=500,height=500),
+                                    tableOutput("estimacion_n")
+                               )
+                )
+      )
+      
     )
   )
 }
-###### Define server logic for random distribution app ---- #####
+#### Server ####
 {
   server <- function(input, output) {
     
-    
+    ##### reactive values #####
     data<-reactiveValues(forest_data=forest_data,par_int=par_int,
                          samp_points=samp_points,est=est,est_n=NULL)
     
@@ -537,6 +556,8 @@ controls <- list(lado,pop_size,samp_size,reps,space,
            main = paste("Parcs ", type, sep = ""),
            pch=20)
     })
+    
+    
     ##### n plots #####
     output$n_muestras <- renderTable({
       field <- switch(input$tipo2,
@@ -557,22 +578,6 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       selected <- get_n_points(data$forest_data,samp_points,field)
       plot_n_selections(gg_plot(),selected,data$samp_points,type=field,tree_center = TRUE)
     })
-  
-    # 
-    # output$plot_selected_n2 <- renderPlot({
-    #   reset()
-    #   input$tipo
-    #   N <- input$N
-    #   n <- input$n
-    #   reset_sample()
-    #   field <- switch(input$tipo,
-    #                   fijo = "r_fijo",
-    #                   variable = "r_variable",
-    #                   relascopio = "r_relascopio"
-    #   )
-    #   selected <- get_n_points(forest_data,samp_points,field)
-    #   plot_n_selections(gg_plot(),selected,type=field,tree_center = FALSE)
-    # })
     
     
     output$tabla_interes3<-renderTable({
@@ -592,8 +597,6 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     })
     
     
-    
-    # Generate a summary of the data ----
     output$distmuest <- renderPrint({
       summary(data$forest_data)
     })

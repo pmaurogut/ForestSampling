@@ -143,13 +143,12 @@ controls <- list(lado,space,pop_size,space,
                  samp_size,space,reps,space,areas_inclusion,space,reset,space,muestra,space,n_muestras)
 
 
-# Define UI for random distribution app ----
+#### UI ####
 ui <- page_navbar(
   
   # App title ----
   title = "Opciones población y muestra",
   
-  # Sidebar layout with input and output definitions ----
   sidebar=sidebar(controls,open="always"),
   tabsetPanel(type = "tabs",
            tabPanel("Población y parámetros de interés",
@@ -179,22 +178,6 @@ ui <- page_navbar(
                       )
                     )
                   ),
-            # tabPanel("Estimación una parcela",
-            #         column(3,
-            #               fluidRow(plot_type),
-            #               fluidRow(textOutput("Placeholder1"))
-            #               ),
-            #         column(6,
-            #               fluidRow(
-            #                 fluidRow(plotOutput("plot_selected1",width=500,height=500)),
-            #                 fluidRow(plotOutput("plot_selected2",width=500,height=500))
-            #                 )),
-            #         column(3,
-            #                textOutput("Placeholder2")
-            #                 )
-            #   ),    
-           
-           
           
            tabPanel("Estimación una parcela",
                     fluidRow(splitLayout(
@@ -229,7 +212,7 @@ ui <- page_navbar(
                  
 
 )
-# Define server logic for random distribution app ----
+#### Server ####
 server <- function(input, output) {
   
   
@@ -267,7 +250,7 @@ server <- function(input, output) {
     sample_data <<-sampling_points(input$n,input$lado)
   })
   
-    # Generate an HTML table view of the data ----
+#### Population ####
   output$poblacion <- renderTable({
     reset()
     forest_data[,c(1:5)]
@@ -287,6 +270,8 @@ server <- function(input, output) {
     parametros_interes(forest_data,input$lado)
     })
   
+  
+  #### Sample selection ####
   output$plot_fijo <- renderPlot({
     all <- input$all_trees
     reset_sample()
@@ -328,6 +313,7 @@ server <- function(input, output) {
     plot_selection(gg_plot(),selected,"radio_relascopio",tree_center = FALSE)
   })
 
+  #### One plot ####
   output$plot_selected1 <- renderPlot({
     reset()
     input$tipo
@@ -397,5 +383,4 @@ server <- function(input, output) {
   
 }
 
-# Create Shiny app ----
 shinyApp(ui, server)
