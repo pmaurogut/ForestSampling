@@ -165,7 +165,12 @@ plot_selection <- function(p,selected,samp_points,type,tree_center=TRUE,all=FALS
                   r_relascopio = "Relascopio BAF=1"
   )
   if(all){
-    p <- p + geom_circle(aes(x0=x,y0=y,r=.data[[type]]), fill="grey50",alpha=0.2)
+    if(type == "r_relascopio"){
+      p <- p + geom_circle(aes(x0=x,y0=y,r=.data[[type]],fill=.data[[type]]),alpha=0.4)
+    }else{
+      p <- p + geom_circle(aes(x0=x,y0=y,r=.data[[type]],fill=factor(.data[[type]])),alpha=0.4)
+    }
+    
   }
   
   if(!is.na(selected$diam[1])){
@@ -210,8 +215,9 @@ plot_n_selections <- function(p,selected,samp_points,type,tree_center=TRUE,all=F
 
 forest_data <- make_population(20,100)
 samp_points <- sampling_points(1,100)
+samp_points_n <- sampling_points(10,100)
 sample <- get_points(forest_data,samp_points[1,],"r_fijo")
-sample_n <- get_n_points(forest_data,samp_points,"r_fijo")
+sample_n <- get_n_points(forest_data,samp_points_n,"r_fijo")
 est <- estimacion(sample,100,rotate=FALSE)
 est_n <- n_estimaciones(sample_n,100,rotate=FALSE)
 par_int <- parametros_interes(forest_data,lado = 100,rotate = TRUE)
@@ -221,10 +227,17 @@ plot_type <- radioButtons("tipo", "Tipo de Parc:",
                           c("Radio fijo 15 m" = "fijo",
                             "Radios anidados d<15 10m, d>=15 10m " = "variable",
                             "Relascopio BAF=1" = "relascopio"),selected = "fijo")
+
 plot_type2 <- radioButtons("tipo2", "Tipo de Parc:",
                           c("Radio fijo 15 m" = "fijo",
                             "Radios anidados d<15 10m, d>=15 10m " = "variable",
                             "Relascopio BAF=1" = "relascopio"),selected = "fijo")
+
+
+plot_type3 <- radioButtons("tipo2", "Tipo de Parc:",
+                           c("Radio fijo 15 m" = "fijo",
+                             "Radios anidados d<15 10m, d>=15 10m " = "variable",
+                             "Relascopio BAF=1" = "relascopio"),selected = "fijo")
 
 parametro_interes<- radioButtons("parametro_interes", "Parametro a estimar",
                           c("N(pies/ha)" = "N",
@@ -234,11 +247,28 @@ parametro_interes<- radioButtons("parametro_interes", "Parametro a estimar",
                             "Ho(m)" = "Ho"
                             ),selected = "G")
 
+parametro_interes2<- radioButtons("parametro_interes", "Parametro a estimar",
+                                 c("N(pies/ha)" = "N",
+                                   "G(m2/ha)" = "variable",
+                                   "h_media(m)" = "hmedia",
+                                   "dg(cm)" = "dg",
+                                   "Ho(m)" = "Ho"
+                                 ),selected = "G")
+
+parametro_interes3<- radioButtons("parametro_interes", "Parametro a estimar",
+                                  c("N(pies/ha)" = "N",
+                                    "G(m2/ha)" = "variable",
+                                    "h_media(m)" = "hmedia",
+                                    "dg(cm)" = "dg",
+                                    "Ho(m)" = "Ho"
+                                  ),selected = "G")
+
+
 lado <- sliderInput("lado","Lado (m)",value = 100,min = 100,max = 500,step=50)
 
 pop_size <- sliderInput("N","Número de árboles/ha",value = 20,min = 5,max = 500,step=5)
 
-samp_size <- sliderInput("n","Número de Parcelas",value = 1,min = 1,max = 50)
+samp_size <- sliderInput("n","Número de Parcelas",value = 10,min = 1,max = 50)
 
 reps <-sliderInput("r","Repeticiones",value = 100,min = 1,max = 200)
 
@@ -250,7 +280,7 @@ n_muestras <- actionButton("n_muestras", "Toma n muestras",color="blue",alpha=0.
 
 areas_inclusion <- checkboxInput("all_trees","Todas las areas de inclusion",value = FALSE)
 
-controls <- list(lado,pop_size,samp_size,reps,space,
+controls <- list(lado,pop_size,space,
                  areas_inclusion,space,reset_population,space,muestra,space,n_muestras)
 
 
@@ -286,17 +316,17 @@ controls <- list(lado,pop_size,samp_size,reps,space,
           )
       ),
     
-      nav_panel("Estimación una Parcela",
+      nav_panel("Estimación una parcela",
           layout_columns(col_widths=c(5,4,3),
                      card(card_header("Tipo de Parcela"),
-                         layout_columns(plot_type,parametro_interes),
-                         tableOutput('tabla_interes2'),
-                         tableOutput('muestra'),
+                         card(layout_columns(plot_type,parametro_interes)),
+                         card(tableOutput('tabla_interes2')),
+                         card(tableOutput('muestra')),
                          
                       ),
                      card(card_header("Selección árboles"),
-                         plotOutput("plot_selected1",width=400,height=400),
-                         tableOutput("estimacion1")
+                          card(plotOutput("plot_selected1",width=400,height=400)),
+                          card(tableOutput("estimacion1"))
                       ),
                      card(card_header("Estimaciones"),
                         card(plotOutput("plot_res1",width=400,height=200),min_height = 400),
@@ -305,44 +335,43 @@ controls <- list(lado,pop_size,samp_size,reps,space,
             )
         ),
       
-      nav_panel("Estimación múltiples Parcelas",
+      nav_panel("Estimación múltiples parcelas",
                 layout_columns(col_widths=c(5,4,3),
-                      card(card_header("Estimación múltiples Parcelass"),
-                        plot_type2,
-                        tableOutput('tabla_interes3'),
-                        tableOutput('n_muestras')
-                      ),
-                      card(card_header("Selección árboles"),
-                         plotOutput("plot_selected_n1",width=500,height=500),
-                         plotOutput("tabla_estimacion_n",width=500,height=500)
-                        ),
-                      card(card_header("Estimaciones"),
-                          plotOutput("plot_res_n1",width=500,height=500),
-                          plotOutput("plot_res_n2",width=500,height=500),
-                          tableOutput("estimacion_n")
-                      )
-                )
-        ),
-      
-      nav_panel("Distribución muestral y errores",
-                layout_columns(col_widths=c(5,4,3),
-                               card(card_header("Estimación múltiples Parcelass"),
-                                    plot_type2,
-                                    tableOutput('tabla_interes3'),
-                                    tableOutput('n_muestras')
+                               card(card_header("Tipo de Parcela"),
+                                    card(layout_columns(plot_type2,parametro_interes2,samp_size)),
+                                    card(tableOutput('tabla_interes3')),
+                                    card(tableOutput('muestra_n')),
+                                    
                                ),
                                card(card_header("Selección árboles"),
-                                    plotOutput("plot_selected_n1",width=500,height=500),
-                                    plotOutput("tabla_estimacion_n",width=500,height=500)
+                                    card(plotOutput("plot_selected2",width=400,height=400)),
+                                    card(tableOutput("tabla_acc2"))
                                ),
                                card(card_header("Estimaciones"),
-                                    plotOutput("plot_res_n1",width=500,height=500),
-                                    plotOutput("plot_res_n2",width=500,height=500),
-                                    tableOutput("estimacion_n")
+                                    card(plotOutput("plot_res2",width=400,height=200),min_height = 400),
+                                    card(plotOutput("plot_means_n",width=400,height=200),min_height = 400)
+                               )
+                )
+      ),
+
+      nav_panel("Distribución muestral y errores",
+                layout_columns(col_widths=c(5,4,3),
+                               card(card_header("Tipo de Parcela"),
+                                    card(layout_columns(plot_type3,parametro_interes3,reps)),
+                                    card(tableOutput('tabla_interes4')),
+                                    card(tableOutput('muestra3')),
+                                    
+                               ),
+                               card(card_header("Selección árboles"),
+                                    card(plotOutput("plot_selected3",width=400,height=400)),
+                                    card(tableOutput("estimacion3"))
+                               ),
+                               card(card_header("Estimaciones"),
+                                    card(plotOutput("plot_res3",width=400,height=200),min_height = 400),
+                                    card(tableOutput("tabla_acc3"),min_height = 400)
                                )
                 )
       )
-      
     )
   )
 }
@@ -352,7 +381,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     
     ##### reactive values #####
     data<-reactiveValues(forest_data=forest_data,par_int=par_int,
-                         samp_points=samp_points,est=est,est_n=NULL)
+                         samp_points=samp_points,est=est,samp_points_n=samp_points_n,est_n=est_n)
     
     
     gg_plot <- reactive({
@@ -365,7 +394,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       rect <- data.frame(x=c(0,0,lado,lado,0),y=c(0,lado,lado,0,0))
       ggplot(data$forest_data) +
         geom_polygon(data=rect,aes(x=x,y=y),col="red",fill="darkgreen",alpha=0.1)+
-        geom_circle(aes(x0=x,y0=y,r=diam/20),col="black")+
+        geom_circle(aes(x0=x,y0=y,r=diam/20),col="black",fill="burlywood4")+
         xlim(c(-20,input$lado+20)) + ylim(c(-20,input$lado+20))+
         coord_fixed(ratio = 1) +
         labs(x="x(m)",y="y(m)") +
@@ -378,7 +407,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       input$reset_pop
       input$N
       input$lado
-      
+
       N <- input$N
       lado <- input$lado
       new_pop <- make_population(N,lado)
@@ -387,10 +416,9 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       data$forest_data <- new_pop
       data$par_int <-  parametros_interes(new_pop,input$lado)
       data$samp_points<-new_points
+
  
     })
-    
-    
     
     reset_estimate<-reactive({
       input$tipo
@@ -399,13 +427,16 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      data$samp_points <- sampling_points(input$n,input$lado)
+      data$samp_points <- sampling_points(1,input$lado)
       data$est <- estimacion(get_points(data$forest_data,data$samp_points[1,],field),input$lado,rotate=FALSE)
       data$est$Parc <- dim(data$est)[1]:1
       data$est <- data$est[order(data$est$Parc),]
       
+      data$est_n <- estimacion(get_points(data$forest_data,data$samp_points,field),input$lado,rotate=FALSE)
+      data$est_n$Parc <- dim(data$est)[1]:1
+      data$est_n <- data$est[order(data$est$Parc),]
+      
     })
-    
     
     add_estimate<-reactive({
       input$muestra
@@ -414,7 +445,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      new_points <- sampling_points(input$n,input$lado)
+      new_points <- sampling_points(1,input$lado)
       data$samp_points <- rbind(new_points,data$samp_points)
       data$est <- rbind(estimacion(get_points(data$forest_data,new_points,field),input$lado,rotate=FALSE),
                        data$est)
@@ -422,8 +453,47 @@ controls <- list(lado,pop_size,samp_size,reps,space,
       data$est <- data$est[order(data$est$Parc),]
       
     })
+    
+    reset_n_estimate<-reactive({
+      input$tipo
+      field <- switch(input$tipo,
+                      fijo = "r_fijo",
+                      variable = "r_variable",
+                      relascopio = "r_relascopio"
+      )
+      data$samp_points_n <- sampling_points(input$n,input$lado)
+    
+      est_n <- estimacion(get_n_points(data$forest_data,data$samp_points_n,field),input$lado,rotate=FALSE)
+      name_est <- colnames(est_n)
+      est_n$rep <- 1
+      data$est_n <- est_n
+      data$est_n$Parc <- dim(data$est_n)[1]:1
+      data$est_n <- data$est_n[order(data$est_n$Parc),c("rep","Parc",names_est)]
+      
+      
+    })
+    
+    add_n_estimate<-reactive({
+      input$n_muestras
+      field <- switch(input$tipo,
+                      fijo = "r_fijo",
+                      variable = "r_variable",
+                      relascopio = "r_relascopio"
+      )
+      new_points <- sampling_points(input$n,input$lado)
+      data$samp_points_n <- rbind(new_points,data$samp_points_n)
+      est_n <- estimacion(get_n_points(data$forest_data,data$samp_points_n,field),input$lado,rotate=FALSE)
+      names_est <- colnames(est_n)
+      est_n$Parc <- dim(data$est_n)[1]:1
+      est_n <- est_n[order(est_n$Parc),c("rep","Parc",names_est)]
+      est_n$rep <- max(data$est_n$rep)+1
+      data$est_n <- rbind(est_n,data$est_n)
+      
+    })
 
     observeEvent(input$muestra,add_estimate())
+    observeEvent(input$n_muestras,add_n_estimate())
+    observeEvent(input$n,reset_estimate())
     observeEvent(input$tipo,reset_estimate())
     observeEvent(input$N,reset_estimate())
     observeEvent(input$lado,reset_estimate())
@@ -547,29 +617,11 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     })
 
     
-    output$plotaverage<- renderPlot({
-      type <- input$tipo
-      N <- input$N
-      n <- input$n
-      
-      plot(data$forest_data$x,data$forest_data$y,
-           main = paste("Parcs ", type, sep = ""),
-           pch=20)
-    })
-    
     
     ##### n plots #####
-    output$n_muestras <- renderTable({
-      field <- switch(input$tipo2,
-                      fijo = "r_fijo",
-                      variable = "r_variable",
-                      relascopio = "r_relascopio"
-      )
-      samp<-get_n_points(data$forest_data,data$samp_points,field)
-      samp[,-c(2:5)]
-    })
+    output$muestra_n <- renderTable({data$samp_points_n})
     
-    output$plot_selected_n1 <- renderPlot({
+    output$plot_selected3<- renderPlot({
       field <- switch(input$tipo2,
                       fijo = "r_fijo",
                       variable = "r_variable",
@@ -583,23 +635,7 @@ controls <- list(lado,pop_size,samp_size,reps,space,
     output$tabla_interes3<-renderTable({
       data$par_int
     })
-    
-    output$plotaverage_n<- renderPlot({
-      
-      reset()
-      type <- input$tipo
-      N <- input$N
-      n <- input$n
-      
-      plot(forest_data$x,forest_data$y,
-           main = paste("Parcs ", type, sep = ""),
-           pch=20)
-    })
-    
-    
-    output$distmuest <- renderPrint({
-      summary(data$forest_data)
-    })
+
     
     
     
