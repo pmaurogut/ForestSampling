@@ -205,7 +205,7 @@ plot_n_selections <- function(p,selected,samp_points,type,tree_center=TRUE,all=F
       selected2 <- selected |> group_by(Parc,!! sym(type)) |> filter(row_number()==1) |> ungroup()
       p <- p  + geom_circle(data=selected2,aes(x0=x0,y0=y0,r=.data[[type]],fill= factor(Parc)),alpha=0.2)  
     }
-    p <- p + geom_circle(data=selected,aes(x0=x,y0=y,r=diam/20),col=green,fill=factor(Parc))
+    p <- p + geom_circle(data=selected,aes(x0=x,y0=y,r=diam/20),col="green",fill=factor(Parc))
   }
   p <- p + geom_point(data=samp_points,aes(x=x,y=y),shape=13,col="red",size=4)
   p <- p + guides(fill=FALSE,color=FALSE)+ggtitle(title)
@@ -621,14 +621,15 @@ controls <- list(lado,pop_size,space,
     ##### n plots #####
     output$muestra_n <- renderTable({data$samp_points_n})
     
-    output$plot_selected3<- renderPlot({
+    output$plot_selected2<- renderPlot({
       field <- switch(input$tipo2,
                       fijo = "r_fijo",
                       variable = "r_variable",
                       relascopio = "r_relascopio"
       )
-      selected <- get_n_points(data$forest_data,samp_points,field)
-      plot_n_selections(gg_plot(),selected,data$samp_points,type=field,tree_center = TRUE)
+      selected <- get_n_points(data$forest_data,data$samp_points_n,field)
+      print(selected)
+      plot_n_selections(gg_plot(),selected,data$samp_points_n,type=field,tree_center = TRUE)
     })
     
     
