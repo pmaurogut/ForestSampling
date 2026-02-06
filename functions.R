@@ -99,7 +99,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
   print(sample)
   if(is.na(sample$diam[1])){
     res <- data.frame(Parc=sample$Parc[1],Total_N=0,Total_G=0,
-                      Total_h=0,N=0,G=0,hmedia=0,dg=0,Ho=0)
+                      Total_h=0,N=0,G=0,h_media=0,dg=0,Ho=0)
     if(rotate){
       names <- colnames(res)
       res <- data.frame(t(res))
@@ -123,8 +123,8 @@ estimacion <- function(sample,lado,rotate=TRUE){
   res$Total_h <- sum(sample$EXP_FAC*sample$ht)*A
   res$N <- res$Total_N/A
   res$G<- res$Total_G/A
-  res$hmedia<- res$Total_h/res$Total_N
-  res$dg<-sqrt((res$G/res$N)*(4/pi))
+  res$h_media<- res$Total_h/res$Total_N
+  res$dg<-sqrt((res$G/res$N)*(4/pi))*100
   if(sum(sample$EXP_FAC)>=100){
     last <- which(sample$cum_sum>100)[1]
     s2 <- sample[1:last,]
@@ -228,82 +228,106 @@ plot_n_selections <- function(p,selected,samp_points,type,tree_center=TRUE,all=F
   p
 }
 
+prepare_long1 <- function(data){
+  
+  print(data)
+  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","h_media","dg","Ho")],
+                            cols = c("N","G","h_media","dg","Ho"),
+                            names_to = "parametro",values_to = "estimacion")
+  means <- data_long|> group_by(parametro)|> summarise_all(mean)
+  
+  means$type_est <- "n-parcelas"
+  data_long$type_est <- "1 parcela"
+  
+  all <- rbind(means,data_long)
+  all$type_est <- factor(all$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
+  
+  variation <- data_long|> group_by(type_est,parametro)|> 
+    summarise(mean=mean(estimacion,na.rm=TRUE),sd=sd(estimacion,na.rm=TRUE),.groups = "keep") |>
+    transmute(xmin = mean - 2*sd,xmax=mean + 2*sd) |> ungroup()
+  
+  variation2 <- variation
+  variation<- rbind(variation,variation2)
+  variation$type_est <- factor(variation$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
+  return(list(all=all,variation=variation))
+}
+
+
 add_samples_plot<-function(p_int,first,parametro="G"){
   
-  names<-p_int$parametro
-  p_int <- data.frame(t(p_int[,1,drop=FALSE]))
-  colnames(p_int)<-names
-  
-  print(p_int)
+  p_int <- p_int[p_int$parametro%in%c("N","G","h_media","dg","Ho"),]
+  p_int2 <- p_int
+  p_int$type_est <- "1 parcela"
+  p_int2$type_est <- "n-parcelas"
+  p_int <- rbind(p_int,p_int2)
+  p_int$type_est <- factor(p_int$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
 
-  max <- max(first$G)
-  print(max)
-  print("Hola")
-  
-  p <- ggplot(p_int)+
-    geom_vline(aes(xintercept=G),col="red")+ylim(c(0,1.5))+xlim(c(-0.1*max,2.1*max))
-  
-  variation <- data.frame(
-    mean=mean(first$G,na.rm=TRUE),
-    sd = sd(first$G,na.rm=TRUE)
-  )
-  variation$xmin <- variation$mean + variation$sd*2
-  variation$xmax <- variation$mean-variation$sd*2
-  variation$xmin2 <- min(first$G)
-  variation$xmax2 <- max(first$G)
-  p <- p + geom_point(data=first,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
-    geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
-    geom_point(data=variation,aes(x=mean,y=1),col="blue",size=5)
-  p
+  to_plot <- prepare_long1(first)
+  to_plot$all$y <- ifelse(to_plot$all$type_est=="1 parcela",0.5,0.25)
+  ggplot(to_plot$all) +
+    facet_grid(cols=vars(parametro),scales="free_x")+
+    geom_point(aes(x=estimacion,y=y,col=type_est,fill=type_est),shape=20,size=4)+
+    # geom_density(aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
+    geom_linerange(data=to_plot$variation,aes(y=0.5,xmin=xmin,xmax=xmax,col=type_est))+
+    geom_vline(data=p_int,aes(xintercept=Valor),col="red")+
+    scale_fill_manual(values=c("1 parcela"="red","n-parcelas"="blue"))+
+    scale_color_manual(values=c("1 parcela"="red","n-parcelas"="blue")) +
+    guides(fill=NULL,color=NULL)+
+    theme(legend.position = "bottom")
   
 }
 
 
-add_samples_n_plots<-function(p_int,all,parametro="G"){
-  
-  names<-p_int$parametro
-  p_int <- data.frame(t(p_int[,1,drop=FALSE]))
-  colnames(p_int)<-names
-  
-  means <- all|> group_by(Rep)|> summarise_all(mean)
-  
-  means$type_est <- "n-parcelas"
-  all$type_est <- "1 parcela"
-  
-  variation <- data.frame(
-    mean=mean(all$G,na.rm=TRUE),
-    sd = sd(all$G,na.rm=TRUE)
-  )
-  variation$xmin <- variation$mean + variation$sd*2
-  variation$xmax <- variation$mean-variation$sd*2
-  # variation$xmin2 <- min(all$G)
-  # variation$xmax2 <- max(all$G)
-  variation$type_est <- "1 parcela"
-  
-  variation2 <- data.frame(
-    mean=mean(means$G,na.rm=TRUE),
-    sd = sd(means$G,na.rm=TRUE)
-  )
-  variation2$type_est <- "n-parcelas"
-  variation2$xmin <- variation2$mean + variation2$sd*2
-  variation2$xmax <- variation2$mean-variation2$sd*2
+prepare_long_n <- function(data){
 
+  print(data)
+  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","h_media","dg","Ho")],
+                            cols = c("N","G","h_media","dg","Ho"),
+                            names_to = "parametro",values_to = "estimacion")
+  means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean)
+
+  means$type_est <- "n-parcelas"
+  data_long$type_est <- "1 parcela"
   
-  all <- rbind(means,all)
+  variation <- data_long|> group_by(type_est,Rep,parametro)|> 
+    summarise(mean=mean(estimacion,na.rm=TRUE),sd=sd(estimacion,na.rm=TRUE),.groups = "keep") |>
+    transmute(xmin = mean - 2*sd,xmax=mean + 2*sd) |> ungroup()
+  
+  variation2 <- means|> group_by(type_est,parametro)|> 
+    summarise(mean=mean(estimacion),sd=sd(estimacion),.groups = "keep") |>
+    transmute(xmin = mean - 2*sd,xmax=mean + 2*sd) |> ungroup()
+  variation2$Rep <- NA
+  all <- rbind(means,data_long)
   all$type_est <- factor(all$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
-  print(all)
   
   variation<- rbind(variation,variation2)
   variation$type_est <- factor(variation$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
+  print(variation)
+  return(list(all=all,variation=variation))
+}
+
+add_samples_n_plots<-function(p_int,all){
   
-  ggplot(all) +
-    facet_grid(rows="type_est",scales="fixed")+
-    geom_point(aes(x=G,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
-    geom_density(aes(x=G,fill=type_est,col=type_est),alpha=0.4) +
-    geom_linerange(data=variation,aes(y=0.5,xmin=xmin,xmax=xmax,col=type_est))+
-    geom_vline(data=p_int,aes(xintercept=G),col="red")+
+  p_int <- p_int[p_int$parametro%in%c("N","G","h_media","dg","Ho"),]
+  p_int2 <- p_int
+  p_int$type_est <- "1 parcela"
+  p_int2$type_est <- "n-parcelas"
+  p_int <- rbind(p_int,p_int2)
+  p_int$type_est <- factor(p_int$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
+  
+
+  to_plot <- prepare_long_n(all)
+  print(to_plot)
+  ggplot(to_plot$all) +
+    facet_grid(rows=vars(type_est),cols=vars(parametro),scales="free_x")+
+    geom_point(aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
+    # geom_density(aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
+    geom_linerange(data=to_plot$variation,aes(y=0.5,xmin=xmin,xmax=xmax,col=type_est))+
+    geom_vline(data=p_int,aes(xintercept=Valor),col="red")+
     scale_fill_manual(values=c("1 parcela"="red","n-parcelas"="blue"))+
-    scale_color_manual(values=c("1 parcela"="red","n-parcelas"="blue"))
+    scale_color_manual(values=c("1 parcela"="red","n-parcelas"="blue")) +
+    guides(fill=NULL,color=NULL)+
+    theme(legend.position = "bottom")
 
   
 }

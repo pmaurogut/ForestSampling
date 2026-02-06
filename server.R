@@ -17,7 +17,7 @@ server <- function(input, output, session) {
   
   est <- reactiveVal({est_n})
   
-  par_int <- reactive({parametros_interes(forest(),input$lado,TRUE)})
+  par_int <- reactive({parametros_interes(forest(),input$lado,TRUE)[,2:1]})
   base_plot <- reactive({
     pop_plot(forest(),input$lado)
   })
@@ -28,8 +28,6 @@ server <- function(input, output, session) {
   update_pop <- reactive({
     new_data <- make_population(input$N,input$lado)
     new_points <- sampling_points(input$n,input$lado)
-    print(par_int())
-    print(new_points)
     forest(new_data)
     samp_points(new_points)
     update_est()
@@ -44,6 +42,7 @@ server <- function(input, output, session) {
   })
   
   
+  
   #
   
   add_estimate<- reactive({
@@ -53,7 +52,6 @@ server <- function(input, output, session) {
     new_estimates$Rep <- est()$Rep[1]+1
     new_estimates <- new_estimates[,c("Rep",names_est_n)]
     print(new_point)
-    print(est())
     old <- est()
     new <- rbind(new_estimates,old)
     est(new)
@@ -90,7 +88,6 @@ server <- function(input, output, session) {
   })
   
   output$tabla_interes1 <- renderTable({
-    print(par_int())
     par_int()
   })
   
@@ -148,7 +145,8 @@ server <- function(input, output, session) {
 
   output$plot_selected1 <- renderPlot({
     selected <- get_trees(forest(),samp_points()[1,],input$plot_type1)
-    plot_selection(base_plot(),selected,samp_points()[1,],type=input$plot_type1,tree_center = FALSE)
+    plot_selection(base_plot(),selected,samp_points()[1,],
+                   type=input$plot_type1,tree_center = input$centered=="arbol")
   })
 
   output$estimacion1<-renderTable({
@@ -174,9 +172,15 @@ server <- function(input, output, session) {
   })
   
   output$plot_selected2<-renderPlot({
-      selected <- get_n_points(forest(),samp_points(),input$plot_type2)
+      selected <- get_n_points(forest(),samp_points(),input$plot_type1)
       print(samp_points())
-      plot_n_selections(base_plot(),selected,samp_points(),type=input$plot_type2,tree_center = FALSE)
+      plot_n_selections(base_plot(),selected,samp_points(),
+                        type=input$plot_type1,tree_center = input$centered=="arbol")
+  })
+  
+  output$n_estimaciones<-renderTable({
+    selected <- est()
+    selected[selected$Rep==max(selected$Rep),]
   })
   
   output$plot_res2<- renderPlot({
