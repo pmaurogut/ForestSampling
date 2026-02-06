@@ -160,59 +160,28 @@ server <- function(input, output, session) {
   })
 
   output$plot_res1 <- renderPlot({
-    p_int <- par_int()
-    names<-p_int$parametro
-    p_int <- data.frame(t(p_int[,1,drop=FALSE]))
-    colnames(p_int)<-names
-
-    print(p_int)
-    
-    first <- est()[est()$Parc==1,]
-    max <- max(first$G)
-    print(max)
-    print("Hola")
-
-    p <- ggplot(p_int)+
-      geom_vline(aes(xintercept=G),col="red")+ylim(c(0,1.5))+xlim(c(-0.1*max,2.1*max))
-    
-    variation <- data.frame(
-      mean=mean(first$G,na.rm=TRUE),
-      sd = sd(first$G,na.rm=TRUE)
-    )
-    variation$xmin <- variation$mean + variation$sd*2
-    variation$xmax <- variation$mean-variation$sd*2
-    variation$xmin2 <- min(first$G)
-    variation$xmax2 <- max(first$G)
-    p <- p + geom_point(data=first,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
-      geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
-      geom_point(data=variation,aes(x=mean,y=1),col="blue",size=5)
-    p
+    first <- est()|> group_by(Rep)|> filter(Parc==1)
+    add_samples_plot(par_int(),first)
 
   })
 
 
 
   # ##### n plots #####
-  output$muestra_n <- renderTable({
-    trees <- get_n_points(forest(),samp_points(),input$plot_type2)
-    trees
-  })
 
-  output$plot_selected2<- renderPlot({
-
-    selected <- get_n_points(forest(),samp_points(),input$plot_type2)
-    print(selected)
-    print(samp_points())
-    plot_n_selections(base_plot(),selected,samp_points(),type=input$plot_type2,tree_center = FALSE)
-    
-  })
-
-
-  output$par_int2<-renderTable({
+  output$tabla_interes3<-renderTable({
     par_int()
   })
   
+  output$plot_selected2<-renderPlot({
+      selected <- get_n_points(forest(),samp_points(),input$plot_type2)
+      print(samp_points())
+      plot_n_selections(base_plot(),selected,samp_points(),type=input$plot_type2,tree_center = FALSE)
+  })
   
+  output$plot_res2<- renderPlot({
+    add_samples_n_plots(par_int(),est())
+  })
   
   
 }

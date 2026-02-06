@@ -227,3 +227,80 @@ plot_n_selections <- function(p,selected,samp_points,type,tree_center=TRUE,all=F
   p <- p + guides(fill=FALSE,color=FALSE)+ggtitle(title)
   p
 }
+
+add_samples_plot<-function(p_int,first,parametro="G"){
+  
+  names<-p_int$parametro
+  p_int <- data.frame(t(p_int[,1,drop=FALSE]))
+  colnames(p_int)<-names
+  
+  print(p_int)
+
+  max <- max(first$G)
+  print(max)
+  print("Hola")
+  
+  p <- ggplot(p_int)+
+    geom_vline(aes(xintercept=G),col="red")+ylim(c(0,1.5))+xlim(c(-0.1*max,2.1*max))
+  
+  variation <- data.frame(
+    mean=mean(first$G,na.rm=TRUE),
+    sd = sd(first$G,na.rm=TRUE)
+  )
+  variation$xmin <- variation$mean + variation$sd*2
+  variation$xmax <- variation$mean-variation$sd*2
+  variation$xmin2 <- min(first$G)
+  variation$xmax2 <- max(first$G)
+  p <- p + geom_point(data=first,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
+    geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
+    geom_point(data=variation,aes(x=mean,y=1),col="blue",size=5)
+  p
+  
+}
+
+
+add_samples_n_plots<-function(p_int,all,parametro="G"){
+  
+  means <- all|> group_by(Rep)|> summarise_all(mean)
+  means$type_est <- "n-parcelas"
+  all$type_est <- "1 parcela"
+  all <- rbind(means,all)
+  all$type_est <- factor(all$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
+  print(all)
+  names<-p_int$parametro
+  p_int <- data.frame(t(p_int[,1,drop=FALSE]))
+  colnames(p_int)<-names
+  
+  print(p_int)
+  
+  max <- max(all$G)
+  print(max)
+  print("Hola")
+  
+  
+  variation <- data.frame(
+    mean=mean(all$G,na.rm=TRUE),
+    sd = sd(all$G,na.rm=TRUE)
+  )
+  variation$xmin <- variation$mean + variation$sd*2
+  variation$xmax <- variation$mean-variation$sd*2
+  variation$xmin2 <- min(all$G)
+  variation$xmax2 <- max(all$G)
+  variation$type_est <- "1 parcela"
+  
+  variation2<-variation
+  variation2$type_est <- "n-parcelas"
+  variation<- rbind(variation,variation2)
+  
+  ggplot(all) +
+    facet_grid(rows="type_est",scales="fixed")+
+    geom_point(aes(x=G,y=0.5,col=type_est,fill=type_est),shape=20,size=4)+
+    geom_density(aes(x=G,fill=type_est,col=type_est),alpha=0.4) +
+    geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
+    geom_vline(data=p_int,aes(xintercept=G),col="red")+xlim(c(-0.1*max,2.1*max))
+
+  
+}
+
+
+

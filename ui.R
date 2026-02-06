@@ -99,20 +99,15 @@ ui <- page_sidebar(
     ),
     
     nav_panel("Estimación múltiples parcelas",
-              layout_columns(col_widths=c(5,4,3),
+              layout_columns(col_widths=c(5,7),
                              card(card_header("Tipo de Parcela"),
                                   card(layout_columns(make_plot_type("plot_type2"),make_par_int("par_int2"))),
                                   card(tableOutput('tabla_interes3')),
-                                  card(tableOutput('muestra_n')),
+                                  card(plotOutput("plot_selected2",width=400,height=400)),
                                   
                              ),
-                             card(card_header("Selección árboles"),
-                                  card(plotOutput("plot_selected2",width=400,height=400)),
-                                  card(tableOutput("tabla_acc2"))
-                             ),
-                             card(card_header("Estimaciones"),
-                                  card(plotOutput("plot_res2",width=400,height=200),min_height = 400),
-                                  card(plotOutput("plot_means_n",width=400,height=200),min_height = 400)
+                             card(card_header("Estimacion 1 parcela vs n parcelas"),
+                                  card(plotOutput("plot_res2",width=800,height=800))
                              )
               )
     ),
