@@ -101,7 +101,7 @@ ui <- page_sidebar(
     nav_panel("Estimación múltiples parcelas",
               layout_columns(col_widths=c(5,4,3),
                              card(card_header("Tipo de Parcela"),
-                                  card(layout_columns(make_plot_type("plot_type2"),make_par_int("par_int2"),samp_size)),
+                                  card(layout_columns(make_plot_type("plot_type2"),make_par_int("par_int2"))),
                                   card(tableOutput('tabla_interes3')),
                                   card(tableOutput('muestra_n')),
                                   

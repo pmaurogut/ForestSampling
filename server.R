@@ -5,8 +5,8 @@ init_pop <- make_population(20,100)
 init_samp_points <- sampling_points(10,100)
 trees <- get_n_points(init_pop,init_samp_points,"r_fijo")
 est_n <- n_estimaciones(trees,100,rotate=FALSE)
-est_n$Parc <- 1:dim(est_n)[1]
-
+names_est_n <- colnames(est_n)
+est_n$Rep <- 1
 server <- function(input, output, session) {
   # thematic::thematic_shiny()
   ##### reactive values #####
@@ -15,7 +15,7 @@ server <- function(input, output, session) {
   samp_points<-reactiveVal(init_samp_points)
   
   
-  est <- reactiveVal({est_n[1,]})
+  est <- reactiveVal({est_n})
   
   par_int <- reactive({parametros_interes(forest(),input$lado,TRUE)})
   base_plot <- reactive({
@@ -37,29 +37,37 @@ server <- function(input, output, session) {
   
   update_est <- reactive({
     trees <- get_n_points(forest(),samp_points(),input$plot_type1)
-    new_estimate <- n_estimaciones(trees,input$lado)
-    new_estimate$Parc <- 1
-    est(new_estimate[1,])
+    new_estimates <- n_estimaciones(trees,input$lado)
+    new_estimates$Rep <- 1
+    new_estimates <- new_estimates[,c("Rep",names_est_n)]
+    est(new_estimates)
   })
+  
+  
   #
   
   add_estimate<- reactive({
-    new_point <- sampling_points(1,input$lado)
-    trees <- get_n_points(forest(),samp_points()[1,],input$plot_type1)
-    new_estimate <- n_estimaciones(trees,input$lado)
-    new_estimate$Parc <- est()$Parc[1]+1
+    new_point <- sampling_points(input$n,input$lado)
+    trees <- get_n_points(forest(),samp_points(),input$plot_type1)
+    new_estimates <- n_estimaciones(trees,input$lado)
+    new_estimates$Rep <- est()$Rep[1]+1
+    new_estimates <- new_estimates[,c("Rep",names_est_n)]
     print(new_point)
     print(est())
     old <- est()
-    new <- rbind(new_estimate,old)
+    new <- rbind(new_estimates,old)
     est(new)
     samp_points(new_point)
   })
   
-  observeEvent(input$muestra,add_estimate())
+  
+  observeEvent(input$muestra,{
+    add_estimate()})
   # observeEvent(input$n_muestras,add_n_estimate())
   # observeEvent(input$n,reset_estimate())
-  observeEvent(input$plot_type1,update_est())
+  observeEvent(input$plot_type1,{
+    update_est()
+    })
   observeEvent(input$N,update_pop())
   observeEvent(input$lado,update_pop())
   observeEvent(input$reset_pop,update_pop())
@@ -148,38 +156,39 @@ server <- function(input, output, session) {
   })
 
   output$tabla_acc <- renderTable({
-    est()
+    est()[est()$Parc==1,]
   })
 
-  # output$plot_res1 <- renderPlot({
-  #   p_int <- data$par_int
-  #   names<-p_int$parametro
-  #   p_int <- data.frame(t(p_int[,1,drop=FALSE]))
-  #   colnames(p_int)<-names
-  # 
-  #   print(p_int)
-  #   max <- p_int$G[1]
-  #   print(max)
-  # 
-  #   p <- ggplot(p_int)+
-  #     geom_vline(aes(xintercept=G),col="red")+ylim(c(0,1.5))+xlim(c(-0.1*max,2.1*max))
-  # 
-  #   if(!is.null(data$est)){
-  #     variation <- data.frame(
-  #       mean=mean(data$est$G),
-  #       sd = sd(data$est$G)
-  #     )
-  #     variation$xmin <- variation$mean + variation$sd*2
-  #     variation$xmax <- variation$mean-variation$sd*2
-  #     variation$xmin2 <- min(data$est$G)
-  #     variation$xmax2 <- max(data$est$G)
-  #     p <- p + geom_point(data=data$est,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
-  #       geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
-  #       geom_point(data=variation,aes(x=mean,y=1),col="blue",size=5)
-  #   }
-  #   p
-  # 
-  # })
+  output$plot_res1 <- renderPlot({
+    p_int <- par_int()
+    names<-p_int$parametro
+    p_int <- data.frame(t(p_int[,1,drop=FALSE]))
+    colnames(p_int)<-names
+
+    print(p_int)
+    
+    first <- est()[est()$Parc==1,]
+    max <- max(first$G)
+    print(max)
+    print("Hola")
+
+    p <- ggplot(p_int)+
+      geom_vline(aes(xintercept=G),col="red")+ylim(c(0,1.5))+xlim(c(-0.1*max,2.1*max))
+    
+    variation <- data.frame(
+      mean=mean(first$G,na.rm=TRUE),
+      sd = sd(first$G,na.rm=TRUE)
+    )
+    variation$xmin <- variation$mean + variation$sd*2
+    variation$xmax <- variation$mean-variation$sd*2
+    variation$xmin2 <- min(first$G)
+    variation$xmax2 <- max(first$G)
+    p <- p + geom_point(data=first,aes(x=G,y=0.5),col="red",shape=20,alpha=0.5,size=3)+
+      geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
+      geom_point(data=variation,aes(x=mean,y=1),col="blue",size=5)
+    p
+
+  })
 
 
 
