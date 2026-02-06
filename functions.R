@@ -261,22 +261,14 @@ add_samples_plot<-function(p_int,first,parametro="G"){
 
 add_samples_n_plots<-function(p_int,all,parametro="G"){
   
-  means <- all|> group_by(Rep)|> summarise_all(mean)
-  means$type_est <- "n-parcelas"
-  all$type_est <- "1 parcela"
-  all <- rbind(means,all)
-  all$type_est <- factor(all$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
-  print(all)
   names<-p_int$parametro
   p_int <- data.frame(t(p_int[,1,drop=FALSE]))
   colnames(p_int)<-names
   
-  print(p_int)
+  means <- all|> group_by(Rep)|> summarise_all(mean)
   
-  max <- max(all$G)
-  print(max)
-  print("Hola")
-  
+  means$type_est <- "n-parcelas"
+  all$type_est <- "1 parcela"
   
   variation <- data.frame(
     mean=mean(all$G,na.rm=TRUE),
@@ -284,20 +276,34 @@ add_samples_n_plots<-function(p_int,all,parametro="G"){
   )
   variation$xmin <- variation$mean + variation$sd*2
   variation$xmax <- variation$mean-variation$sd*2
-  variation$xmin2 <- min(all$G)
-  variation$xmax2 <- max(all$G)
+  # variation$xmin2 <- min(all$G)
+  # variation$xmax2 <- max(all$G)
   variation$type_est <- "1 parcela"
   
-  variation2<-variation
+  variation2 <- data.frame(
+    mean=mean(means$G,na.rm=TRUE),
+    sd = sd(means$G,na.rm=TRUE)
+  )
   variation2$type_est <- "n-parcelas"
+  variation2$xmin <- variation2$mean + variation2$sd*2
+  variation2$xmax <- variation2$mean-variation2$sd*2
+
+  
+  all <- rbind(means,all)
+  all$type_est <- factor(all$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
+  print(all)
+  
   variation<- rbind(variation,variation2)
+  variation$type_est <- factor(variation$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
   
   ggplot(all) +
     facet_grid(rows="type_est",scales="fixed")+
-    geom_point(aes(x=G,y=0.5,col=type_est,fill=type_est),shape=20,size=4)+
+    geom_point(aes(x=G,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
     geom_density(aes(x=G,fill=type_est,col=type_est),alpha=0.4) +
-    geom_linerange(data=variation,aes(y=1,xmin=xmin2,xmax=xmax2),col="blue")+
-    geom_vline(data=p_int,aes(xintercept=G),col="red")+xlim(c(-0.1*max,2.1*max))
+    geom_linerange(data=variation,aes(y=0.5,xmin=xmin,xmax=xmax,col=type_est))+
+    geom_vline(data=p_int,aes(xintercept=G),col="red")+
+    scale_fill_manual(values=c("1 parcela"="red","n-parcelas"="blue"))+
+    scale_color_manual(values=c("1 parcela"="red","n-parcelas"="blue"))
 
   
 }
