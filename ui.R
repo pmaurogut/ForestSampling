@@ -46,7 +46,7 @@ controls <- list(lado,pop_size,samp_size,plot_type,space,
 
 
 #### UI ####
-ui <- page_sidebar(
+ui <- page_navbar(
   
   theme=bs_theme(version=5,preset = "darkly"),
   # tags$head(
@@ -61,10 +61,11 @@ ui <- page_sidebar(
   #   "))
   # ),
   title = "Muestreo forestal",
+  nav_spacer(),
   sidebar=sidebar(title = "Opciones población y muestra",controls,open="always"),
   
-  navset_card_underline(
-    title = "Ejemplos",
+  # navset_card_underline(
+  #   title = "Ejemplos",
     nav_panel("Población y parámetros de interés",
               
               layout_columns(col_widths=c(6,4,2),
@@ -136,5 +137,5 @@ ui <- page_sidebar(
                              )
               )
     )
-  )
+  # )
 )
