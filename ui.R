@@ -98,28 +98,29 @@ ui <- page_navbar(
                              card(card_header("Parámetros de interés y muestra"),
                                   card(layout_columns(col_widths=c(5,7),
                                                       tableOutput('tabla_interes3'),
-                                                      plotOutput("plot_selected2",width=400,height=400)
-                                  )),
-                                  card(tableOutput('n_estimaciones'),min_height = 450),
-                                  
+                                                      plotOutput("plot_selected2")
+                                  ), min_height=350),
+                                  card(tableOutput("n_estimaciones")),
                              ),
                              card(card_header("Estimación con una parcela vs estimación con n parcelas"),
-                                  card(plotOutput("plot_res2",width=950,height=750))
+                                  card(plotOutput("plot_res2"))
                              )
               )
     ),
     
   nav_panel("Distribución muestral",
-            layout_columns(col_widths=c(2,5,5),
-                           card(card_header("Población"),
-                                tableOutput('tabla_interes4'),
-                                plotOutput("plot_selected3",width=200)
+            layout_columns(col_widths=c(5,7),
+                           card(card_header("Parámetros de interés y muestra"),
+                                card(layout_columns(col_widths=c(5,7),
+                                                    tableOutput('tabla_interes4'),
+                                                    plotOutput("plot_selected3")
+                                ), min_height=350),
+                                card(card_header("Cambio en la varianza al aumentar n"),
+                                     plotOutput("var_n")
+                                     ),
                            ),
-                           card(card_header("Cambio en la varianza al aumentar n"),
-                                card(plotOutput("var_n",width=500,height=750))
-                           ),
-                           card(card_header("Aproximacion a una normal"),
-                                card(plotOutput("normal_approx",width=500,height=750))
+                           card(card_header("Aproximación a una normal"),
+                                card(plotOutput("normal_approx"))
                            )
             )
   ),

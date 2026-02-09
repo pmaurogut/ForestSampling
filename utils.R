@@ -213,23 +213,24 @@ plot_selection <- function(p,trees,tree_center=TRUE,all=FALSE,add_hd=FALSE){
 plot_n_selections <- function(p,trees,tree_center=TRUE,all=FALSE){
   
   trees$Parc <- as.factor(trees$Parc)
+
   type <- trees$Type[1]
-  points <- trees2 <- trees |> group_by(Parc, Rep) |> filter(row_number()==1) |> ungroup()
+  points <- trees |> group_by(Parc, Rep) |> filter(row_number()==1) |> ungroup()
   title <- switch(type,
                   r_fijo = "Radio fijo 15m",
                   r_variable = "R anidados d<15cm 10m, d>=15cm 20m",
                   r_relascopio = "Relascopio BAF=1"
   )
   if(all){
-    p <- p + geom_circle(aes(x0=x,y0=y,r=.data[[type]]/20), fill="grey50",alpha=0.2)
+    p <- p + geom_circle(aes(x0=x,y0=y,r=radio_sel_m), fill="grey50",alpha=0.2)
   }
 
   if(!all(is.na(trees$diam))){
     if(tree_center){
-      p <- p  + geom_circle(data=trees,aes(x0=x,y0=y,r=.data[[type]],fill=Parc),alpha=0.2)
+      p <- p  + geom_circle(data=trees,aes(x0=x,y0=y,r=radio_sel_m,fill=Parc),alpha=0.2)
     }else{
-      trees2 <- trees |> group_by(Parc, !!sym(type)) |> filter(row_number()==1) |> ungroup()
-      p <- p  + geom_circle(data=trees2,aes(x0=xp,y0=yp,r=.data[[type]],fill=Parc),alpha=0.2)  
+      trees2 <- trees |> group_by(Parc, radio_sel_m) |> filter(row_number()==1) |> ungroup()
+      p <- p  + geom_circle(data=trees2,aes(x0=xp,y0=yp,r=radio_sel_m,fill=Parc),alpha=0.2)  
     }
     p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=diam/20),fill="green")
   }
@@ -343,33 +344,47 @@ add_samples_n_plots<-function(p_int,all){
   
 }
 
+normal_approx <- function(estimates,n,type,variation,K){
+  
+  reps <- floor(K/n)
+  last <- reps*n
+  
+  variation$x_min <- variation$mean-2*variation$sd
+  variation$x_max <- variation$mean+2*variation$sd
+  
+  estimates<-estimates[estimates$Type==type,]
+  estimates <- estimates[1:last,]
+  estimates$Parc <- rep(1:n,times=reps)
+  estimates$Rep <- rep(1:reps,each=n)
+  
+  limits <- pivot_longer(variation[,c("x_min","x_max","parametro")],
+                                       cols = c("x_min","x_max"),
+                                       names_to = "type",values_to = "value")
+  
+  
+  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","h_media","dg","Ho")],
+                             cols = c("N","G","h_media","dg","Ho"),
+                             names_to = "parametro",values_to = "estimacion")
+  estimates <- group_by(estimates,parametro,Rep)|>summarize(estimacion=mean(estimacion))|>ungroup()
 
+ 
+  estimates<-merge(estimates,variation,by="parametro")
+  estimates$sd_n <- estimates$sd/sqrt(n)
 
-prepare_samp_dist <- function(data){
+  print("Hola")
   
-  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","h_media","dg","Ho")],
-                            cols = c("N","G","h_media","dg","Ho"),
-                            names_to = "parametro",values_to = "estimacion")
-  means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean)
+  norm <- estimates %>% 
+    group_by(parametro) %>% 
+    reframe(x=seq(min(estimacion),max(estimacion),length.out=100),y = dnorm(x, mean = mean(mean,na.rm=TRUE), sd = mean(sd,na.rm=TRUE)/n )) 
+  print(norm)
+
+  ggplot(data=norm) +
+    facet_wrap(.~ parametro,scales="free") +
+    geom_line(data=norm,aes(x=x,y = y),col="blue") + 
+    geom_point(data=estimates,aes(x=estimacion,y=0),shape=20,col="red")+
+    geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2)+
+    geom_vline(data=estimates,aes(xintercept=mean),colour = "red")+
+    ggtitle("Aproximación a una distribución normal al aumentar n")
   
-  means$type_est <- "n-parcelas"
-  data_long$type_est <- "1 parcela"
-  
-  variation <- data_long|> group_by(type_est,Rep,parametro)|> 
-    summarise(mean=mean(estimacion,na.rm=TRUE),sd=sd(estimacion,na.rm=TRUE),.groups = "keep") |>
-    transmute(xmin = mean - 2*sd,xmax=mean + 2*sd) |> ungroup()
-  
-  variation2 <- means|> group_by(type_est,parametro)|> 
-    summarise(mean=mean(estimacion),sd=sd(estimacion),.groups = "keep") |>
-    transmute(xmin = mean - 2*sd,xmax=mean + 2*sd) |> ungroup()
-  variation2$Rep <- NA
-  all <- rbind(means,data_long)
-  all$type_est <- factor(all$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
-  
-  variation<- rbind(variation,variation2)
-  variation$type_est <- factor(variation$type_est,levels=c("1 parcela","n-parcelas"),ordered=TRUE)
-  
-  return(list(all=all,variation=variation))
 }
-
 

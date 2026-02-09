@@ -3,7 +3,7 @@
 source("utils.R")
 L <- 100
 N <- 5
-K<-1000
+K<-5000
 init_pop <- make_population(N,L)
 init_samp_points <- sampling_points(K,L)
 all_trees <- get_all_trees(init_pop,init_samp_points)
@@ -19,26 +19,35 @@ server <- function(input, output, session) {
   est<-reactiveVal(est)
   pos <- reactiveVal(c(1))
 
+  variation<-reactive({
+    data_long <- pivot_longer(est()[,c("N","G","h_media","dg","Ho")],
+                              cols = c("N","G","h_media","dg","Ho"),
+                              names_to = "parametro",values_to = "estimacion")
+
+    data_long|> group_by(parametro)|> 
+      summarise(mean=mean(estimacion,na.rm=TRUE),sd=sd(estimacion,na.rm=TRUE)) 
+  })
   
-  table1 <- reactive({
+  table <- reactive({
     input$muestra
     positions <- pos()
     ests <- est()
+    cols <- colnames(ests)
     ests<-ests[ests$Type==input$plot_type1,]
-    
+    n <- input$n
     k <- length(positions)
-    reps <- k/input$n
-    print(input$n)
+    reps <- k/n
+    print(n)
     print(k)
     print(reps)
     
     indexes <- match(positions,ests$Parc)
     tabla <- ests[indexes,]
-    tabla<-tabla[seq(1,k,by=input$n),]
-    tabla$Parc <- reps:1
-    print(positions)
-    print(tabla)
-    tabla
+
+    tabla$Parc <- rep(n:1,each=reps)
+    tabla$Rep <- rep(reps:1,times=n)
+
+    tabla[,c(cols,"Rep")]
   })
   par_int <- reactive({
     parametros_interes(forest(),input$lado,TRUE)
@@ -130,26 +139,36 @@ server <- function(input, output, session) {
     par_int()
   })
   output$muestra <- renderTable({
-    samp<-get_trees(forest(),table1()[1,],input$plot_type1)
+    samp<-get_trees(forest(),table()[1,],input$plot_type1)
+    samp$Parc <- max(table()$Parc)
     samp
   })
 
   output$plot_selected1 <- renderPlot({
-    trees <- get_trees(forest(),table1()[1,],input$plot_type1)
+    trees <- get_trees(forest(),table()[1,],input$plot_type1)
     plot_selection(base_plot(),trees,
                    tree_center = input$centered=="arbol",add_hd=input$add_hd)
   })
 
   output$estimacion1<-renderTable({
-    tabla <- table1()
-    tabla[1,]
+    tabla <- table()
+    tabla <- tabla[1,1:12]
+    tabla$Parc <- tabla$Rep
+    tabla
   })
 
-  output$tabla_acc <- renderTable({table1()})
+  output$tabla_acc <- renderTable({
+    tabla <- table()
+    tabla <- tabla[tabla$Parc==1,]
+    tabla$Parc <- tabla$Rep
+    tabla[,1:12]
+    })
 
   output$plot_res1 <- renderPlot({
-    tabla <-table1()
-    add_samples_plot(par_int(),tabla)
+    tabla <-table()
+    tabla <- tabla[tabla$Parc==1,]
+    tabla$Parc <- tabla$Rep
+    add_samples_plot(par_int(),tabla[,1:12])
   })
 
 
@@ -161,20 +180,29 @@ server <- function(input, output, session) {
   })
   
   output$plot_selected2<-renderPlot({
-      selected <- get_n_points(forest(),samp_points(),input$plot_type1)
-      plot_n_selections(base_plot(),selected,samp_points(),
-                        type=input$plot_type1,
+    
+    selected <- table() |> filter(Rep==max(Rep))
+    selected_list <- group_split(selected,Rep,Parc)
+    forest_all <- forest()
+    type <- input$plot_type1
+    selected_trees <- map_dfr(selected_list,function(x,population,type){
+      res<- get_trees(population,x,type)
+      res$Parc <- x$Parc[1]
+      res$Rep <- x$Rep[1]
+      res
+    },population=forest_all,type=type)
+    
+    plot_n_selections(base_plot(),selected_trees,
                         tree_center = input$centered=="arbol",
                         all=input$all_trees)
   })
   
   output$n_estimaciones<-renderTable({
-    selected <- est()
-    selected[selected$Rep==max(selected$Rep),]
+    table() |> filter(Rep==max(Rep))
   })
   
   output$plot_res2<- renderPlot({
-    add_samples_n_plots(par_int(),est())
+    add_samples_n_plots(par_int(),table())
   })
   
   # ##### samp dist #####
@@ -185,13 +213,33 @@ server <- function(input, output, session) {
   
   output$plot_selected3<-renderPlot({base_plot()})
   
-  output$n_estimaciones<-renderTable({
-    selected <- est()
-    selected[selected$Rep==max(selected$Rep),]
+
+  output$var_n<- renderPlot({
+    a<-data.frame(n=1:50,id=1)
+    var <- variation()
+    var <- merge(var,a)
+    var$sd_n <- ((var$sd)^2)/var$n
+    var$color <- ifelse(var$n==input$n,"red","black")
+    
+    red <- var[var$color=="red",]
+    
+    ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
+      geom_point(aes(color=color))+geom_path() + 
+      geom_point(data=red,aes(color=color),pch=20,size=3)+
+      xlab("Varianza estimador final")+
+      scale_color_manual(values=c("red"="red","black"="black"))+
+      guides(color="none")+
+      ggtitle("Cambiio en la varianza al aumentar n ")
   })
   
-  output$plot_res2<- renderPlot({
-    add_samples_n_plots(par_int(),est())
+  output$normal_approx<-renderPlot({
+    estimates <- est()
+    n <- input$n
+    type <- input$plot_type1
+    variation <- variation()
+    print(estimates)
+    print(variation)
+    normal_approx(estimates,n,type,variation,K)
   })
   
   
