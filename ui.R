@@ -24,7 +24,7 @@ lado <- sliderInput("lado","Lado (m)",value = 100,min = 100,max = 500,step=50)
 
 pop_size <- sliderInput("N","Número de árboles/ha",value = 20,min = 5,max = 500,step=5)
 
-samp_size <- sliderInput("n","Número de Parcelas",value = 1,min = 1,max = 50)
+samp_size <- sliderInput("n","Número de Parcelas",value = 1,min = 1,max = 100)
 
 reps <-sliderInput("r","Repeticiones",value = 100,min = 1,max = 200)
 

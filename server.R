@@ -3,7 +3,7 @@
 source("utils.R")
 L <- 100
 N <- 5
-K<-5000
+K<-2000
 init_pop <- make_population(N,L)
 init_samp_points <- sampling_points(K,L)
 all_trees <- get_all_trees(init_pop,init_samp_points)
