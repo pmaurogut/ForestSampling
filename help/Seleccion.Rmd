@@ -21,7 +21,11 @@ Hay una forma alternativa de ver si debemos muestrear un árbol o no. Dado que d
 
 Mientras que el punto de vista centrado en los árboles es muy gráfico a la hora de determinar probabilidades de incluir un determinado árbol en la muestra. El punto de vista basado en la parcela tiene una interpretación alternativa que es muy útil.
 
-En este ejemplo suponemos que hemos muestreado una zona de una hectárea. En nuestra parcela han entrado cuatro árboles. Si sabemos que nuestra parcela es de $\frac{1}{5}$ hectáreas. En base a nuestras mediciones esperaríamos tener $5x4=20$ árboles en la zona a muestrear. En realidad hay 23 árboles pero el inverso del área podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}}$ nos permite aproximarnos al valor total de árboles por unidad de área. Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion}}$ y está directamente relacionado con la probabilidad de inclusión. Mientras que el factor de expansión de un árbol es igual a , $w_i=\frac{1}{a_{inclusion}}$, la probabilidad de inclusión es $\pi_i=\frac{a_{inclusion}}{A}$ por tanto, operando podemos relacionar ambas cantidades de la siguiente manera:
+En este ejemplo suponemos que hemos muestreado una zona de una hectárea con radio de parcela que resulta en una superficie de $1/5$ hectáreas . En nuestra parcela han entrado cuatro árboles.
+
+![Áreas de parcela y factores de expansión](Factor_de_expansion.png)
+
+Si sabemos que nuestra parcela es de $\frac{1}{5}$ hectáreas. En base a nuestras mediciones esperaríamos tener $5x4=20$ árboles en la zona a muestrear. En realidad hay 23 árboles pero el inverso del área podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}}$ nos permite aproximarnos al valor total de árboles por unidad de área. Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion}}$ y está directamente relacionado con la probabilidad de inclusión. Mientras que el factor de expansión de un árbol es igual a , $w_i=\frac{1}{a_{inclusion}}$, la probabilidad de inclusión es $\pi_i=\frac{a_{inclusion}}{A}$ por tanto, operando podemos relacionar ambas cantidades de la siguiente manera:
 
 $$
 \pi_i=\frac{a_{inclusion}}{A}\rightarrow\pi_i=\frac{1}{Aw_i}
