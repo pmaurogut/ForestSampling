@@ -1,6 +1,7 @@
 # initial values
 
 source("utils.R")
+
 L <- 100
 N <- 5
 K<-1000
@@ -11,6 +12,7 @@ est <- n_estimaciones(all_trees,L,rotate=FALSE)
 par_int <- parametros_interes(init_pop,L,TRUE)
 rm(all_trees)
 rm(init_samp_points)
+
 server <- function(input, output, session) {
   # thematic::thematic_shiny()
   ##### reactive values #####
@@ -18,12 +20,12 @@ server <- function(input, output, session) {
   forest <- reactiveVal(init_pop)
   est<-reactiveVal(est)
   pos <- reactiveVal(c(1))
-
+  
   variation<-reactive({
     data_long <- pivot_longer(est()[,c("Type","N","G","h_media","dg","Ho")],
                               cols = c("N","G","h_media","dg","Ho"),
                               names_to = "parametro",values_to = "estimacion")
-
+    
     data_long|> group_by(parametro,Type)|> 
       summarise(mean=mean(estimacion,na.rm=TRUE),sd=sd(estimacion,na.rm=TRUE)) 
   })
@@ -43,10 +45,10 @@ server <- function(input, output, session) {
     
     indexes <- match(positions,ests$Parc)
     tabla <- ests[indexes,]
-
+    
     tabla$Parc <- rep(n:1,each=reps)
     tabla$Rep <- rep(reps:1,times=n)
-
+    
     tabla[,c(cols,"Rep")]
   })
   par_int <- reactive({
@@ -61,7 +63,7 @@ server <- function(input, output, session) {
     input$reset_pop
     pop <- make_population(input$N,input$lado)
     samp_points <- sampling_points(K,input$lado)
-
+    
     trees <- get_all_trees(pop,samp_points)
     estimates <- n_estimaciones(trees,input$lado,rotate=FALSE)
     forest(pop)
@@ -86,7 +88,7 @@ server <- function(input, output, session) {
     new_val <- ifelse(new_val>50,1,new_val)
     updateSelectInput(inputId = "n",selected = new_val)
   })
-  
+
   
   ##### Population #####
   
@@ -237,7 +239,7 @@ server <- function(input, output, session) {
       xlab("Varianza estimador final")+
       scale_color_manual(values=c("red"="red","black"="black"))+
       guides(color="none")+
-      ggtitle("Cambiio en la varianza al aumentar n ")
+      ggtitle("Cambio en la varianza al aumentar n ")
   })
   
   output$normal_approx<-renderPlot({

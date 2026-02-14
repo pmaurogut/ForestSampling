@@ -7,6 +7,9 @@ library(purrr)
 library(tidyr)
 library(DT)
 library(thematic)
+library(htmltools)
+library(markdown)
+library(rmarkdown)
 
 
 plot_type<- radioButtons("plot_type1" , "Tipo de parcela:",
@@ -56,16 +59,25 @@ ui <- page_navbar(
   
   # navset_card_underline(
   #   title = "Ejemplos",
+  
     nav_panel("Población y parámetros de interés",
-              
-              layout_columns(col_widths=c(6,4,2),
-                             card(card_header("Mapa Población"),plotOutput("plot_poblacion",width=800,height=800)),
-                             card(card_header("Datos Población"),tableOutput('poblacion')),
-                             card(card_header("Parámetros de interés"),tableOutput('tabla_interes1'))
-              )
+          fluidRow({
+             layout_columns(col_widths=c(6,4,2),
+                            card(card_header("Mapa Población"),plotOutput("plot_poblacion",width=800,height=800)),
+                            card(card_header("Datos Población"),tableOutput('poblacion')),
+                            card(card_header("Parámetros de interés"),tableOutput('tabla_interes1'))
+             )
+           }),
+          fluidRow({   
+            card(
+              card_header("Explicación"),
+              includeHTML('Poblacion.html'),full_screen = TRUE, height=200
+            )
+          })
     ),
     
     nav_panel("Selección de muestras",
+            fluidRow({
               layout_columns(col_widths=c(4,4,4,4,4,4),
                              card(plotOutput("plot_fijo",width=500,height=500)),
                              card(plotOutput("plot_variable",width=500,height=500)),
@@ -74,15 +86,23 @@ ui <- page_navbar(
                              card(plotOutput("plot_variable2",width=500,height=500)),
                              card(plotOutput("plot_relascopio2",width=500,height=500))
               )
+            }),
+            fluidRow({
+              card(
+                card_header("Explicación",color="red"),
+                includeMarkdown(rmarkdown::render('Seleccion.Rmd')),full_screen = TRUE
+              )
+            })
     ),
     
     nav_panel("Estimación una parcela",
-              layout_columns(col_widths=c(5,7),
+            fluidRow(
+              layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
                                   card(layout_columns(col_widths=c(5,7),
                                                       tableOutput('tabla_interes2'),
                                                       plotOutput("plot_selected1",width=400,height=400)
-                                                      )),
+                                  )),
                                   card(tableOutput('muestra'),min_height = 450),
                                   
                              ),
@@ -91,10 +111,19 @@ ui <- page_navbar(
                                   card(tableOutput("tabla_acc"),min_height = 300)
                              )
               )
+            ),
+            fluidRow(
+              card(
+                card_header("Explicación"),
+                includeMarkdown('OnePlot.Rmd'),full_screen = TRUE
+              )
+            )
+              
     ),
     
     nav_panel("Estimación múltiples parcelas",
-              layout_columns(col_widths=c(5,7),
+            fluidRow({
+              layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
                                   card(layout_columns(col_widths=c(5,7),
                                                       tableOutput('tabla_interes3'),
@@ -106,38 +135,67 @@ ui <- page_navbar(
                                   card(plotOutput("plot_res2"))
                              )
               )
+            }),
+            
+            fluidRow(
+              card(
+                card_header("Explicación"),
+                htmltools::includeMarkdown('nPlots.Rmd'),full_screen = TRUE
+              )
+            )
+              
     ),
     
   nav_panel("Distribución muestral",
-            layout_columns(col_widths=c(5,7),
-                           card(card_header("Parámetros de interés y muestra"),
+          fluidRow({
+            layout_columns(col_widths=c(5,7),height = 800,
+                           card(
+                             card_header("Parámetros de interés y muestra"),
                                 card(layout_columns(col_widths=c(5,7),
                                                     tableOutput('tabla_interes4'),
                                                     plotOutput("plot_selected3")
-                                ), min_height=350),
+                                )),
                                 card(card_header("Cambio en la varianza al aumentar n"),
                                      plotOutput("var_n")
-                                     ),
+                                )
                            ),
                            card(card_header("Aproximación a una normal"),
                                 card(plotOutput("normal_approx"))
                            )
             )
+          }),
+          fluidRow(
+            card(
+              card_header("Explicación"),
+              htmltools::includeMarkdown('Samp_dist.Rmd'),full_screen = TRUE
+            )
+          )
+          
+            
   ),
   nav_panel("Error de muestreo",
-            layout_columns(col_widths=c(5,7),
-                           card(card_header("Parámetros de interés y muestra"),
-                                card(layout_columns(col_widths=c(5,7),
-                                                    tableOutput('tabla_interes5'),
-                                                    plotOutput("plot_selected6",width=400,height=400)
-                                )),
-                                card(tableOutput('n_estimaciones2'),min_height = 450),
-                                
-                           ),
-                           card(card_header("Estimación con una parcela vs estimación con n parcelas"),
-                                card(plotOutput("plot_res3",width=950,height=750))
-                           )
+            fluidRow({
+              layout_columns(col_widths=c(5,7),height = 800,
+                             card(card_header("Parámetros de interés y muestra"),
+                                  card(layout_columns(col_widths=c(5,7),
+                                                      tableOutput('tabla_interes5'),
+                                                      plotOutput("plot_selected6",width=400,height=400)
+                                  )),
+                                  card(tableOutput('n_estimaciones2'),min_height = 450),
+                                  
+                             ),
+                             card(card_header("Estimación con una parcela vs estimación con n parcelas"),
+                                  card(plotOutput("plot_res3",width=950,height=750))
+                             )
+              )
+            }),
+            fluidRow(
+              card(
+                card_header("Explicación"),
+                htmltools::includeMarkdown('Sampling_error.Rmd'),full_screen = TRUE
+              )
             )
+            
   )
   # )
 )
