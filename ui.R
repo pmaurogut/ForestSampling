@@ -50,31 +50,72 @@ controls <- list(lado,pop_size,samp_size,plot_type,space,
 #### UI ####
 ui <- page_navbar(
   
-  theme=bs_theme(preset = "darkly"),
-  title = "Muestreo forestal",
+  # theme = bs_theme(version = 5, bootswatch = "darkly"),
+  title = div(
+    img(src = "logo.png", height = "30px"), 
+    "Muestreo forestal"
+  ),
+  
+  theme = bs_theme(version = 5, bootswatch = "darkly",
+                   "navbar-bg" = "#416e5e",
+                   "nav-link-color" = "#60d1b8 !important"
+                   )|> 
+    bslib::bs_add_rules(
+      rules = "
+                    .navbar.navbar-default {
+                        background-color: #416e5e;
+                    }
+                    
+                    "
+    ),
+  
+  
+  tags$head(tags$script(
+    HTML('
+              $(document).ready(function() {
+                $(".navbar-brand").replaceWith(
+                  $("<a class = \'navbar-brand\' href = \'#\'></a>")
+                );
+                var containerHeight = $(".navbar .container-fluid").height() + "px";
+                $(".navbar-brand")
+                  .append(
+                    "<img id = \'myImage\' src=\'logo.png\'" +
+                    " height = " + containerHeight + ">"
+                  );
+                });'
+    )
+  )
+  ),
+  tags$style(HTML(
+    '@media (max-width:992px) { .navbar-brand { padding-top: 0; padding-bottom: 0; }}'
+  )
+  ),
+  
+  
   nav_spacer(),
   sidebar=sidebar(title = "Opciones población y muestra",controls,open="always"),
   
   # navset_card_underline(
   #   title = "Ejemplos",
-  
-    nav_panel("Población y parámetros de interés",
-          fluidRow({
-             layout_columns(col_widths=c(6,4,2),
-                            card(card_header("Mapa Población"),plotOutput("plot_poblacion",width=800,height=800)),
-                            card(card_header("Datos Población"),tableOutput('poblacion')),
-                            card(card_header("Parámetros de interés"),tableOutput('tabla_interes1'))
-             )
-           }),
-          fluidRow({   
-            card(
-              card_header("Explicación"),
-              withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE, height=200
-            )
-          })
+  nav_panel("Población",
+        
+        fluidRow({
+          layout_columns(col_widths=c(6,4,2),
+                         card(card_header("Mapa Población"),plotOutput("plot_poblacion",width=800,height=800)),
+                         card(card_header("Datos Población"),tableOutput('poblacion')),
+                         card(card_header("Parámetros de interés"),tableOutput('tabla_interes1'))
+          )
+        }),
+        
+        fluidRow({   
+          card(
+            card_header("Explicación"),
+            withMathJax(htmltools::includeMarkdown("help/Poblacion.Rmd")),full_screen = TRUE, height=200
+          )
+        })
     ),
-    
-    nav_panel("Selección de muestras",
+  
+  nav_panel("Selección de muestras",
             fluidRow({
               layout_columns(col_widths=c(4,4,4,4,4,4),
                              card(plotOutput("plot_fijo",width=500,height=500)),
@@ -88,7 +129,7 @@ ui <- page_navbar(
             fluidRow({
               card(
                 card_header("Explicación",class = "bg-dark"),
-                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE, height=200
+                withMathJax(htmltools::includeMarkdown("help/Seleccion.Rmd")),full_screen = TRUE, height=200
               )
             })
     ),
