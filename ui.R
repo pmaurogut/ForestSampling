@@ -8,6 +8,7 @@ library(tidyr)
 library(DT)
 library(thematic)
 library(htmltools)
+library(rmarkdown)
 
 
 
@@ -51,7 +52,7 @@ controls <- list(lado,pop_size,samp_size,plot_type,space,
 #### UI ####
 ui <- page_navbar(
   
-  theme=bs_theme(version=5, preset = "darkly"),
+  theme=bs_theme(preset = "darkly"),
   title = "Muestreo forestal",
   nav_spacer(),
   sidebar=sidebar(title = "Opciones población y muestra",controls,open="always"),
@@ -89,7 +90,7 @@ ui <- page_navbar(
             fluidRow({
               card(
                 card_header("Explicación",class = "bg-dark"),
-                includeHTML("Poblacion.html"),full_screen = TRUE, height=200
+                card_body(includeHTML("Poblacion.html")),full_screen = TRUE, height=200
               )
             })
     ),

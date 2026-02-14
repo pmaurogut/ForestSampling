@@ -110,7 +110,7 @@ server <- function(input, output, session) {
     par_int()
   })
   
-  output$pop_help <- renderUI(tags$iframe(src="Poblacion.html"))
+  output$pop_help <- renderUI(tags$iframe("Poblacion.html"))
   
   ##### Seleccion #####
   output$plot_fijo <- renderPlot({
