@@ -112,7 +112,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación"),
-                markdown(paste0(readLines("OnePlot.Rmd"),collapse="\n")),full_screen = TRUE
+                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
               )
             )
               
@@ -137,7 +137,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación"),
-                markdown(paste0(readLines("nPlots.Rmd"),collapse="\n")),full_screen = TRUE
+                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
               )
             )
               
@@ -164,7 +164,7 @@ ui <- page_navbar(
           fluidRow(
             card(
               card_header("Explicación"),
-              markdown(paste0(readLines("Samp_dist.Rmd"),collapse="\n")),full_screen = TRUE
+              withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
             )
           )
           
@@ -189,7 +189,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación"),
-                markdown(paste0(readLines("Sampling_error.Rmd"),collapse="\n")),full_screen = TRUE
+                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
               )
             )
             
