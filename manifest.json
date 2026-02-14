@@ -767,7 +767,7 @@
         "Maintainer": "Carson Sievert <carson@posit.co>",
         "Repository": "CRAN",
         "Date/Publication": "2025-12-04 11:50:09 UTC",
-        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-12-16 17:09:36 UTC; unix"
+        "Built": "R 4.5.2; x86_64-pc-linux-gnu; 2026-02-13 21:14:35 UTC; unix"
       }
     },
     "htmlwidgets": {
@@ -1999,17 +1999,47 @@
     ".Rbuildignore": {
       "checksum": "ecb1f6047d538124f06862b8e7dbfca5"
     },
+    ".RData": {
+      "checksum": "479848fe7fab302ddc237f7baf63d0ab"
+    },
     "DESCRIPTION": {
       "checksum": "224b0bb58a6456f3cb7329a1e712f8c3"
     },
+    "nPlots.Rmd": {
+      "checksum": "0605eb3e4568d0be17c4d807baec33cb"
+    },
+    "OnePlot.html": {
+      "checksum": "363eb400b0c877cec3988698fa04f383"
+    },
+    "OnePlot.Rmd": {
+      "checksum": "0605eb3e4568d0be17c4d807baec33cb"
+    },
+    "Poblacion.html": {
+      "checksum": "5215611261b356436b53c5577456af4f"
+    },
+    "Poblacion.Rmd": {
+      "checksum": "4a1a7b6ed58748bd731fad1f72ac0b8f"
+    },
+    "Samp_dist.Rmd": {
+      "checksum": "0605eb3e4568d0be17c4d807baec33cb"
+    },
+    "Sampling_error.Rmd": {
+      "checksum": "0605eb3e4568d0be17c4d807baec33cb"
+    },
+    "Seleccion.html": {
+      "checksum": "363eb400b0c877cec3988698fa04f383"
+    },
+    "Seleccion.Rmd": {
+      "checksum": "0605eb3e4568d0be17c4d807baec33cb"
+    },
     "server.R": {
-      "checksum": "887a5bf51a9a6d2dfb559c5d4f4adbcd"
+      "checksum": "366abab8cde56f088daae99872981900"
     },
     "ui.R": {
-      "checksum": "0d4268652ebddfcc716cc05cadb84465"
+      "checksum": "ec93d40223c3f4d2c8cf21d433fc78f6"
     },
     "utils.R": {
-      "checksum": "23b963e88bcc0acfbca2a6256a8aea63"
+      "checksum": "19f47875368ab1b56bc5eff3e4c3c814"
     }
   },
   "users": null

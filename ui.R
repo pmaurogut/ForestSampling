@@ -8,8 +8,7 @@ library(tidyr)
 library(DT)
 library(thematic)
 library(htmltools)
-library(markdown)
-library(rmarkdown)
+
 
 
 plot_type<- radioButtons("plot_type1" , "Tipo de parcela:",
@@ -52,7 +51,7 @@ controls <- list(lado,pop_size,samp_size,plot_type,space,
 #### UI ####
 ui <- page_navbar(
   
-  theme=bs_theme(version=5,preset = "darkly"),
+  theme=bs_theme(version=5, preset = "darkly"),
   title = "Muestreo forestal",
   nav_spacer(),
   sidebar=sidebar(title = "Opciones población y muestra",controls,open="always"),
@@ -71,7 +70,7 @@ ui <- page_navbar(
           fluidRow({   
             card(
               card_header("Explicación"),
-              includeHTML('Poblacion.html'),full_screen = TRUE, height=200
+              htmltools::includeHTML("Poblacion.html"),full_screen = TRUE, height=200
             )
           })
     ),
@@ -89,8 +88,8 @@ ui <- page_navbar(
             }),
             fluidRow({
               card(
-                card_header("Explicación",color="red"),
-                includeMarkdown(rmarkdown::render('Seleccion.Rmd')),full_screen = TRUE
+                card_header("Explicación",class = "bg-dark"),
+                markdown(paste0(readLines("Seleccion.Rmd"),collapse="\n")),full_screen = TRUE
               )
             })
     ),
@@ -115,7 +114,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación"),
-                includeMarkdown('OnePlot.Rmd'),full_screen = TRUE
+                markdown(paste0(readLines("OnePlot.Rmd"),collapse="\n")),full_screen = TRUE
               )
             )
               
@@ -140,7 +139,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación"),
-                htmltools::includeMarkdown('nPlots.Rmd'),full_screen = TRUE
+                markdown(paste0(readLines("nPlots.Rmd"),collapse="\n")),full_screen = TRUE
               )
             )
               
@@ -167,7 +166,7 @@ ui <- page_navbar(
           fluidRow(
             card(
               card_header("Explicación"),
-              htmltools::includeMarkdown('Samp_dist.Rmd'),full_screen = TRUE
+              markdown(paste0(readLines("Samp_dist.Rmd"),collapse="\n")),full_screen = TRUE
             )
           )
           
@@ -192,7 +191,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación"),
-                htmltools::includeMarkdown('Sampling_error.Rmd'),full_screen = TRUE
+                markdown(paste0(readLines("Sampling_error.Rmd"),collapse="\n")),full_screen = TRUE
               )
             )
             

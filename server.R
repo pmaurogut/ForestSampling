@@ -110,6 +110,8 @@ server <- function(input, output, session) {
     par_int()
   })
   
+  output$pop_help <- renderUI(tags$iframe(src="Poblacion.html"))
+  
   ##### Seleccion #####
   output$plot_fijo <- renderPlot({
     trees <- get_trees(forest(),est()[pos()[1],],"r_fijo")
