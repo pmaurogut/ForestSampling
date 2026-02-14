@@ -67,7 +67,8 @@ ui <- page_navbar(
                     }
                     
                     "
-    ),
+    )|>
+    bslib::bs_add_rules(".custom-header { background-color: #416e5e ; color: #60d1b8 !important; }"),
   
   
   tags$head(tags$script(
@@ -109,7 +110,7 @@ ui <- page_navbar(
         
         fluidRow({   
           card(
-            card_header("Explicación"),
+            card_header("Explicación",class="custom-header"),
             withMathJax(htmltools::includeMarkdown("help/Poblacion.Rmd")),full_screen = TRUE, height=200
           )
         })
@@ -128,7 +129,7 @@ ui <- page_navbar(
             }),
             fluidRow({
               card(
-                card_header("Explicación",class = "bg-dark"),
+                card_header("Explicación",class="custom-header"),
                 withMathJax(htmltools::includeMarkdown("help/Seleccion.Rmd")),full_screen = TRUE, height=200
               )
             })
@@ -153,8 +154,8 @@ ui <- page_navbar(
             ),
             fluidRow(
               card(
-                card_header("Explicación"),
-                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
+                card_header("Explicación",class="custom-header"),
+                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE, height=200
               )
             )
               
@@ -178,8 +179,8 @@ ui <- page_navbar(
             
             fluidRow(
               card(
-                card_header("Explicación"),
-                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
+                card_header("Explicación",class="custom-header"),
+                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE, height=200
               )
             )
               
@@ -205,8 +206,8 @@ ui <- page_navbar(
           }),
           fluidRow(
             card(
-              card_header("Explicación"),
-              withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
+              card_header("Explicación",class="custom-header"),
+              withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE, height=200
             )
           )
           
@@ -230,8 +231,8 @@ ui <- page_navbar(
             }),
             fluidRow(
               card(
-                card_header("Explicación"),
-                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE
+                card_header("Explicación",class="custom-header"),
+                withMathJax(htmltools::includeMarkdown("Poblacion.Rmd")),full_screen = TRUE, height=200
               )
             )
             

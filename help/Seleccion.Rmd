@@ -5,6 +5,35 @@ output: html_document
 
 Vamos a considerar el experimento aleatorio de ubicar una parcela uniformemente al azar en la zona a maestrear. A partir de la ubicación de este punto se determinarán los árboles que formarán parte de la muestra. Como la ubicación del punto de muestreo es aleatoria, los árboles que formarán la muestra también lo serán. Podemos analizar el proceso de selección de muestras desde dos puntos de vista complementarios que nos permitirán deducir, de una forma sencilla y visual, probabilidades de inclusión en la muestra ($\pi_i$) y factores de expansión ($w_i$) que nos serán útiles en el proceso de estimación.
 
-## Selección basada en áreas de inclusión centradas en los árboles
+![Equivalencia en la selcción de muestra vista desde el centro de la parcela o desde e árbol](fig.png)
 
-## Selección basada en áreas de parcela centradas en el punto de muestreo
+#### Selección basada en áreas de inclusión centradas en los árboles
+
+En la parte superior de esta pestaña puedes ver el monte simulado. Si activas el control **Todas las áreas de inclusión** podrás ver el área de inclusión de cada árbol para los distintos tipos de parcela.
+
+Si miras el proceso de selección desde el punto de vista de comprobar o no si el punto de medición (el centro de parcela) caído o no en el área de inclusión de un determinado árbol, podrás ver que es bastante sencillo determinar la probabilidad de que un árbol determinado sea incluido en la muestra.
+
+**Radio fijo**
+
+Para parcelas de radio fijo, la probabilidad de inclusión en la muestra $\pi_i$ para el árbol $i$ es:
+
+$$
+\pi_i = \frac{\pi r_p^2}{A}
+$$
+
+donde $r_p$ es el radio de la parcela y $A$ el área muestreada.
+
+**Radio variable**
+
+Para parcelas de radio fijo, la probabilidad de inclusión en la muestra $\pi_i$ para el árbol $i$ es:
+
+$$
+\pi_i = \begin{cases}
+\frac{\pi r_1^2}{A}, & \text{si } dn<15cm\\
+\frac{\pi r_2^2}{A}, & \text{si } dn \ge 15cm
+\end{cases}
+$$
+
+donde $r_1=10$ y $r_2=20$ son los radios asociados a las clases de tamaño 1 (menores de 15 cm de diámetro normal) y 2 (diámetro normal mayor o igual a 15 cm) del ejemplo. $A$ es el área muestreada. **Importante,** hemos considerado los radios de parcela y clases del ejemplo. Si hubiese más de dos clases, el procedimiento seria el mismo, pero tendríamos más casos.
+
+#### Selección basada en áreas de parcela centradas en el punto de muestreo
