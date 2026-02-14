@@ -70,7 +70,7 @@ ui <- page_navbar(
           fluidRow({   
             card(
               card_header("Explicación"),
-              htmltools::includeHTML("Poblacion.html"),full_screen = TRUE, height=200
+              htmlOutput("pop_help"),full_screen = TRUE, height=200
             )
           })
     ),
@@ -89,7 +89,7 @@ ui <- page_navbar(
             fluidRow({
               card(
                 card_header("Explicación",class = "bg-dark"),
-                markdown(paste0(readLines("Seleccion.Rmd"),collapse="\n")),full_screen = TRUE
+                includeHTML("Poblacion.html"),full_screen = TRUE, height=200
               )
             })
     ),
