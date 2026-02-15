@@ -25,7 +25,7 @@ $$G=\frac{1}{A}\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
 
 -   Diámetro cuadrático medio (función de totales)
 
-$$dg=\sqrt(\frac{G}{N}\frac{4}{\pi})=\sqrt(\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}\frac{4}{\pi})$$
+$$dg=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}\frac{4}{\pi}}$$
 
 -   Altura media (ratio de totales)
 

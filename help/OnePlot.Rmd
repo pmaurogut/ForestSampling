@@ -3,6 +3,71 @@ title: "Estimación con una parcela ubicada uniformemente al azar"
 output: html_document
 ---
 
-Estás viendo la población que se ha simulado. Al hacer un inventrio, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valres de sus alturas y diámetros. Esto implica que no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés.
+En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña Población) cuando se considera el experimento aleatorio de:
 
-Dado que con este
+1.  Seleccionar una ubicación al azar en la zona a muestrear
+
+2.  Seleccionar los árboles que compondrán la muestra en base al tipo de parcela empleado
+
+La base de la estimación será el estimador de Horvitz-Thompson para totales o su versión para totales por unidad de área. Ambas versiones pueden intercambiarse casi de forma directa ya que el área muestreada $A$ normalmente es conocida.
+
+#### Parámetros de interés
+
+***Totales***
+
+De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada. Si usamos el símbolo $\cal{N}$ (**N de bordes redondeados**) para representar el número de árboles en la zona a muestrear (**parámetro desconocido**) tenemos que totales y totales por unidad de área se expresan como:
+
+$$
+Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total\:por\:unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i
+$$
+
+Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (**N con bordes rectos**), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
+
+***Funciones de totales***
+
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de vista conceptual. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
+
+$$
+Media(y)=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\sum_{i=1}^{\cal{N}}1}
+$$
+
+Pero $\cal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, de forma que **los valores medios son ratios de totales**.
+
+Otro ejemplo de parámetro de interés que se expresa como función de totales es el diámetro cuadrático medio $d_g$. Partiendo de la propia definición de $d_g$ o diámetro del árbol de sección normal media. Vemos que $d_g$ es una función de dos totales $G$ y $N$
+
+$$
+\frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g = \sqrt{\frac{4G}{\pi N}}
+$$
+
+***Otros parámetros complejos***
+
+#### Estimador de Horvitz-Thompson de parcela
+
+Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área.
+
+Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés.
+
+$$
+\hat{Total(y)}=\begin{cases}
+\sum\limits_{i\in muestra}\frac{y_i}{\pi_i} , & \text{si se ha seleccionado algún árbol} \\
+ & \\
+0, & \text{si la no se ha seleccionado ningún árbol}
+\end{cases}
+$$
+
+$$
+\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
+\frac{1}{A}\sum\limits_{i\in muestra}\frac{y_i}{\pi_i} = \sum\limits_{i\in muestra}\frac{y_i}{A\frac{a_{parcela}}{A}} = \sum\limits_{i\in muestra}y_iw_i , & \text{si se ha seleccionado algún árbol} \\
+ & \\
+0, & \text{si la no se ha seleccionado ningún árbol}
+\end{cases}
+$$
+
+Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área el estimador de parcela para un total por unidad de área el área a muestrear $A$ aparece dividiendo el total, pero también de forma implícita en las $\pi_i$ . Estas áreas se cancela y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela el valor de la variable de interés pro su factor de expansión.
+
+$$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
+\sum\limits_{i\in muestra}y_iw_i  , & \text{si se ha seleccionado algún árbol} \\
+ & \\
+0, & \text{si la no se ha seleccionado ningún árbol}
+\end{cases}
+$$
