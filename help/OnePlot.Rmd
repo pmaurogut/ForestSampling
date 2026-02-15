@@ -11,6 +11,8 @@ En esta pestaña se explica cómo se hace la estimación de un parámetro de int
 
 La base de la estimación será el estimador de Horvitz-Thompson para totales o su versión para totales por unidad de área. Ambas versiones pueden intercambiarse casi de forma directa ya que el área muestreada $A$ normalmente es conocida.
 
+Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
+
 #### Parámetros de interés
 
 ***Totales***
@@ -150,7 +152,7 @@ Como puente al proceso más realista en el que se miden múltiples parcelas, pod
 
 En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para cinco variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical roja. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
 
-En este panel es importante observar dos cosas:
+**En este panel es importante observar dos cosas:**
 
 Para totales, a medida que hacemos más y más parcelas y tomamos la media, el punto azul se aproxima más y más al parámetro de interés. Si el lado de tu población es pequeño, puede que haya cierta desviación sistemática o sesgo ya que las probabilidades de inclusión o factores de expansión que tomamos no consideran efectos de bordes que se dan cuando el área de inclusión de un árbol corta los límites de la zona a muestrear.
 
