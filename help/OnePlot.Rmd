@@ -1,5 +1,5 @@
 ---
-title: "Poblacion"
+title: "Estimación con una parcela ubicada uniformemente al azar"
 output: html_document
 ---
 

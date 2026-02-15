@@ -11,25 +11,33 @@ Antes de continuar vemos que para un radio determinado, un árbol se mide si est
 
 La primera, forma de ver esto seria haciendo un círculo del radio correspondiente en torno a cada árbol. Si llamamos área de inclusión al área de dicho círculo, podemos decir que mediremos aquellos árboles para los que el punto de medición que hemos aleatorizado cae dentro del área de inclusión del árbol.
 
-![Selección de muestra vista desde el árbol con áreas de inclusión](areas_inclusion_arbol.png)
+![*Selección de muestra vista desde el árbol con áreas de inclusión*](areas_inclusion_arbol.png)
 
 #### Selección basada en áreas de inclusión centradas en los árboles
 
 Hay una forma alternativa de ver si debemos muestrear un árbol o no. Dado que da igual que punto escojamos para medir distancias, esta vez, podemos centrarnos en el punto de medición y hacer un circulo (o círculos para parcelas con radio variable). Se medirán los arboles que estén dentro del círculo realizado en torno al punto de medición o centro de parcela.
 
-![Selección de muestra vista desde el centro de la parcela](areas_inclusion_parcela.png)
+![*Selección de muestra vista desde el centro de la parcela*](areas_inclusion_parcela.png)
 
 Mientras que el punto de vista centrado en los árboles es muy gráfico a la hora de determinar probabilidades de incluir un determinado árbol en la muestra. El punto de vista basado en la parcela tiene una interpretación alternativa que es muy útil.
 
 En este ejemplo suponemos que hemos muestreado una zona de una hectárea con radio de parcela que resulta en una superficie de $1/5$ hectáreas . En nuestra parcela han entrado cuatro árboles.
 
-![Áreas de parcela y factores de expansión](Factor_de_expansion.png)
+![*Áreas de parcela y factores de expansión*](Factor_de_expansion.png)
 
-Si sabemos que nuestra parcela es de $\frac{1}{5}$ hectáreas. En base a nuestras mediciones esperaríamos tener $5x4=20$ árboles en la zona a muestrear. En realidad hay 23 árboles pero el inverso del área podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}}$ nos permite aproximarnos al valor total de árboles por unidad de área. Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion}}$ y está directamente relacionado con la probabilidad de inclusión. Mientras que el factor de expansión de un árbol es igual a , $w_i=\frac{1}{a_{inclusion}}$, la probabilidad de inclusión es $\pi_i=\frac{a_{inclusion}}{A}$ por tanto, operando podemos relacionar ambas cantidades de la siguiente manera:
+Si sabemos que nuestra parcela es de $\frac{1}{5}$ hectáreas. En base a nuestras mediciones esperaríamos tener $5x4=20$ árboles en la zona a muestrear. En realidad hay 23 árboles pero podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}(ha)}$ nos permite aproximarnos al valor total de árboles por unidad de área, este caso una hectárea. **Básicamente extrapolamos lo que hemos medido en la parcela al resto del área.**
+
+Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion}(ha)}$ y está directamente relacionado con la probabilidad de inclusión.
+
+**Normalmente, las áreas muestreadas se miden en hectáreas de modo que es más cómodo si expresamos siempre áreas parcela y áreas a muestrear en estas unidades. Esto no es obligatorio, pero si que es necesario saber en que unidades se trabaja y ser consistente, especialmente cuando se calculan probabilidades de inclusión donde es necesario usar las mismas unidades en numerador y denominador** .
+
+Mientras que el factor de expansión de un árbol es igual a , $w_i=\frac{1}{a_{inclusion}(ha)}$, la probabilidad de inclusión es $\pi_i=\frac{a_{inclusion}(ha)}{A(ha)}$ por tanto, operando podemos relacionar ambas cantidades de la siguiente manera:
 
 $$
-\pi_i=\frac{a_{inclusion}}{A}\rightarrow\pi_i=\frac{1}{Aw_i}
+\pi_i=\frac{a_{inclusion}(ha)}{A(ha)}\rightarrow\pi_i=\frac{1}{A(ha)w_i}
 $$
+
+También podemos usar esta ecuación para establecer el factor de expansión como $w_i=\frac{1}{A(ha)*\pi_i}$
 
 #### Controles de la pestaña
 
@@ -44,10 +52,10 @@ Se consideran los siguientes tipos de parcela:
 Para parcelas de radio fijo, la probabilidad de inclusión en la muestra $\pi_i$ para el árbol $i$ es:
 
 $$
-\pi_i = \frac{\pi r_p^2}{A}
+\pi_i = \frac{\pi r_p^2(ha)}{A(ha)}
 $$
 
-donde $r_p$ es el radio de la parcela y $A$ el área muestreada en las mismas unidades.
+donde $r_p$ es el radio de la parcela y $A$ el área muestreada en las mismas unidades. El factor de expansión en este caso es igual para todos los árboles y es igual al inverso del área de la parcela en hectáreas $w_i=\frac{1}{\pi r^2(ha)}$
 
 **Radios anidados**
 
@@ -55,17 +63,32 @@ Para parcelas de radio fijo, la probabilidad de inclusión en la muestra $\pi_i$
 
 $$
 \pi_i = \begin{cases}
-\frac{\pi r_1^2}{A}, & \text{si } dn<15cm\\
-\frac{\pi r_2^2}{A}, & \text{si } dn \ge 15cm
+\frac{\pi r_1^2(ha)}{A(ha)}, & \text{si } dn<15cm\\
+\frac{\pi r_2^2(ha)}{A(ha)}, & \text{si } dn \ge 15cm
 \end{cases}
 $$
 
 donde $r_1=10$ y $r_2=20$ son los radios asociados a las clases de tamaño 1 (menores de 15 cm de diámetro normal) y 2 (diámetro normal mayor o igual a 15 cm) del ejemplo. $A$ es el área muestreada. **Importante,** hemos considerado los radios de parcela y clases del ejemplo. Si hubiese más de dos clases, el procedimiento seria el mismo, pero tendríamos más casos. Por otro lado, con parcelas de radios anidados y de relascopio, visualmente, puede ser difícil establecer que radio se corresponde con qué árbol.
 
-**Relascopio**
-
-El último tipo de parcela considerado es el de parcelas de relascopio con un BAF de 1. Cuando el BAF es 1, el área de inclusión en metros cuadrados es igual a $\pi_i = \frac{\pi dn_i^2}{4}$ . En base a esto se puede calcular la probabilidad de inclusión del árbol $i$ como:
+En base a las probabilidades de inclusión podemos establecer los factores de expansión:
 
 $$
-\pi_i = \frac{\pi dn_i^2}{4A}
+w_i = \begin{cases}
+\frac{1}{\pi r_1^2(ha)}, & \text{si } dn<15cm\\
+\frac{1}{\pi r_2^2(ha)}, & \text{si } dn \ge 15cm
+\end{cases}
+$$
+
+**Relascopio**
+
+El último tipo de parcela considerado es el de parcelas de relascopio con un BAF de 1. Cuando el BAF es 1, el área de inclusión tiene un radio igual al radio del árbol pero expresado en metros. En este caso, el área de inclusión en hectáreas es igual a $\pi_i = \frac{\pi dn_i^2}{4*1000}$. En base a esto se puede calcular la probabilidad de inclusión del árbol $i$ como:
+
+$$
+\pi_i = \frac{\pi dn_i^2}{4*10000}*\frac{1}{A}
+$$
+
+El factor de expansión en este caso es igual a
+
+$$
+w_i=\frac{1}{\frac{\pi dn_i^2}{4*10000}}
 $$
