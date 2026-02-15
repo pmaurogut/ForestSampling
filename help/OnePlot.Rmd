@@ -41,7 +41,21 @@ $$
 
 ***Otros parámetros complejos***
 
-#### Estimador de Horvitz-Thompson de parcela
+Hay variables dasométricas que no son totales o funciones o ratios de totales. En este apartado destacan las alturas y diámetros dominantes, que suelen definirse como alturas o diámetros medios del conjunto de árboles dominantes.
+
+$$
+h_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}h_i
+$$
+
+$$
+d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
+$$
+
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?
+
+#### Estimador de Horvitz-Thompson de parcela para totales o totales por unidad de área. 
+
+En esta sección se explica como se obtienen estimaciones de parcela (panel central y medio) a partir de las mediciones de árboles (panel izquierdo).
 
 Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área.
 
@@ -71,3 +85,77 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}
 $$
+
+En el panel izquierdo de esta pestaña tienes las mediciones a nivel de árbol que se haría en la parcela. Para obtener un determinado total solo tenemos que multiplicar la columna de la variable para la que queremos hacer un total (si queremos estimar $N$ esta columna siempre valdría 1) por el factor de expansión correspondiente y sumar.
+
+**Ejemplo 1:**
+
+$$
+\hat{G}=\begin{cases}
+\sum\limits_{i\in muestra}g_iw_i  , & \text{si se ha seleccionado algún árbol} \\
+ & \\
+0, & \text{si la no se ha seleccionado ningún árbol}
+\end{cases}
+$$
+
+**Ejemplo 2:**
+
+$$
+\hat{N}=\begin{cases}
+\sum\limits_{i\in muestra}1w_i  , & \text{si se ha seleccionado algún árbol} \\
+ & \\
+0, & \text{si la no se ha seleccionado ningún árbol}
+\end{cases}
+$$
+
+#### Estimador de parcela para ratios y funciones de totales
+
+Cuando consideremos la estimación de parámetros medios (ratios de totales) o funciones de totales, simplemente haremos el estimador de parcela para cada uno de los totales.
+
+**Ejemplo 3:**
+
+Si el parámetro de interés es la altura media$$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}$$
+
+La altura media es el ratio de dos totales por unidad de área, el total de las alturas $y_i\rightarrow h_i$ y $N$ (el total de una variable que vale 1 para todos los árboles. En este caso, simplemente haremos el estimador de parcela para el numerador y el estimador por parcela para el denominador y después haremos el ratio.
+
+$$
+\hat{\bar{h}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestra}1w_i}
+$$
+
+**Ejemplo 4:**
+
+Para estimar $d_g$ estimaremos $G$ y $N$ tal como se hace en los ejemplos 1 y 2, y después sustituiremos en la ecuación de $d_g$ para obtener el estimador de parcela.
+
+$$
+\hat{d_g} = \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}
+$$
+
+#### Estimador de parcela para parámetros complejos (alturas y diámetros dominantes)
+
+Para alturas y diámetros dominantes, la estimación se hará construyendo análogos de parcela. En este caso, lo primero que haremos será ordenar la tabla de mediciones por diámetro en orden decreciente. Después, iremos sumando los factores de expansión hasta alcanzar 100 árboles por hectárea. Esto nos permitirá estimar el conjunto de árboles dominantes de la parcela. Una vez tengamos este conjunto $\hat{dominantes}$ simplemente calcularemos los valores medios como hemos hecho en el ejemplo 3, pero trabajando sobre los árboles dominantes.
+
+$$
+\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
+$$
+
+$$
+\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
+$$
+
+Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol sumado, deberíamos reducir el factor de expansión de forma que la suma de todos los factores de expansión para el conjunto de árboles dominante sea 100.
+
+#### Repetición del experimento de ubicar una parcela al azar (Panel derecho)
+
+Como puente al proceso más realista en el que se miden múltiples parcelas, podemos ver que ocurre si repetimos múltiples veces el proceso de seleccionar un punto, tomar la muestra de árboles y calcular los estimadores correspondientes.
+
+En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para cinco variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical roja. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
+
+En este panel es importante observar dos cosas:
+
+Para totales, a medida que hacemos más y más parcelas y tomamos la media, el punto azul se aproxima más y más al parámetro de interés. Si el lado de tu población es pequeño, puede que haya cierta desviación sistemática o sesgo ya que las probabilidades de inclusión o factores de expansión que tomamos no consideran efectos de bordes que se dan cuando el área de inclusión de un árbol corta los límites de la zona a muestrear.
+
+En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de borde tienden a ser pequeños, algo similar ocurre si se aumenta el lado del área simulada, estos efectos de borde tienden a tener una importancia casi nula. Prueba a generar poblaciones con un lado mayor:
+
+-   **En la pestaña** **Selección de muestra** verás que, proporcionalmente, las áreas de inclusión que cortan el área muestreada pierden importancia
+
+-   **En esta pestaña** podrás ver como la media de estimaciones de totales por unidad de área se aproximan más y más al valor real, es decir, el sesgo desaparece.
