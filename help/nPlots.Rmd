@@ -1,8 +1,16 @@
 ---
-title: "Poblacion"
+title: "Estimación con n parcelas ubicadas uniformemente al azar"
 output: html_document
 ---
 
-Estás viendo la población que se ha simulado. Al hacer un inventrio, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valres de sus alturas y diámetros. Esto implica que no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés.
+En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña Población) cuando se repite $n$ veces el experimento aleatorio de:
 
-Dado que con este
+1.  Seleccionar una ubicación al azar en la zona a muestrear
+
+2.  Seleccionar los árboles que compondrán la muestra en base al tipo de parcela empleado
+
+3.  Obtener $n$ estimadores de parcela y promediarlos.
+
+Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
+
+#### Dado que con este

@@ -385,7 +385,7 @@ normal_approx <- function(estimates,n,type,variation,K){
     geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2,bw = "ucv")+
     geom_vline(data=variation,aes(xintercept=mean),colour = "red")+
     geom_point(data=limits,aes(x=value,y=0),colour = "red",alpha=0)+
-    ggtitle("Aproximación a una distribución normal al aumentar n")
+    ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")
   
 }
 

@@ -222,7 +222,9 @@ server <- function(input, output, session) {
     par_int()
   })
   
-  output$plot_selected3<-renderPlot({base_plot()})
+  output$plot_selected3<-renderPlot({
+    base_plot()
+  })
   
 
   output$var_n<- renderPlot({
@@ -241,7 +243,7 @@ server <- function(input, output, session) {
       xlab("Varianza estimador final")+
       scale_color_manual(values=c("red"="red","black"="black"))+
       guides(color="none")+
-      ggtitle("Cambio en la varianza al aumentar n ")
+      ggtitle("Cambio en la varianza al aumentar n")
   })
   
   output$normal_approx<-renderPlot({
