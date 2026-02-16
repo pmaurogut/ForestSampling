@@ -1,8 +1,22 @@
 ---
-title: "Poblacion"
+title: "Distribución muestral estimación con n parcelas ubicadas uniformemente al azar y de forma independiente"
 output: html_document
 ---
 
-Estás viendo la población que se ha simulado. Al hacer un inventrio, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valres de sus alturas y diámetros. Esto implica que no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés.
+En esta pestaña se ve en más detalle cual es la distribución muestral del los estimadores finales. Igual que en la pestaña anterior, de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores. Es importante recordar que los estimadores finales se obtienen al repetir $n$ veces y de forma independiente el experimento aleatorio de:
 
-Dado que con este
+1.  Seleccionar $n$ ubicaciónes al azar en la zona a muestrear
+
+2.  Seleccionar los árboles que compondrán la muestra en cada una de las $n$ parcelas en base al tipo de parcela empleado.
+
+3.  Obtener $n$ estimadores de parcela y promediarlos.
+
+Una diferencia importante entre esta pestaña y la pestaña anterior es que en esta pestaña vamos a repetir la toma de muestras que haciamos en la pestaña anterior al pulsar el boton **Muestrea** cientos veces. Solo es necesario cambiar el control **Número de parcelas** o el botón de **Aumentar muestra** y el muestreo y el cálculo de estimadores finales se repite cientos de veces.
+
+**Panel izquierdo, Población, muestras y varianza del estimador final.**
+
+En el panel izquierdo puedes ver como cambia la desviación típica del estimador final al aumentar el número de parcelas, $n$. El tamaño de muestra seleccionado se resalta en rojo.
+
+**Panel derecho aproximación de la distribución del estimador final a una distribución normal.**
+
+En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se aproximan cada vez más a una distribución normal. En rojo se muestra una aproximacion a la distribución muestral en base a los cientos de repeticiones del estimador final que se han generado. En azul, se muestra una distribución normal centrada en el parámetro de interés y con la desviación típica del estimador final con $n$ parcela. A medida que aumentamos $n$ las distribuciones aproximadas (rojo) y las distribuciones normales (azul) se aproximan más y mas.
