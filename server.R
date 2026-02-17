@@ -91,15 +91,15 @@ server <- function(input, output, session) {
   ##### Population #####
   
   output$poblacion <- renderTable({
-    forest()[,c(1:4)]
+    forest()
   })
   
   output$plot_poblacion<-renderPlot({
     p <- base_plot()
     if(input$add_hd){
       p <- p +
-        geom_label(aes(x=x,y=y-3,label=paste("d: ",diam)),size=4,fill="darkgreen",alpha=0.3)+
-        geom_label(aes(x=x,y=y-8,label=paste("h: ",diam)),size=4,fill="blue",alpha=0.3)
+        geom_label(aes(x=x,y=y-3,label=paste("d: ",dn)),size=4,fill="darkgreen",alpha=0.3)+
+        geom_label(aes(x=x,y=y-8,label=paste("h: ",dn)),size=4,fill="blue",alpha=0.3)
     }
     p + ggtitle("Población")
   })

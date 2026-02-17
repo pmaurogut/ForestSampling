@@ -5,7 +5,7 @@ output: html_document
 
 En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña Población) cuando se repite $n$ veces y de forma independiente el experimento aleatorio de:
 
-1.  Seleccionar $n$ ubicaciónes al azar en la zona a muestrear
+1.  Seleccionar $n$ ubicaciones al azar en la zona a muestrear
 
 2.  Seleccionar los árboles que compondrán la muestra en cada una de las $n$ parcelas en base al tipo de parcela empleado.
 
