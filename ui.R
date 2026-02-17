@@ -104,7 +104,7 @@ ui <- page_navbar(
           layout_columns(col_widths=c(6,4,2),
                          card(card_header("Mapa Población"),plotOutput("plot_poblacion",width=800,height=800)),
                          card(card_header("Datos Población"),tableOutput('poblacion')),
-                         card(card_header("Parámetros de interés"),tableOutput('tabla_interes1'))
+                         card(card_header("Parámetros de interés"),tableOutput('tabla_interes1')),max_height = 800
           )
         }),
         
@@ -188,16 +188,16 @@ ui <- page_navbar(
     
   nav_panel("5. Distribución muestral",
           fluidRow({
-            layout_columns(col_widths=c(5,7),height = 800,
+            layout_columns(col_widths=c(5,7),height = 900,
                            card(
                              card_header("Parámetros de interés y muestra"),
                                 card(layout_columns(col_widths=c(5,7),
                                                     tableOutput('tabla_interes4'),
                                                     plotOutput("plot_selected3")
-                                )),
+                                ),height=500),
                                 card(card_header("Cambio en la varianza al aumentar n"),
                                      plotOutput("var_n")
-                                )
+                                ),
                            ),
                            card(card_header("Aproximación a una normal"),
                                 card(plotOutput("normal_approx"))

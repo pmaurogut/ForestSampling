@@ -21,13 +21,29 @@ Hay una forma alternativa de ver si debemos muestrear un árbol o no. Dado que d
 
 Mientras que el punto de vista centrado en los árboles es muy gráfico a la hora de determinar probabilidades de incluir un determinado árbol en la muestra. El punto de vista basado en la parcela tiene una interpretación alternativa que es muy útil.
 
-En este ejemplo suponemos que hemos muestreado una zona de una hectárea con radio de parcela que resulta en una superficie de $1/5$ hectáreas . En nuestra parcela han entrado cuatro árboles.
+#### Factores de expansión
+
+En este ejemplo suponemos que hemos muestreado una zona de dos hectáreas con radio de parcela que resulta en una superficie de $1/3$ hectáreas . En nuestra parcela han entrado cuatro árboles.
 
 ![*Áreas de parcela y factores de expansión*](Factor_de_expansion.png)
 
-Si sabemos que nuestra parcela es de $\frac{1}{5}$ hectáreas. En base a nuestras mediciones esperaríamos tener $5x4=20$ árboles en la zona a muestrear. En realidad hay 23 árboles pero podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}(ha)}$ nos permite aproximarnos al valor total de árboles por unidad de área, este caso una hectárea. **Básicamente extrapolamos lo que hemos medido en la parcela al resto del área.**
+Si sabemos que nuestra parcela es de $\frac{1}{3}$ hectáreas. En base a nuestras mediciones esperaríamos tener $3x4=12$ árboles en cada hectárea y 24 en la zona a muestrear. En realidad hay 23 árboles en la zona a muestrear y $N=12.5$, sin embargo, podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}(ha)}$ nos permite aproximarnos al valor total de árboles por unidad hectárea y al número de árboles total. **Básicamente extrapolamos lo que hemos medido en la parcela a una hectárea y de ahí al total de la superficie muestreada.**
 
-Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion}(ha)}$ y está directamente relacionado con la probabilidad de inclusión.
+Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion}(ha)}$ y tiene una interpretación muy intuitiva. Si el área de inclusión de un árbol es 1/k ha, entonces, en una hectárea esperaremos encontrar k árboles similares al árbol muestreado.
+
+**Ejemplo 1:**
+
+Si tenemos parcelas de radio fijo donde el área de inclusión de todos los árboles de 0.1 hectareas, por cada árbol que muestreemos, esperaríamos tener 10 árboles en cada hectárea.
+
+**Ejemplo 2:**
+
+Si tenemos parcelas de radio variable donde los árboles menores de 7.5 cm se muestrean con un área de 0.05ha y los árboles mayores con un radio que resulta en un área de 0.1ha. entonces:
+
+-   Por cada árbol menor que muestreemos esperaremos encontrar 20 árboles similares en cada ha.
+
+-   Por cada árbol mayor, esperaremos encontrar 10 árboles similares por hectárea.
+
+Además de esta interpretación, el factor de expansión está directamente relacionado con la probabilidad de inclusión.
 
 **Normalmente, las áreas muestreadas se miden en hectáreas de modo que es más cómodo si expresamos siempre áreas parcela y áreas a muestrear en estas unidades. Esto no es obligatorio, pero si que es necesario saber en que unidades se trabaja y ser consistente, especialmente cuando se calculan probabilidades de inclusión donde es necesario usar las mismas unidades en numerador y denominador** .
 

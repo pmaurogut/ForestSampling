@@ -10,6 +10,7 @@ init_samp_points <- sampling_points(K,L)
 all_trees <- get_all_trees(init_pop,init_samp_points)
 est <- n_estimaciones(all_trees,L,rotate=FALSE)
 par_int <- parametros_interes(init_pop,L,TRUE)
+
 rm(all_trees)
 rm(init_samp_points)
 
@@ -39,9 +40,6 @@ server <- function(input, output, session) {
     n <- input$n
     k <- length(positions)
     reps <- k/n
-    print(n)
-    print(k)
-    print(reps)
     
     indexes <- match(positions,ests$Parc)
     tabla <- ests[indexes,]
@@ -251,10 +249,7 @@ server <- function(input, output, session) {
     n <- input$n
     type <- input$plot_type1
     variation <- variation()
-
-    print(estimates)
-    print(variation)
-    normal_approx(estimates,n,type,variation,K)
+    normal_approx(estimates,par_int(),n,type,variation,K)
   })
   
   

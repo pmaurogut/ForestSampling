@@ -40,10 +40,10 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
   res$dg <- sqrt(mean(poblacion$diam^2))
   poblacion <- poblacion[order(poblacion$diam,decreasing=TRUE),]
   
-  if(res$N<100){
+  if(res$N<=100){
     res$Ho<-mean(poblacion$ht)
   }else{
-    k <- round(dim(poblacion)[1]*(100/res$N))
+    k <-round(100*A)
     res$Ho<-mean(poblacion[1:k,"ht"])
   }
   if(rotate){
@@ -112,7 +112,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
   A <- (lado*lado)/10000
   res <- data.frame(Type=sample$Type[1],Parc=sample$Parc[1],
                     xp=sample$xp[1],yp=sample$yp[1],
-                    Total_N=0,Total_G=0,Total_h=0,N=0,G=0,h_media=0,dg=0,Ho=0)
+                    Total_N=0,Total_G=0,Total_h=0,N=0,G=0,h_media=NA,dg=NA,Ho=NA)
   if(!is.na(sample$diam[1])){
 
     sample <- sample[order(sample$diam,decreasing = TRUE),]
@@ -125,7 +125,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
     res$h_media<- res$Total_h/res$Total_N
     res$dg<-sqrt((res$G/res$N)*(4/pi))*100
     
-    if(sum(sample$EXP_FAC)>=100){
+    if(sum(sample$EXP_FAC)>100){
       last <- which(sample$cum_sum>100)[1]
       s2 <- sample[1:last,]
       s2[last,"EXP_FAC"]<-s2[last,]$cum_sum-100
@@ -244,7 +244,7 @@ prepare_long1 <- function(data){
   data_long <- pivot_longer(data[,c("Parc","N","G","h_media","dg","Ho")],
                             cols = c("N","G","h_media","dg","Ho"),
                             names_to = "parametro",values_to = "estimacion")
-  means <- data_long|> group_by(parametro)|> summarise_all(mean)
+  means <- data_long|> group_by(parametro)|> summarise_all(mean,na.rm=TRUE)
   
   means$type_est <- "n-parcelas"
   data_long$type_est <- "1 parcela"
@@ -294,7 +294,7 @@ prepare_long_n <- function(data){
                             cols = c("N","G","h_media","dg","Ho"),
                             names_to = "parametro",values_to = "estimacion")
   
-  means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean)
+  means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean,na.rm=TRUE)
   means$y <- 0.5
   means$type_est <- "n-parcelas"
   data_long$type_est <- "1 parcela"
@@ -344,16 +344,23 @@ add_samples_n_plots<-function(p_int,all){
   
 }
 
-normal_approx <- function(estimates,n,type,variation,K){
+normal_approx <- function(estimates,p_int,n,type,variation,K){
   
-  reps <- floor(K/n)
+  reps <- 100
   last <- reps*n
+  colnames(p_int)[2]<-"target"
+  p_int <- p_int[p_int$parametro%in%variation$parametro,]
+  print(p_int)
   variation <- variation[variation$Type==type,]
   variation$x_min <- variation$mean-2*variation$sd
   variation$x_max <- variation$mean+2*variation$sd
+  variation$x_min2 <- variation$mean-2*variation$sd
+  variation$x_max2 <- variation$mean+2*variation$sd
   
   estimates<-estimates[estimates$Type==type,]
-  estimates <- estimates[1:last,]
+  
+  positions<-sample(1:dim(estimates)[1],last,replace=TRUE)
+  estimates <- estimates[positions,]
   estimates$Parc <- rep(1:n,times=reps)
   estimates$Rep <- rep(1:reps,each=n)
   
@@ -365,25 +372,27 @@ normal_approx <- function(estimates,n,type,variation,K){
   estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","h_media","dg","Ho")],
                              cols = c("N","G","h_media","dg","Ho"),
                              names_to = "parametro",values_to = "estimacion")
-  estimates <- group_by(estimates,parametro,Rep)|>summarize(estimacion=mean(estimacion))|>ungroup()
+  estimates <- group_by(estimates,parametro,Rep)|>summarize(estimacion=mean(estimacion,na.rm=TRUE))|>ungroup()
 
  
   estimates<-merge(estimates,variation,by="parametro")
   estimates$sd_n <- estimates$sd/sqrt(n)
+  estimates <- merge(estimates,p_int,by="parametro")
 
   print("Hola")
-  
+  print(estimates)
   norm <- estimates %>% 
     group_by(parametro) %>% 
-    reframe(x=seq(min(estimacion),max(estimacion),length.out=100),y = dnorm(x, mean = mean(mean,na.rm=TRUE), sd = mean(sd_n,na.rm=TRUE) )) 
+    reframe(x=seq(min(target,na.rm=TRUE)-3*mean(sd),max(target,na.rm=TRUE)+3*mean(sd),length.out=200),
+            y = dnorm(x, mean = mean(target,na.rm=TRUE), sd = mean(sd_n,na.rm=TRUE) )) 
   print(norm)
 
   ggplot(data=norm) +
     facet_wrap(.~ parametro,scales="free") +
     geom_line(data=norm,aes(x=x,y = y),col="blue") + 
     geom_point(data=estimates,aes(x=estimacion,y=0),shape=20,col="red")+
-    geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2,bw = "ucv")+
-    geom_vline(data=variation,aes(xintercept=mean),colour = "red")+
+    geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2)+
+    geom_vline(data=p_int,aes(xintercept=target),colour = "red")+
     geom_point(data=limits,aes(x=value,y=0),colour = "red",alpha=0)+
     ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")
   
