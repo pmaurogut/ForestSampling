@@ -11,7 +11,7 @@ make_population <-function(N,L){
   )
   
   res$ht <- round(5+(res$dn-5)*0.5,1)
-  res$g <- pi*(res$dn/200)^2
+  res$gi_m2 <- pi*(res$dn/200)^2
   res$vcc <- res$ht*res$g*0.7
   
   res$r_fijo <- 15
@@ -34,11 +34,15 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
     Area_ha = A,
     Total_N = length(poblacion[[1]]),
     Total_G = (1/10000)*sum(pi*poblacion$dn^2)/4,
-    Total_h = sum(poblacion$ht)
+    Total_h = sum(poblacion$ht),
+    Total_V = sum(poblacion$vcc)
   )
   res$N <- res$Total_N/A
   res$G <- res$Total_G/A
+  res$V <-res$Total_V/A
+  
   res$h_media <- mean(poblacion$ht)
+   
   res$dg <- sqrt(mean(poblacion$dn^2))
   poblacion <- poblacion[order(poblacion$dn,decreasing=TRUE),]
   
@@ -71,7 +75,7 @@ get_trees <- function(population,point,type){
     return(data.frame(
       Type=type,
       Parc=point$Parc,xp=point$xp,yp=point$yp,x=NA,y=NA,
-      dn=NA,ht=NA,gi_m2=NA,radio_sel_m=NA,A_parc_ha=NA,EXP_FAC=NA))
+      dn=NA,ht=NA,gi_m2=NA,vcc=NA,radio_sel_m=NA,A_parc_ha=NA,EXP_FAC=NA))
   }else{
     
     res<-population[pick, ]
@@ -86,7 +90,7 @@ get_trees <- function(population,point,type){
     res$EXP_FAC <- 1/res$A_parc_ha
     res<-res[order(res$dn,decreasing = TRUE),]
     res<-res[,c("Type","Parc","xp","yp",
-                "x","y","dn","ht","gi_m2",
+                "x","y","dn","ht","gi_m2","vcc",
                 "radio_sel_m","A_parc_ha","EXP_FAC")]
     colnames(res)<-gsub("area_","A_",colnames(res))
     return(res)
@@ -114,7 +118,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
   A <- (lado*lado)/10000
   res <- data.frame(Type=sample$Type[1],Parc=sample$Parc[1],
                     xp=sample$xp[1],yp=sample$yp[1],
-                    Total_N=0,Total_G=0,Total_h=0,N=0,G=0,h_media=NA,dg=NA,Ho=NA)
+                    Total_N=0,Total_G=0,Total_V=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,Ho=NA)
   if(!is.na(sample$dn[1])){
 
     sample <- sample[order(sample$dn,decreasing = TRUE),]
@@ -122,8 +126,10 @@ estimacion <- function(sample,lado,rotate=TRUE){
     res$Total_N <- sum(sample$EXP_FAC)*A
     res$Total_G <- sum(sample$EXP_FAC*sample$gi_m2)*A
     res$Total_h <- sum(sample$EXP_FAC*sample$ht)*A
+    res$Total_V <- sum(sample$EXP_FAC*sample$vcc)*A
     res$N <- res$Total_N/A
     res$G<- res$Total_G/A
+    res$V <- res$Total_V/A
     res$h_media<- res$Total_h/res$Total_N
     res$dg<-sqrt((res$G/res$N)*(4/pi))*100
     
@@ -234,7 +240,7 @@ plot_n_selections <- function(p,trees,tree_center=TRUE,all=FALSE){
       trees2 <- trees |> group_by(Parc, radio_sel_m) |> filter(row_number()==1) |> ungroup()
       p <- p  + geom_circle(data=trees2,aes(x0=xp,y0=yp,r=radio_sel_m,fill=Parc),alpha=0.2)  
     }
-    p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=dn/20),fill="green")
+    p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=dn/20,fill=Parc))
   }
   p <- p + geom_point(data=points,aes(x=xp,y=yp,col=Parc),shape=13,size=4)
   p <- p + guides(fill=FALSE,color=FALSE)+ggtitle(title)
@@ -243,8 +249,8 @@ plot_n_selections <- function(p,trees,tree_center=TRUE,all=FALSE){
 
 prepare_long1 <- function(data){
 
-  data_long <- pivot_longer(data[,c("Parc","N","G","h_media","dg","Ho")],
-                            cols = c("N","G","h_media","dg","Ho"),
+  data_long <- pivot_longer(data[,c("Parc","N","G","V","h_media","dg","Ho")],
+                            cols = c("N","G","V","h_media","dg","Ho"),
                             names_to = "parametro",values_to = "estimacion")
   means <- data_long|> group_by(parametro)|> summarise_all(mean,na.rm=TRUE)
   
@@ -267,7 +273,7 @@ prepare_long1 <- function(data){
 
 add_samples_plot<-function(p_int,first){
   
-  p_int <- p_int[p_int$parametro%in%c("N","G","h_media","dg","Ho"),]
+  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","Ho"),]
   p_int2 <- p_int
   p_int$type_est <- "1 parcela"
   p_int2$type_est <- "n-parcelas"
@@ -292,8 +298,8 @@ add_samples_plot<-function(p_int,first){
 
 prepare_long_n <- function(data){
 
-  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","h_media","dg","Ho")],
-                            cols = c("N","G","h_media","dg","Ho"),
+  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","V","h_media","dg","Ho")],
+                            cols = c("N","G","V","h_media","dg","Ho"),
                             names_to = "parametro",values_to = "estimacion")
   
   means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean,na.rm=TRUE)
@@ -322,7 +328,7 @@ prepare_long_n <- function(data){
 
 add_samples_n_plots<-function(p_int,all){
   
-  p_int <- p_int[p_int$parametro%in%c("N","G","h_media","dg","Ho"),]
+  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","Ho"),]
   p_int2 <- p_int
   p_int$type_est <- "1 parcela"
   p_int2$type_est <- "n-parcelas"
@@ -371,8 +377,8 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
                                        names_to = "type",values_to = "value")
   
   
-  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","h_media","dg","Ho")],
-                             cols = c("N","G","h_media","dg","Ho"),
+  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","Ho")],
+                             cols = c("N","G","V","h_media","dg","Ho"),
                              names_to = "parametro",values_to = "estimacion")
   estimates <- group_by(estimates,parametro,Rep)|>summarize(estimacion=mean(estimacion,na.rm=TRUE))|>ungroup()
 

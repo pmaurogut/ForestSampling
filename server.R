@@ -23,8 +23,8 @@ server <- function(input, output, session) {
   pos <- reactiveVal(c(1))
   
   variation<-reactive({
-    data_long <- pivot_longer(est()[,c("Type","N","G","h_media","dg","Ho")],
-                              cols = c("N","G","h_media","dg","Ho"),
+    data_long <- pivot_longer(est()[,c("Type","N","G","V","h_media","dg","Ho")],
+                              cols = c("N","G","V","h_media","dg","Ho"),
                               names_to = "parametro",values_to = "estimacion")
     
     data_long|> group_by(parametro,Type)|> 
@@ -161,7 +161,7 @@ server <- function(input, output, session) {
 
   output$estimacion1<-renderTable({
     tabla <- table()
-    tabla <- tabla[1,1:12]
+    tabla <- tabla
     tabla$Parc <- tabla$Rep
     tabla
   })
@@ -170,14 +170,14 @@ server <- function(input, output, session) {
     tabla <- table()
     tabla <- tabla[tabla$Parc==1,]
     tabla$Parc <- tabla$Rep
-    tabla[,1:12]
+    tabla
     })
 
   output$plot_res1 <- renderPlot({
     tabla <-table()
     tabla <- tabla[tabla$Parc==1,]
     tabla$Parc <- tabla$Rep
-    add_samples_plot(par_int(),tabla[,1:12])
+    add_samples_plot(par_int(),tabla)
   })
 
 
