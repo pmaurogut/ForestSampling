@@ -16,7 +16,7 @@ En esta pestaña se explica cómo se hace la estimación de un parámetro de int
 Cuando medimos múltiples parcelas ubicadas al azar y de forma independiente, construimos nuestro estimador final promediando los $n$ estimadores de parcela
 
 $$
-\boxed{\boxed{ estimador final = \frac{1}{n}\sum_{p=1}^n (estimador\:parcela)_p}}
+\boxed{\boxed{ estimador final = \frac{1}{n}\sum_{p=1}^n (estimador \ parcela)_p}}
 $$
 
 Para conocer las propiedades del estimador final debemos tener en cuenta la siguientes ideas:
@@ -36,13 +36,13 @@ A partir de estos dos puntos podemos deducir propiedades importantes del estimad
 En base a estas propiedades tenemos que:
 
 $$
-\boxed{\boxed{ E(estimador final) = E(\frac{1}{n}\sum_{p=1}^n (estimador\:parcela)_p)=\frac{1}{n}\sum_{p=1}^n E(estimador\:parcela_p)}}
+\boxed{\boxed{ E(estimador final) = E(\frac{1}{n}\sum_{p=1}^n (estimador\parcela)_p)=\frac{1}{n}\sum_{p=1}^n E(estimador \ parcela_p)}}
 $$
 
 Como todos los estimadores de parcela tiene son el resultado del mismo experimento aleatorio, tods tienen la misma esperanza y tenemos que:
 
 $$
-\boxed{\boxed{ E(estimador final) = \frac{nE(estimador\:parcela)}{n}=E(estimador\:parcela)}}
+\boxed{\boxed{ E(estimador final) = \frac{nE(estimador \ parcela)}{n}=E(estimador \ parcela)}}
 $$
 
 El estimador final tendrá la misma esperanza que el estimador de parcela. Esto es interesante porque:
@@ -62,19 +62,19 @@ Para obtener la varianza del estimador final nos apoyaremos en:
 En base a estas propiedades tenemos que:
 
 $$
-\boxed{\boxed{ V(estimador final) = V(\frac{1}{n}\sum_{p=1}^n (estimador\:parcela)_p)=\frac{1}{n²}\sum_{p=1}^n V(estimador\:parcela_p)}}
+\boxed{\boxed{ V(estimador final) = V(\frac{1}{n}\sum_{p=1}^n (estimador \ parcela)_p)=\frac{1}{n²}\sum_{p=1}^n V(estimador \ parcela_p)}}
 $$
 
 Como todos los estimadores de parcela son el resultado de repetir el mismo experimento aleatorio, todos tiene la misma esperanza y enemos que:
 
 $$
-\boxed{\boxed{ V(estimador final) = \frac{nV(estimador\:parcela)}{n²}=\frac{V(estimador\:parcela)}{n}}}
+\boxed{\boxed{ V(estimador final) = \frac{nV(estimador \ parcela)}{n²}=\frac{V(estimador \ parcela)}{n}}}
 $$
 
 La varianza del estimador será igual a $\frac{1}{n}$ por la varianza del estimador de parcela. Sin el lugar de a las varianzas miramos desviaciones típica, $sd=\sqrt{V}$, al tomar raices cuadradas tendremos que la desviación típica del estimador final será $\frac{1}{\sqrt{n}}$ por la desviación típica del estimador de parcela.
 
 $$
-\boxed{\boxed{ sd(estimador final) = \sqrt{\frac{nV(estimador\:parcela)}{n²}}=\sqrt{\frac{V(estimador\:parcela)}{n}}=\frac{sd(estimador\:parcela)}{\sqrt{n}}}}
+\boxed{\boxed{ sd(estimador final) = \sqrt{\frac{nV(estimador \ parcela)}{n²}}=\sqrt{\frac{V(estimador \ parcela)}{n}}=\frac{sd(estimador \ parcela)}{\sqrt{n}}}}
 $$
 
 Es importante recordar que la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, por lo que sólo podemos aspirar a estimar estas varianzas del estimador de parcela. Esto se hace repitiendo múltiples veces el experimento de seleccionar una parcela al azar.
@@ -82,11 +82,13 @@ Es importante recordar que la varianza de los estimadores de parcela están dire
 Para estimar la varianza del estimador de parcela emplearemos:
 
 $$
-\hat{V}(estimador parcela)= \frac{1}{n-1}\sum_{p=1}^n(estimador\:parcela_p-estimador\:final)²
+\hat{V}(estimador parcela)= \frac{1}{n-1}\sum_{p=1}^n(estimador\ parcela_p - estimador\ final)²
 $$
 
-Una vez que estimemos la varianza del estimador de parcela, emplearemos la ecuacion anterior que la relaciona con la varianza del estimador final. $$
-\boxed{\boxed{\hat{V}(estimador final)= \frac{\hat{V}(estimador\:parcela)}{n}=\frac{1}{n(n-1)}\sum_{p=1}^n(estimador\:parcela_p-estimador\:final)²}}
+Una vez que estimemos la varianza del estimador de parcela, emplearemos la ecuacion anterior que la relaciona con la varianza del estimador final. 
+
+$$
+\boxed{\boxed{\hat{V}(estimador final)= \frac{\hat{V}(estimador\ parcela)}{n}=\frac{1}{n(n-1)}\sum_{p=1}^n(estimador\ parcela_p-estimador\ final)²}}
 $$
 
 De esta forma, estimaremos la varianza del estimador final dividiendo la varianza de las estimaciones de parcela por el numero de parcelas promediadas en el estimador final $n$
