@@ -9,7 +9,9 @@ En esta pestaña se explica cómo se hace la estimación de un parámetro de int
 
 2.  Seleccionar los árboles que compondrán la muestra en base al tipo de parcela empleado
 
-La base de la estimación será el estimador de Horvitz-Thompson para totales o su versión para totales por unidad de área. Ambas versiones pueden intercambiarse casi de forma directa ya que el área muestreada $A$ normalmente es conocida.
+3.  Calcular estimaciones de parcela a partir del conjunto de árboles seleccionados
+
+La base de la estimación será el estimador de Horvitz-Thompson para totales o su versión para totales por unidad de área. Ambas versiones pueden intercambiarse casi de forma directa ya que el área a muestrear $A$ normalmente es conocida.
 
 Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
 
@@ -27,7 +29,7 @@ Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basim
 
 ***Funciones de totales***
 
-Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de vista conceptual. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
 
 $$
 Media(y)=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\sum_{i=1}^{\cal{N}}1}
@@ -53,7 +55,7 @@ $$
 d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
-Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de esos detalles, pero es importante saber que existen y que en algún momento tendremos que decidir como aproximarnos a dichos problemas.
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos tendremos que decidir como aproximarnos a dichos problemas.
 
 #### Estimador de Horvitz-Thompson de parcela para totales o totales por unidad de área.
 
@@ -155,7 +157,6 @@ $$
 $$
 \hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}=\frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{100}
 $$
-
 
 **Propiedades del estimador de parcela**
 

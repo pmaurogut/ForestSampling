@@ -11,26 +11,36 @@ En este caso hemos considerado los siguientes parámetros de interés donde $A$ 
 
 -   Total de individuos
 
-$$Total\:individuos= \sum_{i=1}^{\cal{N}}1$$ - Total secciones normales
+$$Total\:individuos= \sum_{i=1}^{\cal{N}}1$$
 
-$$Total\:secciones\:normales=\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
+-   Total secciones normales
+
+$$Total\:secciones\:normales(m²)=\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
+
+-   Total de volumen con corteza
+
+$$Total\:volumen\:con\:corteza(m³)=\sum_{i=1}^{\cal{N}}vcc_i$$
 
 -   Densidad (pies por ha) (Total por unidad de área)
 
-$$N=\frac{1}{A}\sum_{i=1}^{\cal{N}}1$$
+$$N(individuos/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}1$$
 
 -   Área basimétrica (Total por unidad de área)
 
-$$G=\frac{1}{A}\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
+$$G(m²/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$ - Volumen con corteza por unidad de área (Volumen con corteza por ha)
+
+$$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}vcc_i$$
 
 -   Diámetro cuadrático medio (función de totales)
 
-$$dg=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}\frac{4}{\pi}}$$
+$$dg(cm)=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}\frac{4}{\pi}}$$
 
 -   Altura media (ratio de totales)
 
-$$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}h_i}{\sum_{i=1}^{\cal{N}}1}$$
+$$\bar{h}(m)=\frac{\sum_{i=1}^{\cal{N}}h_i}{\sum_{i=1}^{\cal{N}}1}$$
 
 -   Altura dominante (otros parámetros complejos)
 
-$$h_o =\sum_{i \in \cal{D}}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i² \:\: ,donde \: \cal{D} \text{ es el conjunto de árboles dominantes}$$
+$$h_o(m) =\sum_{i \in \cal{D}}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i² \:\: ,donde \: \cal{D} \text{ es el conjunto de árboles dominantes}$$
+
+Bajo el criterio de Assman $\cal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea

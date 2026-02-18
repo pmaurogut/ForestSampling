@@ -23,7 +23,7 @@ Para conocer las propiedades del estimador final debemos tener en cuenta la sigu
 
 1.  Los estimadores de parcela son variables aleatorias (heredan la aleatoriedad de la ubicación del punto de muestreo) y todas proceden del mismo experimento y por tanto tienen la misma distribución.
 
-2.  Cómo las ubicaciones de cada parcela se hace de forma independiente al del resto de parcelas, tenemos que el estimador final es una media de $n$ variables aleatorias idependientes y por 1, con la misma distribución.
+2.  Cómo las ubicaciones de cada parcela se hacen de forma independiente al del resto de parcelas, tenemos que el estimador final es una media de $n$ variables aleatorias independientes, y por el punto 1, todas con la misma distribución.
 
 A partir de estos dos puntos podemos deducir propiedades importantes del estimador final. Para ello, simplemente tenemos que recordar algunas propiedades de las esperanzas y varianzas de combinaciones lineales de variables aleatorias vistas en estadística.
 
@@ -39,7 +39,7 @@ $$
 \boxed{\boxed{ E(estimador final) = E(\frac{1}{n}\sum_{p=1}^n (estimador\:parcela)_p)=\frac{1}{n}\sum_{p=1}^n E(estimador\:parcela_p)}}
 $$
 
-Como todos los estimadores de parcela tiene la misma esperanza tenemos que:
+Como todos los estimadores de parcela tiene son el resultado del mismo experimento aleatorio, tods tienen la misma esperanza y tenemos que:
 
 $$
 \boxed{\boxed{ E(estimador final) = \frac{nE(estimador\:parcela)}{n}=E(estimador\:parcela)}}
@@ -47,15 +47,15 @@ $$
 
 El estimador final tendrá la misma esperanza que el estimador de parcela. Esto es interesante porque:
 
--   Para totales y totales por unidad de área el valor esperado del estimador coincide con el parámetro a estimar si los efectos de bordes son pequeños.
+-   Para totales y totales por unidad de área, el valor esperado del estimador de parcela coincide con el parámetro a estimar si los efectos de bordes son pequeños. Es decir, los estimadores de parcela no tienen sesgo, y los estimadores finales heredan esta propiedad.
 
--   Para ratios, funciones de totales y parámetros complejos, el valor esperado no coincidirá con el parámetro a estimar, es decir se heredará el sesgo del estimador de parcela.
+-   Para ratios, funciones de totales y parámetros complejos, el valor esperado no coincidirá con el parámetro a estimar, es decir, los estimadores de parcela pueden tener un sesgo y este lo heredará el estimador final.
 
 [Varianza\\desiviación típica del estimador final]{.underline}
 
 Para obtener la varianza del estimador final nos apoyaremos en:
 
--   La varianza de una suma de $n$ variables aleatorias **independientes** es igual a la suma de las varianzas. $V(\sum_{p=1}^n x_p)=\sum_{p=1}^nV(x_p)$
+-   La varianza de una suma de $n$ variables aleatorias **independientes** es igual a la suma de sus varianzas. $V(\sum_{p=1}^n x_p)=\sum_{p=1}^nV(x_p)$
 
 -   La varianza de una variable aleatoria $x$ por una constante $k$ es igual a la constante al cuadrado por la varianza de la variable aleatoria. $V(k x) = k²V(x)$
 
@@ -65,15 +65,19 @@ $$
 \boxed{\boxed{ V(estimador final) = V(\frac{1}{n}\sum_{p=1}^n (estimador\:parcela)_p)=\frac{1}{n²}\sum_{p=1}^n V(estimador\:parcela_p)}}
 $$
 
-Como todos los estimadores de parcela tiene la misma esperanza tenemos que:
+Como todos los estimadores de parcela son el resultado de repetir el mismo experimento aleatorio, todos tiene la misma esperanza y enemos que:
 
 $$
 \boxed{\boxed{ V(estimador final) = \frac{nV(estimador\:parcela)}{n²}=\frac{V(estimador\:parcela)}{n}}}
 $$
 
-La varianza del estimador será igual a $\frac{1}{n}$ por la varianza del estimador de parcela. Sin el lugar de a las varianzas miramos desviaciones típica, al tomar raices cuadradas tendremos que la desviación tipica del estimador final será $\frac{1}{\sqrt{n}}$ por la desviación típica del estimador de parcea
+La varianza del estimador será igual a $\frac{1}{n}$ por la varianza del estimador de parcela. Sin el lugar de a las varianzas miramos desviaciones típica, $sd=\sqrt{V}$, al tomar raices cuadradas tendremos que la desviación típica del estimador final será $\frac{1}{\sqrt{n}}$ por la desviación típica del estimador de parcela.
 
-Es importante recordar que la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, por lo que sólo podemos aspirar a estimar estas varianzas del estimador de parcela repitiendo múltiples veces el experimento de seleccionar una parcela al azar.
+$$
+\boxed{\boxed{ sd(estimador final) = \sqrt{\frac{nV(estimador\:parcela)}{n²}}=\sqrt{\frac{V(estimador\:parcela)}{n}}=\frac{sd(estimador\:parcela)}{\sqrt{n}}}}
+$$
+
+Es importante recordar que la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, por lo que sólo podemos aspirar a estimar estas varianzas del estimador de parcela. Esto se hace repitiendo múltiples veces el experimento de seleccionar una parcela al azar.
 
 Para estimar la varianza del estimador de parcela emplearemos:
 
@@ -81,11 +85,11 @@ $$
 \hat{V}(estimador parcela)= \frac{1}{n-1}\sum_{p=1}^n(estimador\:parcela_p-estimador\:final)²
 $$
 
-Una vez que estimemos la varianza del estimador de parcela, estimaremos la varianza del estimador final dividiendo por $n$
-
-$$
+Una vez que estimemos la varianza del estimador de parcela, emplearemos la ecuacion anterior que la relaciona con la varianza del estimador final. $$
 \boxed{\boxed{\hat{V}(estimador final)= \frac{\hat{V}(estimador\:parcela)}{n}=\frac{1}{n(n-1)}\sum_{p=1}^n(estimador\:parcela_p-estimador\:final)²}}
 $$
+
+De esta forma, estimaremos la varianza del estimador final dividiendo la varianza de las estimaciones de parcela por el numero de parcelas promediadas en el estimador final $n$
 
 **Panel izquierdo, Población, muestras y estimaciones**
 
