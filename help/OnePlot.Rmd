@@ -100,7 +100,7 @@ $$
 \hat{G}=\begin{cases}
 \sum\limits_{i\in muestra}g_iw_i  , & \text{si se ha seleccionado algún árbol} \\
  & \\
-0, & \text{si la no se ha seleccionado ningún árbol}
+0, & \text{si no se ha seleccionado ningún árbol}
 \end{cases}
 $$
 
@@ -120,7 +120,9 @@ Cuando consideremos la estimación de parámetros medios (ratios de totales) o f
 
 **Ejemplo 3:**
 
-Si el parámetro de interés es la altura media$$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}$$
+Si el parámetro de interés es la altura media
+
+$$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}$$
 
 La altura media es el ratio de dos totales por unidad de área, el total de las alturas $y_i\rightarrow h_i$ y $N$ (el total de una variable que vale 1 para todos los árboles. En este caso, simplemente haremos el estimador de parcela para el numerador y el estimador por parcela para el denominador y después haremos el ratio.
 
@@ -144,6 +146,8 @@ $$
 \hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
 $$
 
+y 
+
 $$
 \hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
 $$
@@ -153,6 +157,7 @@ Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, par
 $$
 \hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}\frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{100}
 $$
+y 
 
 $$
 \hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}=\frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{100}

@@ -116,7 +116,7 @@ ui <- page_navbar(
         })
     ),
   
-  nav_panel("2. Selecció muestras",
+  nav_panel("2. Selección de muestras",
             fluidRow({
               layout_columns(col_widths=c(4,4,4,4,4,4),
                              card(plotOutput("plot_fijo",width=500,height=500)),
@@ -161,7 +161,7 @@ ui <- page_navbar(
               
     ),
     
-    nav_panel("4. Estimación n parcelas",
+    nav_panel("4. Estimación con n parcelas",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
@@ -186,7 +186,7 @@ ui <- page_navbar(
               
     ),
     
-  nav_panel("5. Dist muestral",
+  nav_panel("5. Distribución muestral",
           fluidRow({
             layout_columns(col_widths=c(5,7),height = 900,
                            card(
