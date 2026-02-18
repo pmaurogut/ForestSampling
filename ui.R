@@ -116,7 +116,7 @@ ui <- page_navbar(
         })
     ),
   
-  nav_panel("2. Selección de muestras",
+  nav_panel("2. Selecció muestras",
             fluidRow({
               layout_columns(col_widths=c(4,4,4,4,4,4),
                              card(plotOutput("plot_fijo",width=500,height=500)),
@@ -135,7 +135,7 @@ ui <- page_navbar(
             })
     ),
     
-    nav_panel("3. Estimación una parcela",
+    nav_panel("3. Estimacion 1 parcela",
             fluidRow(
               layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
@@ -161,7 +161,7 @@ ui <- page_navbar(
               
     ),
     
-    nav_panel("4. Estimación múltiples parcelas",
+    nav_panel("4. Estimación n parcelas",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
@@ -186,7 +186,7 @@ ui <- page_navbar(
               
     ),
     
-  nav_panel("5. Distribución muestral",
+  nav_panel("5. Dist muestral",
           fluidRow({
             layout_columns(col_widths=c(5,7),height = 900,
                            card(
@@ -213,7 +213,7 @@ ui <- page_navbar(
           
             
   ),
-  nav_panel("6. Error de muestreo",
+  nav_panel("6. Error muestreo",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
@@ -226,6 +226,30 @@ ui <- page_navbar(
                              ),
                              card(card_header("Estimación con una parcela vs estimación con n parcelas"),
                                   card(plotOutput("plot_res3",width=950,height=750))
+                             )
+              )
+            }),
+            fluidRow(
+              card(
+                card_header("Explicación",class="custom-header"),
+                withMathJax(htmltools::includeMarkdown("help/Sampling_error.Rmd")),full_screen = TRUE#, height=200
+              )
+            )
+            
+  ),
+  nav_panel("7. Cálculo de n",
+            fluidRow({
+              layout_columns(col_widths=c(5,7),height = 800,
+                             card(card_header("Parámetros de interés y muestra"),
+                                  card(layout_columns(col_widths=c(5,7),
+                                                      tableOutput('tabla_interes6'),
+                                                      plotOutput("plot_selected6",width=400,height=400)
+                                  )),
+                                  card(tableOutput('n_estimaciones3'),min_height = 450),
+                                  
+                             ),
+                             card(card_header("Estimación con una parcela vs estimación con n parcelas"),
+                                  card(plotOutput("plot_res4",width=950,height=750))
                              )
               )
             }),
