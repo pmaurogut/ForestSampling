@@ -339,7 +339,7 @@ prepare_long_n <- function(data){
   return(list(all=all,variation=variation))
 }
 
-add_samples_n_plots<-function(p_int,all){
+add_samples_n_plots<-function(p_int,all,variation){
   
   p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","Ho"),]
   p_int2 <- p_int
@@ -349,13 +349,30 @@ add_samples_n_plots<-function(p_int,all){
   p_int$type_est <- factor(p_int$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
   
 
+  
+  variation <- variation[variation$Type==first$Type[1],]
+  variation$x_min <- variation$mean-3*variation$sd
+  variation$x_max <- variation$mean+3*variation$sd
+  variation$type_est <- "1-parcela"
+  
+  variation2 <- variation
+  variation2$type_est <- "n-parcelas"
+  
+  variation <- rbind(variation,variation2)
+  variation$type_est <- factor(variation$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
+  
+  variation$type_par <- ifelse(variation$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
+  p_int$type_par <- ifelse(p_int$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
+  
   to_plot <- prepare_long_n(all)
+  to_plot$all$type_par <- ifelse(to_plot$all$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
+  
   print(to_plot)
-  ggplot(to_plot$all) +
-    facet_grid(type_est~parametro,scales="free_x")+
-    geom_point(aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
-    geom_density(aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
-    geom_linerange(data=to_plot$variation,aes(y=0.75,xmin=xmin,xmax=xmax,col=type_est))+
+  ggplot(variation) +
+    facet_grid(type_est+type_par~parametro,scales="free_x")+
+    geom_point(to_plot$all,aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
+    geom_density(to_plot$all,aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
+    geom_linerange(data=variation,aes(y=0.75,xmin=xmin,xmax=xmax,col=type_est))+
     geom_vline(data=p_int,aes(xintercept=Valor),col="black")+
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +

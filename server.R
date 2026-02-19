@@ -211,7 +211,7 @@ server <- function(input, output, session) {
   })
   
   output$plot_res2<- renderPlot({
-    add_samples_n_plots(par_int(),table())
+    add_samples_n_plots(par_int(),table(),variation())
   })
   
   # ##### samp dist #####
