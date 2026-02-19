@@ -350,7 +350,7 @@ add_samples_n_plots<-function(p_int,all,variation){
   
 
   
-  variation <- variation[variation$Type==first$Type[1],]
+  variation <- variation[variation$Type==all$Type[1],]
   variation$x_min <- variation$mean-3*variation$sd
   variation$x_max <- variation$mean+3*variation$sd
   variation$type_est <- "1-parcela"
@@ -365,14 +365,16 @@ add_samples_n_plots<-function(p_int,all,variation){
   p_int$type_par <- ifelse(p_int$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
   
   to_plot <- prepare_long_n(all)
-  to_plot$all$type_par <- ifelse(to_plot$all$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
   
+  to_plot$all$type_par <- ifelse(to_plot$all$parametro%in%c("V","G","N"),"Total","Funcion de totales o complejo")
+  to_plot$all <- ungroup(to_plot$all)
   print(to_plot)
+  
   ggplot(variation) +
-    facet_grid(type_est+type_par~parametro,scales="free_x")+
-    geom_point(to_plot$all,aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
-    geom_density(to_plot$all,aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
-    geom_linerange(data=variation,aes(y=0.75,xmin=xmin,xmax=xmax,col=type_est))+
+    facet_grid(type_est~parametro,scales="free_x")+
+    geom_point(data=to_plot$all,aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
+    geom_density(data=to_plot$all,aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
+    geom_linerange(data=variation,aes(y=0.75,xmin=x_min,xmax=x_max,col=type_est))+
     geom_vline(data=p_int,aes(xintercept=Valor),col="black")+
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
