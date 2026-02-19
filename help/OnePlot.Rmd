@@ -184,7 +184,7 @@ Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin
 
 Como puente al proceso más realista en el que se miden múltiples parcelas, podemos ver que ocurre si repetimos múltiples veces el proceso de seleccionar un punto, tomar la muestra de árboles y calcular los estimadores correspondientes.
 
-En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para cinco variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical roja. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
+En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para cinco variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical negra. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
 
 [En este panel es importante observar dos cosas:]{.underline}
 

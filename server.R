@@ -177,7 +177,7 @@ server <- function(input, output, session) {
     tabla <-table()
     tabla <- tabla[tabla$Parc==1,]
     tabla$Parc <- tabla$Rep
-    add_samples_plot(par_int(),tabla)
+    add_samples_plot(par_int(),tabla,variation())
   })
 
 
