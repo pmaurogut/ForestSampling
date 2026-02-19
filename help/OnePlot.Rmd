@@ -94,7 +94,7 @@ $$
 
 **En el panel izquierdo de esta pestaña tienes las mediciones a nivel de árbol que se haría en la parcela. Para obtener un determinado total por unidad de área solo tenemos que multiplicar la columna de la variable para la que queremos hacer el total por unidad de área (si queremos estimar** $N$ **esta columna siempre valdría 1) por el factor de expansión correspondiente y sumar.**
 
-**Ejemplo 1:**
+***Ejemplo 1:***
 
 $$
 \hat{G}=\begin{cases}
@@ -104,7 +104,7 @@ $$
 \end{cases}
 $$
 
-**Ejemplo 2:**
+***Ejemplo 2:***
 
 $$
 \hat{N}=\begin{cases}
@@ -118,7 +118,7 @@ $$
 
 Cuando consideremos la estimación de parámetros medios (ratios de totales) o funciones de totales, simplemente haremos el estimador de parcela para cada uno de los totales.
 
-**Ejemplo 3:**
+***Ejemplo 3:***
 
 Si el parámetro de interés es la altura media
 
@@ -130,7 +130,7 @@ $$
 \hat{\bar{h}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestra}1w_i}
 $$
 
-**Ejemplo 4:**
+***Ejemplo 4:***
 
 Para estimar $d_g$ estimaremos $G$ y $N$ tal como se hace en los ejemplos 1 y 2, y después sustituiremos en la ecuación de $d_g$ para obtener el estimador de parcela.
 
@@ -154,17 +154,15 @@ $$
 
 Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol sumado, deberíamos reducir el factor de expansión de forma que la suma de todos los factores de expansión para el conjunto de árboles dominante sea 100 (podemos usar el símbolo $w_i^*$ para indicar que estos factores de expansión se han modificado para el último árbol dominante). La suma del denominador, en este caso se reduce a 100 árboles en una hectárea.
 
-$$
-\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}\frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{100}
-$$ y
+$$\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}\frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{100}$$
 
-$$
-\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}=\frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{100}
-$$
+y
+
+$$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}=\frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{100}$$
 
 #### **Propiedades del estimador de parcela**
 
-#### [Valor esperado]{.underline}
+***Valor esperado***
 
 Cuando consideramos totales o totales por unidad de área, es posible demostrar que el estimador de parcela que hemos empleado no tendrá sesgo si los efectos de borde no son importantes. Es decir, si los efectos de borde se pueden despreciar, tenemos que el valor esperado del estimador coincide con el valor que queremos estimar.
 
@@ -176,7 +174,7 @@ Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calc
 
 Desafortunadamente, esta propiedad aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
 
-#### [Varianza y desviación típica]{.underline}
+***Varianza y desviación típica***
 
 Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la dispersión del mismo. Desafortunadamente, la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, **por lo que sólo podemos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
 

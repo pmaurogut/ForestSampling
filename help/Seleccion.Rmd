@@ -99,10 +99,7 @@ $$
 
 El último tipo de parcela considerado es el de parcelas de relascopio con un BAF de 1. Cuando el BAF es 1, el área de inclusión tiene un radio igual al radio del árbol pero expresado en metros. En este caso, el área de inclusión en hectáreas es igual a $\pi_i = \frac{\pi dn_i^2}{4*1000}$. En base a esto se puede calcular la probabilidad de inclusión del árbol $i$ como:
 
-$$
-\pi_i = \frac{\pi dn_i^2}{4*10000}*\frac{1}{A}
-$$
-
+$$\pi_i = \frac{\pi dn_i^2}{4*10000}*\frac{1}{A}$$
 El factor de expansión en este caso es igual a
 
 $$

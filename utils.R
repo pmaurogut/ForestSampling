@@ -372,7 +372,7 @@ add_samples_n_plots<-function(p_int,all,variation){
   
   ggplot(variation) +
     facet_grid(type_est~parametro,scales="free_x")+
-    geom_point(data=to_plot$all,aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
+    geom_point(to_plot$all,aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
     geom_density(data=to_plot$all,aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
     geom_linerange(data=variation,aes(y=0.75,xmin=x_min,xmax=x_max,col=type_est))+
     geom_vline(data=p_int,aes(xintercept=Valor),col="black")+
