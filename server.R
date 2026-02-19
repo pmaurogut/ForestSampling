@@ -91,7 +91,7 @@ server <- function(input, output, session) {
   ##### Population #####
   
   output$poblacion <- renderTable({
-    forest()
+    forest()[,1:7]
   })
   
   output$plot_poblacion<-renderPlot({

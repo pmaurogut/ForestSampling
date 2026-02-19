@@ -146,7 +146,7 @@ $$
 \hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
 $$
 
-y 
+y
 
 $$
 \hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
@@ -156,16 +156,15 @@ Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, par
 
 $$
 \hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}\frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{100}
-$$
-y 
+$$ y
 
 $$
 \hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}=\frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{100}
 $$
 
-**Propiedades del estimador de parcela**
+#### **Propiedades del estimador de parcela**
 
-[Valor esperado]{.underline}
+#### [Valor esperado]{.underline}
 
 Cuando consideramos totales o totales por unidad de área, es posible demostrar que el estimador de parcela que hemos empleado no tendrá sesgo si los efectos de borde no son importantes. Es decir, si los efectos de borde se pueden despreciar, tenemos que el valor esperado del estimador coincide con el valor que queremos estimar.
 
@@ -177,7 +176,7 @@ Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calc
 
 Desafortunadamente, esta propiedad aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
 
-[Varianza y desviación típica]{.underline}
+#### [Varianza y desviación típica]{.underline}
 
 Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la dispersión del mismo. Desafortunadamente, la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, **por lo que sólo podemos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
 

@@ -7,7 +7,53 @@ output: html_document
 
 Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a maestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.
 
+#### Parámetros de interés (General)
+
+**Totales y totales por unidad de área**
+
+De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada $A$ . Si usamos el símbolo $\cal{N}$ (N de bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido) tenemos que totales y totales por unidad de área se expresan como:
+
+$$
+Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total\:por\:unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i
+$$
+
+Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (N con bordes rectos), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
+
+**Ratios y funciones de totales**
+
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
+
+$$
+Media(y)=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\sum_{i=1}^{\cal{N}}1}
+$$
+
+Pero $\cal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, de forma que los valores medios son ratios de totales.
+
+Otro ejemplo de parámetro de interés que se expresa como función de totales es el diámetro cuadrático medio $d_g$. Partiendo de la propia definición de $d_g$ o diámetro del árbol de sección normal media. Vemos que $d_g$ es una función de dos totales $G$ y $N$
+
+$$
+\frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g = \sqrt{\frac{4G}{\pi N}}
+$$
+
+**Otros parámetros complejos**
+
+Hay variables dasométricas que no son totales o funciones o ratios de totales. En este apartado destacan las alturas y diámetros dominantes, que suelen definirse como alturas o diámetros medios del conjunto de árboles dominantes.
+
+$$
+h_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}h_i
+$$
+
+$$
+d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
+$$
+
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos tendremos que decidir como aproximarnos a dichos problemas.
+
+#### Parámetros de interés (aplicación)
+
 En este caso hemos considerado los siguientes parámetros de interés donde $A$ es el área conocida de la zona a muestrear:
+
+**Totales**
 
 -   Total de individuos
 
@@ -21,6 +67,8 @@ $$Total\:secciones\:normales(m²)=\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\f
 
 $$Total\:volumen\:con\:corteza(m³)=\sum_{i=1}^{\cal{N}}vcc_i$$
 
+**Totales por unidad de área**
+
 -   Densidad (pies por ha) (Total por unidad de área)
 
 $$N(individuos/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}1$$
@@ -31,6 +79,8 @@ $$G(m²/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}
 
 $$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}vcc_i$$
 
+**Ratios y funciones de totales o totales por unidad de área**
+
 -   Diámetro cuadrático medio (función de totales)
 
 $$dg(cm)=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}\frac{4}{\pi}}$$
@@ -38,6 +88,8 @@ $$dg(cm)=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\cal{N}}\frac{\
 -   Altura media (ratio de totales)
 
 $$\bar{h}(m)=\frac{\sum_{i=1}^{\cal{N}}h_i}{\sum_{i=1}^{\cal{N}}1}$$
+
+**Parámetros de dominancia**
 
 -   Altura dominante (otros parámetros complejos)
 
