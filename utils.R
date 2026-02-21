@@ -452,18 +452,29 @@ standard_dev<- function(var,n,plot_type){
     ggtitle("Cambio en la desviación típica al aumentar n")
 }
 
-standard_dev2<- function(var,n,plot_type,param,samples){
+get_estimatesIC <- function(estimates,type,n,param,K){
+  estimates <- estimates |> filter(Type==type)
+  estimates <- estimates[sample(1:K,n*10,replace=TRUE),param,drop=FALSE]
+  colnames(estimates)<-"estimacion"
+  
+  estimates$Parc <- rep(1:n,10)
+  estimates$Rep <- rep(1:10,each=n)
+  estimates$parametro<-param
+  estimates
+}
+
+standard_dev2<- function(var,n,samples){
   
   a<-data.frame(n=1:50,id=1)
-  var <- var[var$Type==plot_type&var$parametro==param,]
+  var$id <- 1
   var <- merge(var,a)
+  
   var$sd_n <- var$sd/sqrt(var$n)
   var$color <- ifelse(var$n==n,"red","black")
   
   red <- var[var$color=="red",]
   
-  samples<-samples[samples$parametro==param,]
-  samples <- samples |> group_by(Rep)|> summarise(sd_n=sd(estimacion))
+  samples <- samples |> group_by(Rep)|> summarise(sd_n=sd(estimacion)/sqrt(n())) |> ungroup()
   samples$n <- n
   
   ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+

@@ -222,7 +222,7 @@ ui <- page_navbar(
                                card_header("Parámetro de interés"),
                                card(height=600,layout_columns(
                                  tableOutput('tabla_interes5'),
-                                 selectInput("par_int","Parámetro de interés",
+                                 selectInput("paramint","Parámetro de interés",
                                              choices=c("N","G","V","h_media","dg","ho"))
                                )
                                ),
@@ -232,7 +232,7 @@ ui <- page_navbar(
                                  plotOutput("var_n2")
                                )),
                              card(card_header("Intervalos de confianza"),
-                                  plotOutput("normal_approx2"),height=1000
+                                  plotOutput("intervals"),height=1000
                              )
               )
             }),
