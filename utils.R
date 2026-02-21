@@ -295,6 +295,7 @@ add_samples_plot<-function(p_int,first,variation){
   variation$type_est <- factor(variation$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
 
   to_plot$all$y <- ifelse(to_plot$all$type_est=="1-parcela",0.5,0.25)
+  
   ggplot(variation) +
     facet_wrap(.~parametro,scales="free")+
     geom_point(data=to_plot$all,aes(x=estimacion,y=y,col=type_est,fill=type_est),shape=20,size=4)+
@@ -434,9 +435,8 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
   
 }
 
-standard_dev<- function(var,n,plot_type){
+standard_dev<- function(var,n){
   a<-data.frame(n=1:50,id=1)
-  var <- var[var$Type==plot_type,]
   var <- merge(var,a)
   var$sd_n <- var$sd/sqrt(var$n)
   var$color <- ifelse(var$n==n,"red","black")
@@ -452,18 +452,7 @@ standard_dev<- function(var,n,plot_type){
     ggtitle("Cambio en la desviación típica al aumentar n")
 }
 
-get_estimatesIC <- function(estimates,type,n,param,K){
-  estimates <- estimates |> filter(Type==type)
-  estimates <- estimates[sample(1:K,n*10,replace=TRUE),param,drop=FALSE]
-  colnames(estimates)<-"estimacion"
-  
-  estimates$Parc <- rep(1:n,10)
-  estimates$Rep <- rep(1:10,each=n)
-  estimates$parametro<-param
-  estimates
-}
-
-standard_dev2<- function(var,n,samples){
+standard_dev2<- function(var,n,samples=NULL){
   
   a<-data.frame(n=1:50,id=1)
   var$id <- 1
@@ -473,35 +462,59 @@ standard_dev2<- function(var,n,samples){
   var$color <- ifelse(var$n==n,"red","black")
   
   red <- var[var$color=="red",]
+
   
-  samples <- samples |> group_by(Rep)|> summarise(sd_n=sd(estimacion)/sqrt(n())) |> ungroup()
-  samples$n <- n
-  
-  ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
+  p <- ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
+    geom_point(aes(y=1.5*sd_n),alpha=0)+
     geom_point(aes(color=color))+geom_path() + 
-    geom_point(data=red,aes(color=color),pch=20,size=3)+
-    geom_point(data=samples,color="blue",alpha=0.5,pch=20,size=1)+
+    geom_point(data=red,aes(color=color),pch=20,size=3)
+  if(!is.null(samples)){
+    samples <- samples |> group_by(Rep,parametro)|> summarise(sd_n=sd(estimacion)/sqrt(n())) |> ungroup()
+    samples$n <- n
+    p <- p + geom_point(data=samples,color="blue",alpha=0.5,pch=20,size=1)
+  }
+  p <- p + 
     xlab("Desiviación tipica del estimador final")+
     scale_color_manual(values=c("red"="red","black"="black"))+
     guides(color="none")+
     ggtitle("Cambio en la desviación típica al aumentar n")
+  p
+}
+
+get_estimatesIC <- function(estimates,type,n,K){
+  estimates <- estimates |> filter(Type==type)
+  print(estimates)
+  estimates <- estimates[sample(1:K,n*20,replace=TRUE),]
+
+  estimates$Parc <- rep(1:n,20)
+  estimates$Rep <- rep(1:20,each=n)
+  estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
+                            cols = c("N","G","V","h_media","dg","ho"),
+                            names_to = "parametro",values_to = "estimacion")
+  estimates
 }
 
 
-confint_plot<-function(estimates, var, par_int){
-  print(estimates)
-  var$x_min <- var$mean - 4 * var$sd
-  var$x_max <- var$mean + 4 * var$sd
-  means <- estimates |> group_by(Rep) |> summarize(mean=mean(estimacion),sd=sd(estimacion)/n()) |> ungroup()
-  means$x_min <- means$mean - 1.96*means$sd
-  means$x_max <- means$mean + 1.96*means$sd
+confint_plot<-function(estimates, var, par_int,conf){
   
-  ggplot(var) +
+  var$x_min <- var$mean - 2 * var$sd
+  var$x_max <- var$mean + 2 * var$sd
+  print(estimates)
+  estimates <- estimates[!is.na(estimates$estimacion),]
+  means <- estimates |> group_by(Rep,parametro) |> summarize(mean=mean(estimacion,na.rm=TRUE),
+                                                   sd=sd(estimacion)/sqrt(n()),na.rm=TRUE) |> ungroup()
+  conf <- pnorm(conf)
+  means$x_min <- means$mean - conf*means$sd
+  means$x_max <- means$mean + conf*means$sd
+  
+  par_int <- filter(par_int, parametro%in%var$parametro)
+  print(par_int)
+  ggplot(var) + facet_wrap(.~parametro,scales="free_x") + 
     geom_point(aes(x=x_min,y=11),alpha=0)+
     geom_point(aes(x=x_min,y=0),alpha=0)+
     geom_point(data=estimates,aes(x=estimacion,y=Rep),shape=20,alpha=0.5,col="red")+
-    geom_point(data=means,aes(x=mean,y=Rep-0.25),shape=20,alpha=0.5,col="blue",size=3)+
-    geom_linerange(data=means,aes(y=Rep-0.25,xmin=x_min,xmax=x_max),col="blue")+
+    geom_point(data=means,aes(x=mean,y=Rep-0.4),shape=20,alpha=0.5,col="blue",size=3)+
+    geom_linerange(data=means,aes(y=Rep-0.4,xmin=x_min,xmax=x_max),col="blue")+
     geom_vline(data=par_int,aes(xintercept=Valor),col="black")+
     guides(fill=NULL,color=NULL)+
     theme(legend.position = "bottom")

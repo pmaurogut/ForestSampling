@@ -24,7 +24,7 @@ server <- function(input, output, session) {
   
   estimatesIC <- reactive({
     input$remuestreaIC
-    get_estimatesIC(est(),input$plot_type1,input$n,input$paramint,K)
+    get_estimatesIC(est(),input$plot_type1,input$n,K)
   })
   
   variation<-reactive({
@@ -230,7 +230,12 @@ server <- function(input, output, session) {
   
 
   output$var_n<- renderPlot({ 
-    standard_dev(variation(),input$n,input$plot_type1)
+    n <- input$n
+    type <- input$plot_type1
+    var <- variation()
+    var <- var[var$Type==type ,]
+    
+    standard_dev2(var,n,estimatesIC())
   })
   
   output$normal_approx<-renderPlot({
@@ -252,18 +257,16 @@ server <- function(input, output, session) {
     
     n <- input$n
     type <- input$plot_type1
-    param <- input$paramint
     var <- variation()
-    var <- var[var$Type==type & var$parametro==param,]
+    var <- var[var$Type==type ,]
 
     standard_dev2(var,n,estimatesIC())
   })
   
   output$intervals<-renderPlot({
     var <- variation()
-    var <- var[var$Type==input$plot_type1 & var$parametro==input$paramint,]
-    par_int<- par_int()|> filter(parametro==input$paramint)
-    confint_plot(estimatesIC(),var,par_int)
+    var <- var[var$Type==input$plot_type1,]
+    confint_plot(estimatesIC(),var,par_int(),input$conf_level)
   })
   
   

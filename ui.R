@@ -223,8 +223,8 @@ ui <- page_navbar(
                                card(height=600,layout_columns(col_widths = c(7,5),
                                  tableOutput('tabla_interes5'),
                                  card(
-                                   selectInput("paramint","Parámetro de interés",
-                                                  choices=c("N","G","V","h_media","dg","ho")),
+                                   sliderInput("conf_level","Nivel de confianza",
+                                               min=0.75,max=0.99,step = 0.01,value = 0.95),
                                    actionButton("remuestreaIC","Remuestrea"))
                                   )
                                ),
