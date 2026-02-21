@@ -98,6 +98,7 @@ ui <- page_navbar(
   
   # navset_card_underline(
   #   title = "Ejemplos",
+  #### Poblacion ####
   nav_panel("1. Población",
         
         fluidRow({
@@ -115,7 +116,7 @@ ui <- page_navbar(
           )
         })
     ),
-  
+  #### Sample selection ####
   nav_panel("2. Selección de muestras",
             fluidRow({
               layout_columns(col_widths=c(4,4,4,4,4,4),
@@ -134,7 +135,7 @@ ui <- page_navbar(
               )
             })
     ),
-    
+  #### One plot ####
     nav_panel("3. Estimacion 1 parcela",
             fluidRow(
               layout_columns(col_widths=c(5,7),height = 800,
@@ -160,7 +161,7 @@ ui <- page_navbar(
             )
               
     ),
-    
+  #### n plots ####
     nav_panel("4. Estimación con n parcelas",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 800,
@@ -185,7 +186,7 @@ ui <- page_navbar(
             )
               
     ),
-    
+  #### Samp dist ####
   nav_panel("5. Distribución muestral",
           fluidRow({
             layout_columns(col_widths=c(5,7),height = 900,
@@ -213,13 +214,14 @@ ui <- page_navbar(
           
             
   ),
+  #### IC and error ####
   nav_panel("6. IC y error muestreo",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 900,
                              card(
                                card_header("Parámetro de interés"),
                                card(height=600,layout_columns(
-                                 tableOutput('tabla_interes4'),
+                                 tableOutput('tabla_interes5'),
                                  selectInput("par_int","Parámetro de interés",
                                              choices=c("N","G","V","h_media","dg","ho"))
                                )
@@ -242,6 +244,7 @@ ui <- page_navbar(
             )
             
   ),
+  #### Sample alloc ####
   nav_panel("7. Cálculo de n",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 800,

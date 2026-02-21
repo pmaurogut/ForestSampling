@@ -434,12 +434,12 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
   
 }
 
-standard_dev<- function(var){
+standard_dev<- function(var,n,plot_type){
   a<-data.frame(n=1:50,id=1)
-  var <- var[var$Type==input$plot_type1,]
+  var <- var[var$Type==plot_type,]
   var <- merge(var,a)
   var$sd_n <- var$sd/sqrt(var$n)
-  var$color <- ifelse(var$n==input$n,"red","black")
+  var$color <- ifelse(var$n==n,"red","black")
   
   red <- var[var$color=="red",]
   
@@ -451,6 +451,31 @@ standard_dev<- function(var){
     guides(color="none")+
     ggtitle("Cambio en la desviación típica al aumentar n")
 }
+
+standard_dev2<- function(var,n,plot_type,param,samples){
+  
+  a<-data.frame(n=1:50,id=1)
+  var <- var[var$Type==plot_type&var$parametro==param,]
+  var <- merge(var,a)
+  var$sd_n <- var$sd/sqrt(var$n)
+  var$color <- ifelse(var$n==n,"red","black")
+  
+  red <- var[var$color=="red",]
+  
+  samples<-samples[samples$parametro==param,]
+  samples <- samples |> group_by(Rep)|> summarise(sd_n=sd(estimacion))
+  samples$n <- n
+  
+  ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
+    geom_point(aes(color=color))+geom_path() + 
+    geom_point(data=red,aes(color=color),pch=20,size=3)+
+    geom_point(data=samples,color="blue",alpha=0.5,pch=20,size=1)+
+    xlab("Desiviación tipica del estimador final")+
+    scale_color_manual(values=c("red"="red","black"="black"))+
+    guides(color="none")+
+    ggtitle("Cambio en la desviación típica al aumentar n")
+}
+
 
 confint_plot<-function(p_int,all,variation){
   

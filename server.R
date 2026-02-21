@@ -226,7 +226,7 @@ server <- function(input, output, session) {
   
 
   output$var_n<- renderPlot({ 
-    standard_dev(variation())
+    standard_dev(variation(),input$n,input$plot_type1)
   })
   
   output$normal_approx<-renderPlot({
@@ -237,6 +237,41 @@ server <- function(input, output, session) {
     normal_approx(estimates,par_int(),n,type,variation,K)
   })
   
+  # ##### IC #####
+  
+  output$tabla_interes5<-renderTable({
+    par_int()
+  })
+  
+  output$plot_selected3<-renderPlot({
+    base_plot()
+  })
+  
+  
+  output$var_n2<- renderPlot({
+    n <- input$n
+    type <- input$plot_type1
+    param <- input$
+    var <- variation()[variation()$Type==plot_type&
+                         variation()$parametro==param,]
+    var <- merge(var,a)
+    
+    
+    estimates <- est()|> filter(Type=type)
+    estimates <- estimates[sample(1:K,n*10,replace=TRUE),]
+    estimates$Parc <- rep(1:n,10)
+    estimates$Rep <- rep(1:10,each=n)
+    
+    standard_dev2(variation(),n,)
+  })
+  
+  output$normal_approx<-renderPlot({
+    estimates <- est()
+    n <- input$n
+    type <- input$plot_type1
+    variation <- variation()
+    normal_approx(estimates,par_int(),n,type,variation,K)
+  })
   
 }
 
