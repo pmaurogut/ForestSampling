@@ -47,10 +47,10 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
   poblacion <- poblacion[order(poblacion$dn,decreasing=TRUE),]
   
   if(res$N<=100){
-    res$Ho<-mean(poblacion$ht)
+    res$ho<-mean(poblacion$ht)
   }else{
     k <-round(100*A)
-    res$Ho<-mean(poblacion[1:k,"ht"])
+    res$ho<-mean(poblacion[1:k,"ht"])
   }
   if(rotate){
     names<- colnames(res)
@@ -118,7 +118,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
   A <- (lado*lado)/10000
   res <- data.frame(Type=sample$Type[1],Parc=sample$Parc[1],
                     xp=sample$xp[1],yp=sample$yp[1],
-                    Total_N=0,Total_G=0,Total_V=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,Ho=NA)
+                    Total_N=0,Total_G=0,Total_V=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,ho=NA)
   if(!is.na(sample$dn[1])){
 
     sample <- sample[order(sample$dn,decreasing = TRUE),]
@@ -137,10 +137,10 @@ estimacion <- function(sample,lado,rotate=TRUE){
       last <- which(sample$cum_sum>100)[1]
       s2 <- sample[1:last,]
       s2[last,"EXP_FAC"]<-s2[last,]$cum_sum-100
-      res$Ho<-sum(s2$EXP_FAC*s2$ht)/sum(s2$EXP_FAC)
+      res$ho<-sum(s2$EXP_FAC*s2$ht)/sum(s2$EXP_FAC)
       
     }else{
-      res$Ho <- sum(sample$EXP_FAC*sample$ht)/sum(sample$EXP_FAC)
+      res$ho <- sum(sample$EXP_FAC*sample$ht)/sum(sample$EXP_FAC)
     }
   }
   
@@ -249,8 +249,8 @@ plot_n_selections <- function(p,trees,tree_center=TRUE,all=FALSE){
 
 prepare_long1 <- function(data){
 
-  data_long <- pivot_longer(data[,c("Parc","N","G","V","h_media","dg","Ho")],
-                            cols = c("N","G","V","h_media","dg","Ho"),
+  data_long <- pivot_longer(data[,c("Parc","N","G","V","h_media","dg","ho")],
+                            cols = c("N","G","V","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
   means <- data_long|> group_by(parametro)|> summarise_all(mean,na.rm=TRUE)
   
@@ -273,7 +273,7 @@ prepare_long1 <- function(data){
 
 add_samples_plot<-function(p_int,first,variation){
   
-  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","Ho"),]
+  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","ho"),]
   p_int2 <- p_int
   p_int$type_est <- "1-parcela"
   p_int2$type_est <- "n-parcelas"
@@ -311,8 +311,8 @@ add_samples_plot<-function(p_int,first,variation){
 
 prepare_long_n <- function(data){
 
-  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","V","h_media","dg","Ho")],
-                            cols = c("N","G","V","h_media","dg","Ho"),
+  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
+                            cols = c("N","G","V","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
   
   means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean,na.rm=TRUE)
@@ -341,7 +341,7 @@ prepare_long_n <- function(data){
 
 add_samples_n_plots<-function(p_int,all,variation){
   
-  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","Ho"),]
+  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","ho"),]
   p_int2 <- p_int
   p_int$type_est <- "1-parcela"
   p_int2$type_est <- "n-parcelas"
@@ -361,12 +361,8 @@ add_samples_n_plots<-function(p_int,all,variation){
   variation <- rbind(variation,variation2)
   variation$type_est <- factor(variation$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
   
-  variation$type_par <- ifelse(variation$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
-  p_int$type_par <- ifelse(p_int$parametro%in%c("V","G","B"),"Total","Funcion de totales o complejo")
-  
   to_plot <- prepare_long_n(all)
   
-  to_plot$all$type_par <- ifelse(to_plot$all$parametro%in%c("V","G","N"),"Total","Funcion de totales o complejo")
   to_plot$all <- ungroup(to_plot$all)
   print(to_plot)
   
@@ -409,8 +405,8 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
                                        names_to = "type",values_to = "value")
   
   
-  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","Ho")],
-                             cols = c("N","G","V","h_media","dg","Ho"),
+  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
+                             cols = c("N","G","V","h_media","dg","ho"),
                              names_to = "parametro",values_to = "estimacion")
   estimates <- group_by(estimates,parametro,Rep)|>summarize(estimacion=mean(estimacion,na.rm=TRUE))|>ungroup()
 
@@ -419,7 +415,7 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
   estimates$sd_n <- estimates$sd/sqrt(n)
   estimates <- merge(estimates,p_int,by="parametro")
 
-  print("Hola")
+  print("hola")
   print(estimates)
   norm <- estimates %>% 
     group_by(parametro) %>% 
@@ -435,6 +431,48 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
     geom_vline(data=p_int,aes(xintercept=target),colour = "red")+
     geom_point(data=limits,aes(x=value,y=0),colour = "red",alpha=0)+
     ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")
+  
+}
+
+
+confint_plot<-function(p_int,all,variation){
+  
+  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","ho"),]
+  p_int2 <- p_int
+  p_int$type_est <- "1-parcela"
+  p_int2$type_est <- "n-parcelas"
+  p_int <- rbind(p_int,p_int2)
+  p_int$type_est <- factor(p_int$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
+  
+  
+  
+  variation <- variation[variation$Type==all$Type[1],]
+  variation$x_min <- variation$mean-3*variation$sd
+  variation$x_max <- variation$mean+3*variation$sd
+  variation$type_est <- "1-parcela"
+  
+  variation2 <- variation
+  variation2$type_est <- "n-parcelas"
+  
+  variation <- rbind(variation,variation2)
+  variation$type_est <- factor(variation$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
+
+  to_plot <- prepare_long_n(all)
+  
+  to_plot$all <- ungroup(to_plot$all)
+  print(to_plot)
+  
+  ggplot(variation) +
+    facet_grid(type_est~parametro,scales="free_x")+
+    geom_point(to_plot$all,aes(x=estimacion,y=0.25,col=type_est,fill=type_est),shape=20,size=4)+
+    geom_density(data=to_plot$all,aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
+    geom_linerange(data=variation,aes(y=0.75,xmin=x_min,xmax=x_max,col=type_est))+
+    geom_vline(data=p_int,aes(xintercept=Valor),col="black")+
+    scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
+    scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
+    guides(fill=NULL,color=NULL)+
+    theme(legend.position = "bottom")
+  
   
 }
 

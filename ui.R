@@ -213,26 +213,31 @@ ui <- page_navbar(
           
             
   ),
-  nav_panel("6. Error muestreo",
+  nav_panel("6. IC y error muestreo",
             fluidRow({
-              layout_columns(col_widths=c(5,7),height = 800,
-                             card(card_header("Parámetros de interés y muestra"),
-                                  card(layout_columns(col_widths=c(5,7),
-                                                      tableOutput('tabla_interes5'),
-                                                      plotOutput("plot_selected6",width=400,height=400)
-                                  )),
-                                  card(tableOutput('n_estimaciones2'),min_height = 450),
-                                  
-                             ),
-                             card(card_header("Estimación con una parcela vs estimación con n parcelas"),
-                                  card(plotOutput("plot_res3",width=950,height=750))
+              layout_columns(col_widths=c(5,7),height = 900,
+                             card(
+                               card_header("Parámetro de interés"),
+                               card(height=600,layout_columns(
+                                 tableOutput('tabla_interes4'),
+                                 selectInput("par_int","Parámetro de interés",
+                                             choices=c("N","G","V","h_media","dg","ho"))
+                               )
+                               ),
+                             
+                               card(
+                                 card_header("Cambio en la varianza al aumentar n"),
+                                 plotOutput("var_n2")
+                               )),
+                             card(card_header("Aproximación a una normal"),
+                                  plotOutput("normal_approx2"),height=1000
                              )
               )
             }),
             fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/Sampling_error.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/Interval_error.Rmd")),full_screen = TRUE#, height=200
               )
             )
             
@@ -256,7 +261,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/Sampling_error.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/Samp_aloc.Rmd")),full_screen = TRUE#, height=200
               )
             )
             

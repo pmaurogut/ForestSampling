@@ -23,8 +23,8 @@ server <- function(input, output, session) {
   pos <- reactiveVal(c(1))
   
   variation<-reactive({
-    data_long <- pivot_longer(est()[,c("Type","N","G","V","h_media","dg","Ho")],
-                              cols = c("N","G","V","h_media","dg","Ho"),
+    data_long <- pivot_longer(est()[,c("Type","N","G","V","h_media","dg","ho")],
+                              cols = c("N","G","V","h_media","dg","ho"),
                               names_to = "parametro",values_to = "estimacion")
     
     data_long|> group_by(parametro,Type)|> 
@@ -225,7 +225,7 @@ server <- function(input, output, session) {
   })
   
 
-  output$var_n<- renderPlot({
+  output$var_n<- renderPlot({ 
     a<-data.frame(n=1:50,id=1)
     var <- variation()
     var <- var[var$Type==input$plot_type1,]
