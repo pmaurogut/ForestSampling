@@ -217,14 +217,16 @@ ui <- page_navbar(
   #### IC and error ####
   nav_panel("6. IC y error muestreo",
             fluidRow({
-              layout_columns(col_widths=c(5,7),height = 900,
+              layout_columns(col_widths=c(4,8),height = 900,
                              card(
                                card_header("Parámetro de interés"),
-                               card(height=600,layout_columns(
+                               card(height=600,layout_columns(col_widths = c(7,5),
                                  tableOutput('tabla_interes5'),
-                                 selectInput("paramint","Parámetro de interés",
-                                             choices=c("N","G","V","h_media","dg","ho"))
-                               )
+                                 card(
+                                   selectInput("paramint","Parámetro de interés",
+                                                  choices=c("N","G","V","h_media","dg","ho")),
+                                   actionButton("remuestreaIC","Remuestrea"))
+                                  )
                                ),
                              
                                card(

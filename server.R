@@ -22,6 +22,11 @@ server <- function(input, output, session) {
   est<-reactiveVal(est)
   pos <- reactiveVal(c(1))
   
+  estimatesIC <- reactive({
+    input$remuestreaIC
+    get_estimatesIC(est(),input$plot_type1,input$n,input$paramint,K)
+  })
+  
   variation<-reactive({
     data_long <- pivot_longer(est()[,c("Type","N","G","V","h_media","dg","ho")],
                               cols = c("N","G","V","h_media","dg","ho"),
@@ -86,7 +91,6 @@ server <- function(input, output, session) {
     new_val <- ifelse(new_val>50,1,new_val)
     updateSelectInput(inputId = "n",selected = new_val)
   })
-
   
   ##### Population #####
   
@@ -251,13 +255,15 @@ server <- function(input, output, session) {
     param <- input$paramint
     var <- variation()
     var <- var[var$Type==type & var$parametro==param,]
-    
-    estimates <- get_estimatesIC(est(),type,n,param,K)
-    print(estimates)
-    standard_dev2(var,n,estimates)
+
+    standard_dev2(var,n,estimatesIC())
   })
   
   output$intervals<-renderPlot({
+    var <- variation()
+    var <- var[var$Type==input$plot_type1 & var$parametro==input$paramint,]
+    par_int<- par_int()|> filter(parametro==input$paramint)
+    confint_plot(estimatesIC(),var,par_int)
   })
   
   
