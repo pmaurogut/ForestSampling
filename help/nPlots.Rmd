@@ -36,10 +36,10 @@ A partir de estos dos puntos podemos deducir propiedades importantes del estimad
 En base a estas propiedades tenemos que:
 
 $$
-\boxed{\boxed{ E(estimador final) = E(\frac{1}{n}\sum_{p=1}^n (estimador\parcela)_p)=\frac{1}{n}\sum_{p=1}^n E(estimador \ parcela_p)}}
+\boxed{\boxed{ E(estimador final) = E(\frac{1}{n}\sum_{p=1}^n (estimador\:parcela)_p)=\frac{1}{n}\sum_{p=1}^n E(estimador\:parcela_p)}}
 $$
 
-Como todos los estimadores de parcela tiene son el resultado del mismo experimento aleatorio, tods tienen la misma esperanza y tenemos que:
+Como todos los estimadores de parcela tiene son el resultado del mismo experimento aleatorio, todos tienen la misma esperanza y tenemos que:
 
 $$
 \boxed{\boxed{ E(estimador final) = \frac{nE(estimador \ parcela)}{n}=E(estimador \ parcela)}}
@@ -85,7 +85,7 @@ $$
 \hat{V}(estimador parcela)= \frac{1}{n-1}\sum_{p=1}^n(estimador\ parcela_p - estimador\ final)²
 $$
 
-Una vez que estimemos la varianza del estimador de parcela, emplearemos la ecuacion anterior que la relaciona con la varianza del estimador final. 
+Una vez que estimemos la varianza del estimador de parcela, emplearemos la ecuacion anterior que la relaciona con la varianza del estimador final.
 
 $$
 \boxed{\boxed{\hat{V}(estimador final)= \frac{\hat{V}(estimador\ parcela)}{n}=\frac{1}{n(n-1)}\sum_{p=1}^n(estimador\ parcela_p-estimador\ final)²}}

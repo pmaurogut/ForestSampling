@@ -226,22 +226,7 @@ server <- function(input, output, session) {
   
 
   output$var_n<- renderPlot({ 
-    a<-data.frame(n=1:50,id=1)
-    var <- variation()
-    var <- var[var$Type==input$plot_type1,]
-    var <- merge(var,a)
-    var$sd_n <- ((var$sd)^2)/var$n
-    var$color <- ifelse(var$n==input$n,"red","black")
-    
-    red <- var[var$color=="red",]
-    
-    ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
-      geom_point(aes(color=color))+geom_path() + 
-      geom_point(data=red,aes(color=color),pch=20,size=3)+
-      xlab("Varianza estimador final")+
-      scale_color_manual(values=c("red"="red","black"="black"))+
-      guides(color="none")+
-      ggtitle("Cambio en la varianza al aumentar n")
+    standard_dev(variation())
   })
   
   output$normal_approx<-renderPlot({

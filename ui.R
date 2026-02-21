@@ -195,7 +195,7 @@ ui <- page_navbar(
                                                     tableOutput('tabla_interes4'),
                                                     plotOutput("plot_selected3")
                                 ),height=500),
-                                card(card_header("Cambio en la varianza al aumentar n"),
+                                card(card_header("Cambio en la desviación típìca al aumentar n"),
                                      plotOutput("var_n")
                                 ),
                            ),
@@ -226,10 +226,10 @@ ui <- page_navbar(
                                ),
                              
                                card(
-                                 card_header("Cambio en la varianza al aumentar n"),
+                                 card_header("Cambio en la desviación típìca aumentar n"),
                                  plotOutput("var_n2")
                                )),
-                             card(card_header("Aproximación a una normal"),
+                             card(card_header("Intervalos de confianza"),
                                   plotOutput("normal_approx2"),height=1000
                              )
               )
