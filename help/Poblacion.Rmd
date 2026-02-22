@@ -3,6 +3,8 @@ title: "Poblacion"
 output: html_document
 ---
 
+#### Introducción
+
 **Estás viendo la población simulada**. Al hacer un inventario, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valores de sus alturas y diámetros. Esto implica que en aplicaciones reales no conoceremos los valores de los parámetros de interés que querremos estimar.
 
 Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a maestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.

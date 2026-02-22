@@ -3,6 +3,8 @@ title: "Estimación con n parcelas ubicadas uniformemente al azar y de forma ind
 output: html_document
 ---
 
+#### Introducción
+
 En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña Población) cuando se repite $n$ veces y de forma independiente el experimento aleatorio de:
 
 1.  Seleccionar $n$ ubicaciones al azar en la zona a muestrear
@@ -11,7 +13,7 @@ En esta pestaña se explica cómo se hace la estimación de un parámetro de int
 
 3.  Obtener $n$ estimadores de parcela y promediarlos. Al resultado de este promedio los llamaremos **estimador final**
 
-**Estimador final y propiedades**
+#### **Estimador final y propiedades**
 
 Cuando medimos múltiples parcelas ubicadas al azar y de forma independiente, construimos nuestro estimador final promediando los $n$ estimadores de parcela
 
@@ -97,7 +99,7 @@ $$
 
 De esta forma, estimaremos la varianza del estimador final dividiendo la varianza de las estimaciones de parcela por el numero de parcelas promediadas en el estimador final $n$
 
-**Panel izquierdo, Población, muestras y estimaciones**
+#### **Panel izquierdo, Población, muestras y estimaciones**
 
 Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores. Además en esta pestaña es posible aumentar el número de parcelas que se miden empleando el control para el **Número de parcelas** o el botón de **Aumentar muestra**.
 
@@ -105,7 +107,7 @@ Para un número de parcelas dado, cada vez que se pulsa el botón **Muestrea** s
 
 En el panel izquierdo puedes ver los valores de distintos parámetros de interés, las parcelas generadas, así como las estimaciones de parcela para cada una de las $n$ parcelas.
 
-**Panel derecho comparación estimaciones por parcela vs estimaciones finales (promedio** $n$ **estimaciones por parcela)**
+#### **Panel derecho comparación estimaciones por parcela vs estimaciones finales (promedio** $n$ **estimaciones por parcela)**
 
 En el panel derecho se puede comparar la distribución de las estimaciones por parcela (panel superior en rojo) con la distribución de las estimaciones finales (panel inferior punto en azul). Igual que en la pestaña anterior el valor real del parámetro de interés se marca con una línea vertical roja.
 

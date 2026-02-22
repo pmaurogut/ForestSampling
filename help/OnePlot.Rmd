@@ -3,6 +3,8 @@ title: "Estimación con una parcela ubicada uniformemente al azar"
 output: html_document
 ---
 
+#### Introducción
+
 En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña Población) cuando se considera el experimento aleatorio de:
 
 1.  Seleccionar una ubicación al azar en la zona a muestrear

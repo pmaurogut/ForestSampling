@@ -3,6 +3,8 @@ title: "Intervalos de confianza y error"
 output: html_document
 ---
 
+#### Introducción
+
 En la pestaña anterior nos hemos apoyado en simulaciones del proceso de muestreo para ver que ocurre con la distribución muestral del estimador final. Repetíamos cientos de veces el proceso de muestreo y cálculo del estimador final. En esta pestaña vamos a usar menos la simulación (simularemos pero solo unas pocas veces) y **vamos a ver cómo procederíamos para calcular intervalos de confianza y errores de muestreo para el estimador final.**
 
 Para simplificar la notación vamos a usar el símbolo $\mu$ para el parámetro de interés (es un símbolo genérico), y recordamos que:
