@@ -15,4 +15,6 @@ Para simplificar la notación vamos a usar el símbolo $\mu$ para el parámetro 
 
 En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parcela del parámetro $\mu$ en la parcela $p$, y que $\hat{\mu}_{final}=\sum_{p=1}^n\hat{\mu}_p$ sería el estimador final del parámetro de interés $\mu$ basado en $n$ parcelas.
 
+Cuando hagamos un inventario real mediremos $n$ parcelas y no podremos repetir ese proceso cientos de veces como hacíamos en la pestaña anterior. Entonces, ¿Como podemos obtener información sobre la distribución muestral del estimador final?
+
 #### Panel izquierdo

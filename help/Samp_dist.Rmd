@@ -7,7 +7,7 @@ output: html_document
 
 #### Distribución muestral
 
-En esta pestaña se ve en más detalle la distribución muestral del los estimadores finales. Es importante tener en cuenta que estas distribuciones son las distribuciones de valores que tendríamos si pudiésemos repetir infinitas veces el proceso de muestrear de forma independiente $n$ parcelas.
+En esta pestaña se ve en más detalle la distribución muestral del los estimadores finales. Es importante tener en cuenta que estas distribuciones son las distribuciones de valores que tendríamos si pudiésemos repetir infinitas veces el proceso de muestrear de forma independiente $n$ parcelas y **nos dan información sobre la precisión y el sesgo de las estimaciones finales siendo la base del control de calidad y del reporte de la incertidumbre del muestreo.**
 
 Los resultados que se ven en esta pestaña están basados en simulaciones del proceso de muestreo donde se ha repetido un número muy elevado de veces el siguiente proceso:
 
