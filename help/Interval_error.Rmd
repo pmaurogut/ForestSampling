@@ -4,3 +4,13 @@ output: html_document
 ---
 
 En la pestaña anterior nos hemos apoyado en simulaciones del proceso de muestreo para ver que ocurre con la distribución muestral del estimador final. Repetíamos cientos de veces el proceso de muestreo y cálculo del estimador final. En esta pestaña vamos a usar menos la simulación (simularemos pero solo unas pocas veces) y **vamos a ver cómo procederíamos para calcular intervalos de confianza y errores de muestreo para el estimador final.**
+
+Para simplificar la notación vamos a usar el símbolo $\mu$ para el parámetro de interés (es un símbolo genérico), y recordamos que:
+
+1.  Usaremos el subíndice $p$ para indicar que estamos usando el estimador de la parcela $p$ y el subíndice $final$ par indicar que consideramos un estimador final, media de $n$ estimadores de parcela.
+
+2.  Las estimaciones de un parámetro de interés se indican poniendo un acento circunflejo sobre el símbolo del parámetro a estimar.
+
+En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parcela del parámetro $\mu$ en la parcela $p$, y que $\hat{\mu}_{final}=\sum_{p=1}^n\hat{\mu}_p$ sería el estimador final del parámetro de interés $\mu$ basado en $n$ parcelas.
+
+#### Panel izquierdo
