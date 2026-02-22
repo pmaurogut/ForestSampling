@@ -151,8 +151,12 @@ ui <- page_navbar(
                                                       tableOutput('tabla_interes2'),
                                                       plotOutput("plot_selected1",width=400,height=400)
                                   )),
-                                  card(tableOutput('muestra'),min_height = 200),
-                                  
+                                  card(card_header("Muestra"),
+                                       list(
+                                         downloadButton("download1Samp", "Deccarga muestra"),
+                                         tableOutput('muestra')
+                                       )
+                                  )
                              ),
                              card(card_header("Estimaciones"),
                                   card(plotOutput("plot_res1",width=950,height=650),min_height = 600),
@@ -177,7 +181,12 @@ ui <- page_navbar(
                                                       tableOutput('tabla_interes3'),
                                                       plotOutput("plot_selected2")
                                   ), min_height=350),
-                                  card(tableOutput("n_estimaciones")),
+                                  card(card_header("Muestras"),
+                                       list(
+                                         downloadButton("download1Samp", "Deccarga muestra"),
+                                         tableOutput("n_estimaciones")
+                                       )
+                                    ),
                              ),
                              card(card_header("Estimación con una parcela vs estimación con n parcelas"),
                                   card(plotOutput("plot_res2"))
@@ -202,11 +211,10 @@ ui <- page_navbar(
                                 card(layout_columns(col_widths=c(5,7),
                                                     tableOutput('tabla_interes4'),
                                                     plotOutput("plot_selected3")
-                                ),height=500),
+                                ),height=400),
                                 card(card_header("Cambio en la desviación típìca al aumentar n"),
                                      plotOutput("var_n")
-                                ),
-                           ),
+                                )),
                            card(card_header("Aproximación a una normal"),
                                 card(plotOutput("normal_approx"))
                            )
@@ -224,7 +232,7 @@ ui <- page_navbar(
   #### IC and error ####
   nav_panel("6. IC y error muestreo",
             fluidRow({
-              layout_columns(col_widths=c(4,8),height = 900,
+              layout_columns(col_widths=c(5,7),height = 900,
                              card(
                                card_header("Parámetro de interés"),
                                card(height=600,layout_columns(col_widths = c(7,5),

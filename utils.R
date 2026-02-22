@@ -504,7 +504,7 @@ standard_dev2<- function(var,n,samples=NULL){
   if(!is.null(samples)){
     samples <- samples |> group_by(Rep,parametro)|> summarise(sd_n=sd(estimacion)/sqrt(n())) |> ungroup()
     samples$n <- n
-    p <- p + geom_point(data=samples,color="blue",alpha=0.5,pch=20,size=1)
+    p <- p + geom_point(data=samples,color="blue",alpha=0.5,pch=20,size=3)
   }
   p <- p + 
     xlab("Desiviación tipica del estimador final")+

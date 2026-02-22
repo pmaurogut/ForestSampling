@@ -104,7 +104,7 @@ server <- function(input, output, session) {
         paste('poblacion-', Sys.Date(), '.csv', sep='')
       },
       content = function(con) {
-        write.csv(forest()[,1:7], con)
+        write.csv(forest()[,1:7], con,row.names = FALSE)
       }
     )
   
@@ -160,6 +160,17 @@ server <- function(input, output, session) {
   output$tabla_interes2<-renderTable({
     par_int()
   })
+  output$download1Samp<-downloadHandler(
+    
+    filename = function() {
+      paste('muestras-', Sys.Date(), '.csv', sep='')
+    },
+    content = function(con) {
+      samp<-get_trees(forest(),table()[1,],input$plot_type1)
+      samp$Parc <- max(table()$Parc)
+      write.csv(samp, con,row.names = FALSE)
+    }
+  )
   output$muestra <- renderTable({
     samp<-get_trees(forest(),table()[1,],input$plot_type1)
     samp$Parc <- max(table()$Parc)
@@ -218,6 +229,26 @@ server <- function(input, output, session) {
                         tree_center = input$centered=="arbol",
                         all=input$all_trees)
   })
+  
+  output$downloadnSamp<-downloadHandler(
+    
+    filename = function() {
+      paste('n_muestras-', Sys.Date(), '.csv', sep='')
+    },
+    content = function(con) {
+      selected <- table() |> filter(Rep==max(Rep))
+      selected_list <- group_split(selected,Rep,Parc)
+      forest_all <- forest()
+      type <- input$plot_type1
+      selected_trees <- map_dfr(selected_list,function(x,population,type){
+        res<- get_trees(population,x,type)
+        res$Parc <- x$Parc[1]
+        res$Rep <- x$Rep[1]
+        res
+      },population=forest_all,type=type)
+      write.csv(selected_trees, con,row.names = FALSE)
+    }
+  )
   
   output$n_estimaciones<-renderTable({
     table() |> filter(Rep==max(Rep))
