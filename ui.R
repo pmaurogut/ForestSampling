@@ -103,8 +103,15 @@ ui <- page_navbar(
         
         fluidRow({
           layout_columns(col_widths=c(6,4,2),
-                         card(card_header("Mapa Población"),plotOutput("plot_poblacion",width=800,height=800)),
-                         card(card_header("Datos Población"),tableOutput('poblacion')),
+                         card(card_header("Mapa Población"),
+                              plotOutput("plot_poblacion",width=800,height=800)
+                            ),
+                         card(card_header("Datos Población"),
+                              list(
+                                downloadButton("downloadPop", "Deccarga Población"),
+                                tableOutput('poblacion')
+                              )
+                            ),
                          card(card_header("Parámetros de interés"),tableOutput('tabla_interes1')),max_height = 800
           )
         }),

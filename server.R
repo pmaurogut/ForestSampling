@@ -99,6 +99,15 @@ server <- function(input, output, session) {
     forest()[,1:7]
   })
   
+  output$downloadPop<-downloadHandler(
+      filename = function() {
+        paste('poblacion-', Sys.Date(), '.csv', sep='')
+      },
+      content = function(con) {
+        write.csv(forest(), con)
+      }
+    )
+  
   output$plot_poblacion<-renderPlot({
     p <- base_plot()
     if(input$add_hd){
@@ -112,7 +121,6 @@ server <- function(input, output, session) {
   output$tabla_interes1 <- renderTable({
     par_int()
   })
-  
   
   
   ##### Seleccion #####
