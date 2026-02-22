@@ -104,7 +104,7 @@ server <- function(input, output, session) {
         paste('poblacion-', Sys.Date(), '.csv', sep='')
       },
       content = function(con) {
-        write.csv(forest(), con)
+        write.csv(forest()[,1:7], con)
       }
     )
   
