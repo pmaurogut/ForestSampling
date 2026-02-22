@@ -294,13 +294,43 @@ add_samples_plot<-function(p_int,first,variation){
   variation <- rbind(variation,variation2)
   variation$type_est <- factor(variation$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
 
-  to_plot$all$y <- ifelse(to_plot$all$type_est=="1-parcela",0.5,0.25)
+  to_plot$all$y <- ifelse(to_plot$all$type_est=="1-parcela",1,0)
   
-  ggplot(variation) +
+  print(to_plot)
+  p <- ggplot(variation) +
     facet_wrap(.~parametro,scales="free")+
-    geom_point(data=to_plot$all,aes(x=estimacion,y=y,col=type_est,fill=type_est),shape=20,size=4)+
-    # geom_density(aes(x=estimacion,fill=type_est,col=type_est),alpha=0.4) +
-    geom_linerange(data=variation[variation$type_est=="1-parcela",],aes(y=0.5,xmin=x_min,xmax=x_max),col="red")+
+    geom_point(data=to_plot$all,aes(x=estimacion,y=y,col=type_est,fill=type_est),shape=20,size=4)
+  
+  if(max(to_plot$all$Parc)>1){
+    densities <- to_plot$all[to_plot$all$type_est=="1-parcela",]
+    densities <- group_split(densities,parametro)
+    print(densities)
+    
+    densities <- map_dfr(densities,function(x){
+      
+      x<-x[!is.na(x$estimacion),]
+      if(dim(x)[1]<2){
+        return(NULL)
+      }else{
+        dens <- density(x$estimacion)
+        dens <- data.frame(x=c(dens$x,dens$x[1]),y=c(dens$y,dens$y[1]),
+                           parametro=x$parametro[1])
+        dens$y <- 0.5+0.4*dens$y/max(dens$y)
+        return(dens)
+      }
+    })
+    
+    if(dim(densities)[1]>0){
+      print("dens")
+      print(densities)
+      p <- p + geom_polygon(data=densities,aes(x=x,y=y),col="black",fill="grey",linewidth=0.5,alpha=0.5)
+    }
+    
+  }
+  
+
+  
+  p + geom_linerange(data=variation[variation$type_est=="1-parcela",],aes(y=0,xmin=x_min,xmax=x_max),col="red")+
     geom_vline(data=p_int,aes(xintercept=Valor),col="black")+
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
@@ -499,8 +529,8 @@ confint_plot<-function(estimates, var, par_int,conf){
   
   par_int <- merge(par_int, var, by="parametro")
   
-  var$x_min <- var$mean - 3 * var$sd
-  var$x_max <- var$mean + 3 * var$sd
+  var$x_min <- var$mean - 5 * var$sd
+  var$x_max <- var$mean + 5 * var$sd
   
   print(estimates)
   estimates <- estimates[!is.na(estimates$estimacion),]
@@ -513,27 +543,31 @@ confint_plot<-function(estimates, var, par_int,conf){
   means$rel_error <- round(100*conf*means$sd/means$mean,1)
   means$label_sd1 <- paste("sd(mu[p])==",round(means$sd*sqrt(means$n),1),sep="")
   means$label_sdn<- paste("sd(mu[final])==",round(means$sd,1),sep="")
-  means$label_rel_error<- paste("epsilon[final]==",round(means$rel_error,1),"\'%\'",sep="")
+  means$label_rel_error<- paste("epsilon['final']==",round(means$rel_error,1),"~'%'",sep="")
   
   labels <- merge(par_int,means,by="parametro")
-  
-  # par_int <- filter(par_int, parametro%in%var$parametro)
+  labels$pos1 <- labels$mean.x - 3*labels$sd.x
+  labels$pos2 <- labels$mean.x + 3*labels$sd.x
+    # par_int <- filter(par_int, parametro%in%var$parametro)
+
+  line_range <- merge(var,expand.grid(parametro=unique(var$parametro),Rep=1:10),by="parametro")
   
   print(par_int)
   print(labels)
   print(means)
   p <- ggplot(var) + facet_wrap(.~parametro,scales="free_x") + 
-    geom_point(aes(x=x_min,y=11),alpha=0)+
-    geom_point(aes(x=x_min,y=0),alpha=0)+
+    geom_point(aes(x=x_min,y=10),alpha=0)+
+    geom_point(aes(x=x_max,y=1),alpha=0)+
+    geom_linerange(data=line_range,aes(xmin=x_min,xmax=x_max,y=Rep-0.6),col="grey30",linetype=2)+
     geom_point(data=estimates,aes(x=estimacion,y=Rep),shape=20,alpha=0.5,col="red")+
     geom_point(data=means,aes(x=mean,y=Rep-0.4),shape=20,alpha=0.5,col="blue",size=3)+
     geom_linerange(data=means,aes(y=Rep-0.4,xmin=x_min,xmax=x_max),col="blue")+
     geom_vline(data=par_int,aes(xintercept=Valor),col="black")
     
   if(max(estimates$Parc)>1){
-    p <- p + geom_text(data=labels,aes(x=x_max+sd.x,y=Rep-0.4,label=rel_error),parse=TRUE,hjust=1) +
-             geom_text(data=labels,aes(x=x_min-sd.x,y=Rep-0.4,label=label_sdn),parse=TRUE,hjust=0) +
-             geom_text(data=labels,aes(x=x_min-sd.x,y=Rep,label=label_sd1),parse=TRUE,hjust=0)
+    p <- p + geom_text(data=labels,aes(x=pos2,y=Rep-0.4,label=label_rel_error),parse=TRUE,hjust=0,size=4.5,col="blue") +
+             geom_text(data=labels,aes(x=pos1,y=Rep-0.4,label=label_sdn),parse=TRUE,hjust=1,size=4.5,col="blue") +
+             geom_text(data=labels,aes(x=pos1,y=Rep,label=label_sd1),parse=TRUE,hjust=1,size=4.5,col = "red")
       
   }
     
