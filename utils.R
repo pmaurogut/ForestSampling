@@ -335,7 +335,8 @@ add_samples_plot<-function(p_int,first,variation){
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
     guides(fill=NULL,color=NULL)+
-    theme(legend.position = "bottom")
+    theme(legend.position = "bottom")+
+    theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
   
 }
 
@@ -406,7 +407,8 @@ add_samples_n_plots<-function(p_int,all,variation){
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
     guides(fill=NULL,color=NULL)+
-    theme(legend.position = "bottom")
+    theme(legend.position = "bottom")+
+    theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
 
   
 }
@@ -461,7 +463,8 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
     geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2)+
     geom_vline(data=p_int,aes(xintercept=target),colour = "red")+
     geom_point(data=limits,aes(x=value,y=0),colour = "red",alpha=0)+
-    ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")
+    ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")+
+    theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
   
 }
 
@@ -571,7 +574,8 @@ confint_plot<-function(estimates, var, par_int,conf){
       
   }
     
-    p <- p+ guides(fill=NULL,color=NULL)+theme(legend.position = "bottom")
+    p <- p+ guides(fill=NULL,color=NULL)+theme(legend.position = "bottom") +
+            theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
     p
   
   
