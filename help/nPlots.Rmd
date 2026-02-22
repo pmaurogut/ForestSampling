@@ -49,6 +49,10 @@ El estimador final tendrá la misma esperanza que el estimador de parcela. Esto 
 
 -   Para totales y totales por unidad de área, el valor esperado del estimador de parcela coincide con el parámetro a estimar si los efectos de bordes son pequeños. Es decir, los estimadores de parcela no tienen sesgo, y los estimadores finales heredan esta propiedad.
 
+    $$
+    \boxed{\boxed{ E(estimador final) = E(estimador \ parcela)=Parámetro\:interés}}
+    $$
+
 -   Para ratios, funciones de totales y parámetros complejos, el valor esperado no coincidirá con el parámetro a estimar, es decir, los estimadores de parcela pueden tener un sesgo y este lo heredará el estimador final.
 
 [Varianza\\desiviación típica del estimador final]{.underline}

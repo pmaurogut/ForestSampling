@@ -539,7 +539,7 @@ confint_plot<-function(estimates, var, par_int,conf){
   estimates <- estimates[!is.na(estimates$estimacion),]
   means <- estimates |> group_by(Rep,parametro) |> summarize(mean=mean(estimacion,na.rm=TRUE),
                                                    sd=sd(estimacion,na.rm=TRUE)/sqrt(n()),n=n()) |> ungroup()
-  conf <- pnorm(conf/2)
+  conf <- -qnorm((1-conf)/2)
   means$x_min <- means$mean - conf*means$sd
   means$x_max <- means$mean + conf*means$sd
   
@@ -555,8 +555,8 @@ confint_plot<-function(estimates, var, par_int,conf){
 
   line_range <- merge(var,expand.grid(parametro=unique(var$parametro),Rep=1:10),by="parametro")
   
-  print(par_int)
-  print(labels)
+  # print(par_int)
+  # print(labels)
   print(means)
   p <- ggplot(var) + facet_wrap(.~parametro,scales="free_x") + 
     geom_point(aes(x=x_min,y=10),alpha=0)+

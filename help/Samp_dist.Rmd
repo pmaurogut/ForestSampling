@@ -3,20 +3,48 @@ title: "Distribución muestral estimación con n parcelas ubicadas uniformemente
 output: html_document
 ---
 
-En esta pestaña se ve en más detalle cual es la distribución muestral del los estimadores finales. Igual que en la pestaña anterior, de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores. Es importante recordar que los estimadores finales se obtienen al repetir $n$ veces y de forma independiente el experimento aleatorio de:
+#### Distribución muestral
 
-1.  Seleccionar $n$ ubicaciones al azar en la zona a muestrear
+En esta pestaña se ve en más detalle la distribución muestral del los estimadores finales. Es importante tener en cuenta que estas distribuciones son las distribuciones de valores que tendríamos si pudiésemos repetir infinitas veces el proceso de muestrear de forma independiente $n$ parcelas.
+
+Los resultados que se ven en esta pestaña están basados en simulaciones del proceso de muestreo donde se ha repetido un número muy elevado de veces el siguiente proceso:
+
+1.  Seleccionar $n$ ubicaciones al azar y de forma independiente en la zona a muestrear
 
 2.  Seleccionar los árboles que compondrán la muestra en cada una de las $n$ parcelas en base al tipo de parcela empleado.
 
 3.  Obtener $n$ estimadores de parcela y promediarlos.
 
-Una diferencia importante entre esta pestaña y la pestaña anterior es que en esta pestaña vamos a repetir la toma de muestras que hacíamos en la pestaña anterior al pulsar el botón **Muestrea** cientos veces. Solo es necesario cambiar el control **Número de parcelas** o el botón de **Aumentar muestra** y el muestreo y el cálculo de estimadores finales se repite cientos de veces.
+Una diferencia importante entre esta pestaña y la pestaña anterior es que en esta pestaña se repite cientos veces la toma de muestras y cálculo de estimadores que hacíamos en la pestaña anterior por lo que obtenemos aproximaciones muy fieles a la distribución muestral de los estimadores finales. Es decir, cada vez que cambiamos el número de parcelas, es como si pulsásemos el botón **Muestrea** de la pestaña anterior cientos de veces por lo que obtendremos valores que aproximan muy bien las distribuciones muestrales de los estimadores finales.
+
+Igual que en la pestaña anterior, antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
+
+Para observar el efecto de modificar $n$, solo es necesario cambiar el control **Número de parcelas** o el botón de **Aumentar muestra** y el muestreo, el cálculo de estimadores finales se repite cientos de veces de forma automática. Una vez que se han repetido estas estimaciones se calcula la distribución muestral del estimador final basado en $n$ parcelas.
 
 **Panel izquierdo, Población, muestras y varianza del estimador final.**
 
-En el panel izquierdo puedes ver como cambia la desviación típica del estimador final al aumentar el número de parcelas, $n$. El tamaño de muestra seleccionado se resalta en rojo.
+En el panel izquierdo puedes ver como cambia la desviación típica del estimador final al aumentar el número de parcelas, $n$. El tamaño de muestra seleccionado se resalta en rojo. Esta variación es una consecuencia directa de la propiedad vista en la pestaña anterior donde obtuvimos que:
+
+$$
+\boxed{\boxed{ sd(estimador final) = \frac{sd(estimador \ parcela)}{\sqrt{n}}}}
+$$
 
 **Panel derecho aproximación de la distribución del estimador final a una distribución normal.**
 
-En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se hacen cada vez mas estrechas su desviación típica decrece a un ritmo proporcional a $\frac{1}{\sqrt{n}}$ . La varianza, el cuadrado de la desviación típica, decrece a un ritmo proporcional a $\frac{1}{n}$. Pero además de hacerse cada vez mas estrechas, las distribuciones se aproximan cada vez más a una distribución normal. En rojo se muestra una aproximación a la distribución muestral en base a los cientos de repeticiones del estimador final que se han generado. En azul, se muestra una distribución normal centrada en el parámetro de interés y con la desviación típica del estimador final con $n$ parcelas. A medida que aumentamos $n$ las distribuciones aproximadas (rojo) y las distribuciones normales (azul) se aproximan más y mas.
+En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se hacen cada vez mas estrechas su desviación típica decrece a un ritmo proporcional a $\frac{1}{\sqrt{n}}$ . La varianza, el cuadrado de la desviación típica, decrece a un ritmo proporcional a $\frac{1}{n}$. Pero además ver como al aumentar $n$ la distribución muestral se hace más estrecha podemos ver algo muy importante: **al aumentar** $n$ **las distribuciones se aproximan cada vez más a una distribución normal.**
+
+Cuando los efectos de borde son pequeños, tenemos además que para totales o totales por unidad de área se puede demostrar que:
+
+$$
+\boxed{\boxed{ E(estimador final) = E(estimador \: parcela)=Parámetro\:interés}}
+$$
+
+Por lo que la distribución muestral del estimador final verificará que estará centrada en torno al parámetro de interés y además, se aproximará a una distribución normal. Es decir, al aumentar $n$ el estimador final tenderá a distribuirse como una distribución normal (curva azul) centrada en el parámetro de interés.
+
+$$
+\boxed{\boxed{
+estimador\:final \sim N(Parámetro\:interés,\frac{sd(estimador\:parcela)}{\sqrt{n}})
+}}
+$$
+
+En rojo se muestra la aproximación al la distribución muestral que se ha obtenido en base a los cientos de repeticiones del estimador final que se han generado. En azul, se muestra una distribución normal centrada en el parámetro de interés y con la desviación típica del estimador final con $n$ parcelas. A medida que aumentamos $n$ las distribuciones aproximadas (rojo) y las distribuciones normales (azul) se aproximan más y mas.

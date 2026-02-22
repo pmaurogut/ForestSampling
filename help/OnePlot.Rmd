@@ -170,6 +170,12 @@ $$
 \boxed{\boxed{ E(\hat{Total(y)}) = Total(y)}}
 $$
 
+o
+
+$$
+\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}
+$$
+
 Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calcular el estimador, la media de esas infinitas estimaciones coincidiría con el valor a estimar. **Esta propiedad es muy fuerte pues se cumple sea cual sea la población y el tipo de parcela, lo único que debe ser despreciable son los efectos de borde, cosa que normalmente ocurre.**
 
 Desafortunadamente, esta propiedad aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**

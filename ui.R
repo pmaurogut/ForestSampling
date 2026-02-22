@@ -253,7 +253,7 @@ ui <- page_navbar(
               layout_columns(col_widths=c(4,8),height = 900,
                              card(
                                card_header("Parámetro de interés y estimación final"),
-                               card(height=500,layout_columns(col_widths = c(7,5),
+                               card(height=600,layout_columns(col_widths = c(7,5),
                                                               tableOutput('tabla_interes6'),
                                                               card(
                                                                 tableOutput("estimate7"),
