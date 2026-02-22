@@ -232,7 +232,8 @@ ui <- page_navbar(
                                card(
                                  card_header("Cambio en la desviación típìca aumentar n"),
                                  plotOutput("var_n2")
-                               )),
+                               )
+                              ),
                              card(card_header("Intervalos de confianza"),
                                   plotOutput("intervals"),height=1000
                              )
@@ -247,19 +248,26 @@ ui <- page_navbar(
             
   ),
   #### Sample alloc ####
-  nav_panel("7. Cálculo de n",
+  nav_panel("7. tamaño muestra",
             fluidRow({
-              layout_columns(col_widths=c(5,7),height = 800,
-                             card(card_header("Parámetros de interés y muestra"),
-                                  card(layout_columns(col_widths=c(5,7),
-                                                      tableOutput('tabla_interes6'),
-                                                      plotOutput("plot_selected6",width=400,height=400)
-                                  )),
-                                  card(tableOutput('n_estimaciones3'),min_height = 450),
-                                  
-                             ),
-                             card(card_header("Estimación con una parcela vs estimación con n parcelas"),
-                                  card(plotOutput("plot_res4",width=950,height=750))
+              layout_columns(col_widths=c(4,8),height = 900,
+                             card(
+                               card_header("Parámetro de interés y estimación final"),
+                               card(height=500,layout_columns(col_widths = c(7,5),
+                                                              tableOutput('tabla_interes6'),
+                                                              card(
+                                                                tableOutput("estimate7"),
+                                                                actionButton("remuestreaIC2","Remuestrea"))
+                               )
+                               ),
+                               
+                               card(
+                                 card_header("Muestra"),
+                                 tableOutput('sample7')
+                               )
+                              ),
+                             card(card_header("Intervalos de confianza"),
+                                  plotOutput("intervals2"),height=1000
                              )
               )
             }),
