@@ -514,13 +514,13 @@ standard_dev2<- function(var,n,samples=NULL){
   p
 }
 
-get_estimatesIC <- function(estimates,type,n,K){
+get_estimatesIC <- function(estimates,type,n,K,reps){
   estimates <- estimates |> filter(Type==type)
   print(estimates)
-  estimates <- estimates[sample(1:K,n*10,replace=TRUE),]
+  estimates <- estimates[sample(1:K,n*reps,replace=TRUE),]
 
-  estimates$Parc <- rep(1:n,10)
-  estimates$Rep <- rep(1:10,each=n)
+  estimates$Parc <- rep(1:n,reps)
+  estimates$Rep <- rep(1:reps,each=n)
   estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
                             cols = c("N","G","V","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
@@ -535,6 +535,8 @@ confint_plot<-function(estimates, var, par_int,conf){
   var$x_min <- var$mean - 5 * var$sd
   var$x_max <- var$mean + 5 * var$sd
   
+  reps <- max(estimates$Rep)
+  
   print(estimates)
   estimates <- estimates[!is.na(estimates$estimacion),]
   means <- estimates |> group_by(Rep,parametro) |> summarize(mean=mean(estimacion,na.rm=TRUE),
@@ -544,25 +546,27 @@ confint_plot<-function(estimates, var, par_int,conf){
   means$x_max <- means$mean + conf*means$sd
   
   means$rel_error <- round(100*conf*means$sd/means$mean,1)
-  means$label_sd1 <- paste("sd(mu[p])==",round(means$sd*sqrt(means$n),1),sep="")
-  means$label_sdn<- paste("sd(mu[final])==",round(means$sd,1),sep="")
-  means$label_rel_error<- paste("epsilon['final']==",round(means$rel_error,1),"~'%'",sep="")
+  means$label_sd1 <- paste("\hat(sd)(\hat(mu)[p])==",round(means$sd*sqrt(means$n),1),sep="")
+  means$label_sdn<- paste("\hat(sd)(\hat(mu)[final])==",round(means$sd,1),sep="")
+  means$label_rel_error<- paste("\hat(epsilon)['final']==",round(means$rel_error,1),"~'%'",sep="")
   
   labels <- merge(par_int,means,by="parametro")
   labels$pos1 <- labels$mean.x - 3*labels$sd.x
   labels$pos2 <- labels$mean.x + 3*labels$sd.x
     # par_int <- filter(par_int, parametro%in%var$parametro)
 
-  line_range <- merge(var,expand.grid(parametro=unique(var$parametro),Rep=1:10),by="parametro")
+  line_range <- merge(var,expand.grid(parametro=unique(var$parametro),Rep=1:reps),by="parametro")
   
   # print(par_int)
   # print(labels)
   print(means)
   p <- ggplot(var) + facet_wrap(.~parametro,scales="free_x") + 
-    geom_point(aes(x=x_min,y=10),alpha=0)+
+    geom_point(aes(x=x_min,y=reps),alpha=0)+
     geom_point(aes(x=x_max,y=1),alpha=0)+
     geom_linerange(data=line_range,aes(xmin=x_min,xmax=x_max,y=Rep-0.6),col="grey30",linetype=2)+
+    
     geom_point(data=estimates,aes(x=estimacion,y=Rep),shape=20,alpha=0.5,col="red")+
+    
     geom_point(data=means,aes(x=mean,y=Rep-0.4),shape=20,alpha=0.5,col="blue",size=3)+
     geom_linerange(data=means,aes(y=Rep-0.4,xmin=x_min,xmax=x_max),col="blue")+
     geom_vline(data=par_int,aes(xintercept=Valor),col="black")

@@ -10,7 +10,7 @@ init_samp_points <- sampling_points(K,L)
 all_trees <- get_all_trees(init_pop,init_samp_points)
 est <- n_estimaciones(all_trees,L,rotate=FALSE)
 par_int <- parametros_interes(init_pop,L,TRUE)
-
+reps <- 5
 rm(all_trees)
 rm(init_samp_points)
 
@@ -25,7 +25,7 @@ server <- function(input, output, session) {
   conf <- reactive(input$conf_level)
   estimatesIC <- reactive({
     input$remuestreaIC
-    get_estimatesIC(est(),input$plot_type1,input$n,K)
+    get_estimatesIC(est(),input$plot_type1,input$n,K,reps)
   })
   
   variation<-reactive({
