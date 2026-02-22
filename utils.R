@@ -546,9 +546,9 @@ confint_plot<-function(estimates, var, par_int,conf){
   means$x_max <- means$mean + conf*means$sd
   
   means$rel_error <- round(100*conf*means$sd/means$mean,1)
-  means$label_sd1 <- paste("\hat(sd)(\hat(mu)[p])==",round(means$sd*sqrt(means$n),1),sep="")
-  means$label_sdn<- paste("\hat(sd)(\hat(mu)[final])==",round(means$sd,1),sep="")
-  means$label_rel_error<- paste("\hat(epsilon)['final']==",round(means$rel_error,1),"~'%'",sep="")
+  means$label_sd1 <- paste("'hat(sd)(hat(mu)[p])==",round(means$sd*sqrt(means$n),1),sep="")
+  means$label_sdn<- paste("hat(sd)(hat(mu)[final])==",round(means$sd,1),sep="")
+  means$label_rel_error<- paste("hat(epsilon)['final']==",round(means$rel_error,1),"~'%'",sep="")
   
   labels <- merge(par_int,means,by="parametro")
   labels$pos1 <- labels$mean.x - 3*labels$sd.x
