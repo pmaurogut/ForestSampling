@@ -484,10 +484,10 @@ standard_dev2<- function(var,n,samples=NULL){
 get_estimatesIC <- function(estimates,type,n,K){
   estimates <- estimates |> filter(Type==type)
   print(estimates)
-  estimates <- estimates[sample(1:K,n*20,replace=TRUE),]
+  estimates <- estimates[sample(1:K,n*10,replace=TRUE),]
 
-  estimates$Parc <- rep(1:n,20)
-  estimates$Rep <- rep(1:20,each=n)
+  estimates$Parc <- rep(1:n,10)
+  estimates$Rep <- rep(1:10,each=n)
   estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
                             cols = c("N","G","V","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
@@ -497,27 +497,48 @@ get_estimatesIC <- function(estimates,type,n,K){
 
 confint_plot<-function(estimates, var, par_int,conf){
   
-  var$x_min <- var$mean - 2 * var$sd
-  var$x_max <- var$mean + 2 * var$sd
+  par_int <- merge(par_int, var, by="parametro")
+  
+  var$x_min <- var$mean - 3 * var$sd
+  var$x_max <- var$mean + 3 * var$sd
+  
   print(estimates)
   estimates <- estimates[!is.na(estimates$estimacion),]
   means <- estimates |> group_by(Rep,parametro) |> summarize(mean=mean(estimacion,na.rm=TRUE),
-                                                   sd=sd(estimacion)/sqrt(n()),na.rm=TRUE) |> ungroup()
-  conf <- pnorm(conf)
+                                                   sd=sd(estimacion,na.rm=TRUE)/sqrt(n()),n=n()) |> ungroup()
+  conf <- pnorm(conf/2)
   means$x_min <- means$mean - conf*means$sd
   means$x_max <- means$mean + conf*means$sd
   
-  par_int <- filter(par_int, parametro%in%var$parametro)
+  means$rel_error <- round(100*conf*means$sd/means$mean,1)
+  means$label_sd1 <- paste("sd(mu[p])==",round(means$sd*sqrt(means$n),1),sep="")
+  means$label_sdn<- paste("sd(mu[final])==",round(means$sd,1),sep="")
+  means$label_rel_error<- paste("epsilon[final]==",round(means$rel_error,1),"\'%\'",sep="")
+  
+  labels <- merge(par_int,means,by="parametro")
+  
+  # par_int <- filter(par_int, parametro%in%var$parametro)
+  
   print(par_int)
-  ggplot(var) + facet_wrap(.~parametro,scales="free_x") + 
+  print(labels)
+  print(means)
+  p <- ggplot(var) + facet_wrap(.~parametro,scales="free_x") + 
     geom_point(aes(x=x_min,y=11),alpha=0)+
     geom_point(aes(x=x_min,y=0),alpha=0)+
     geom_point(data=estimates,aes(x=estimacion,y=Rep),shape=20,alpha=0.5,col="red")+
     geom_point(data=means,aes(x=mean,y=Rep-0.4),shape=20,alpha=0.5,col="blue",size=3)+
     geom_linerange(data=means,aes(y=Rep-0.4,xmin=x_min,xmax=x_max),col="blue")+
-    geom_vline(data=par_int,aes(xintercept=Valor),col="black")+
-    guides(fill=NULL,color=NULL)+
-    theme(legend.position = "bottom")
+    geom_vline(data=par_int,aes(xintercept=Valor),col="black")
+    
+  if(max(estimates$Parc)>1){
+    p <- p + geom_text(data=labels,aes(x=x_max+sd.x,y=Rep-0.4,label=rel_error),parse=TRUE,hjust=1) +
+             geom_text(data=labels,aes(x=x_min-sd.x,y=Rep-0.4,label=label_sdn),parse=TRUE,hjust=0) +
+             geom_text(data=labels,aes(x=x_min-sd.x,y=Rep,label=label_sd1),parse=TRUE,hjust=0)
+      
+  }
+    
+    p <- p+ guides(fill=NULL,color=NULL)+theme(legend.position = "bottom")
+    p
   
   
 }

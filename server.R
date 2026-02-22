@@ -22,6 +22,7 @@ server <- function(input, output, session) {
   est<-reactiveVal(est)
   pos <- reactiveVal(c(1))
   
+  conf <- reactive(input$conf_level)
   estimatesIC <- reactive({
     input$remuestreaIC
     get_estimatesIC(est(),input$plot_type1,input$n,K)
@@ -266,7 +267,7 @@ server <- function(input, output, session) {
   output$intervals<-renderPlot({
     var <- variation()
     var <- var[var$Type==input$plot_type1,]
-    confint_plot(estimatesIC(),var,par_int(),input$conf_level)
+    confint_plot(estimatesIC(),var,par_int(),conf())
   })
   
   
