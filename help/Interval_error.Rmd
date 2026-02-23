@@ -79,21 +79,19 @@ $$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\su
 
 y para desviaciones típicas tendremos:
 
-#### $$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$ Intervalos de confianza
+$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$ 
+
+#### Intervalos de confianza
 
 Una vez que hemos visto el segundo problema de estimación (estimar la dispersión de la distribución muestral del estimador final a través de la varianza o desviación ), podemos ver como se hace el reporte de incertidumbres o control de calidad de un muestreo. Para ello, nos vamos a apoyar en los estimadores de la desviación típica que acabamos de ver y en la aplicación del teorema del límite central que veíamos en la pestaña anterior.
 
 Asumiendo que se ha conseguido la normalidad, la siguiente fórmula nos permite crear intervalos que contienen el valor esperado del estimador final con un $(1-\alpha)\%$ de probabilidad:
 
-$$
-Intervalo \: confianza=[\hat{\mu}_{final}-q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})\:,\:\hat{\mu}_{final}+q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})]
-$$
+$$Intervalo \: confianza=[\hat{\mu}_{final}-q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})\:,\:\hat{\mu}_{final}+q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})]$$
 
 A $(1-\alpha)\%$ se le llama nivel de confianza o probabilidad fiducial. Una forma alternativa y más concisa de expresar estos intervalos es
 
-$$
-Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})
-$$
+$$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
 Distintos autores consideran distintos valores para $q(1-\frac{\alpha}{2})$:
 
@@ -110,31 +108,25 @@ En la práctica, el proceso de construcción de los intervalos de confianza se r
 1.  Obtenemos el estimador final ($\hat{\mu}_{final}$) como promedio de los estimadores de parcela.
 2.  Estimamos la desviación típica de $\hat{\mu}_{final}$ usando:
 
-$$
-\hat{sd}(\hat{\mu}_{final})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}
-$$
+$$\hat{sd}(\hat{\mu}_{final})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$
 
 3.  Construimos el intervalo de confianza como:
 
-$$
-Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})
-$$
+$$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
 #### Error de muestreo
 
 Directamente relacionado con los intervalos de confianza tendremos la cantidad que llamamos error de muestreo. El error de muestreo para un nivel de probabilidad $1-\alpha\%$ es la cantidad que sustraemos o añadimos a $\hat{\mu}_{final}$ al construir el intervalo. Es decir, el error de muestreo es la mitad del ancho del intervalo de confianza.
 
-$$
-Error\: muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})
-$$
+$$Error\: muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
-Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo y los denotaremos con el símbolo $\varepsilon_{(1-\alpha)\%}$ y los calcularemos, expresándolos en tanto por ciento, con la siguiente fórmula:
+Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo y los denotaremos con el símbolo $\hat{\varepsilon}_{(1-\alpha)\%}$ y los calcularemos, expresándolos en tanto por ciento, con la siguiente fórmula:
 
-$$
-\varepsilon_{(1-\alpha)\%} = 100\frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}
-$$
+$$\hat{\varepsilon}_{(1-\alpha)\%} = 100\frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}$$
 
-Los terminos que intervienen en el error de muestreo (en términos absolutos o relativos) implican los pasos 1 y 2 de la construcción de intervalos de confianza.
+Los términos que intervienen en el error de muestreo (en términos absolutos o relativos) implican los pasos 1 y 2 de la construcción de intervalos de confianza. Pondremos el acento circunflejo en el error de muestreo para indicar que es una magnitud estimada (Esto también se debería hacer con los intervalos pero la notación queda algo engorrosa)
+
+**IMPORTANTE:** Es frecuente que se soliciten trabajos de muestreo donde se especifica una tolerancia máxima en términos de error relativo. Por ejemplo, nos podrían solicitar realizar un muestreo donde el volumen se estimase con un error relativo de muestreo inferior al 10% considerando un nivel de confianza del 95%. Ante esta situación podríamos ir midiendo más y más parcelas hasta que alcanzásemos el error deseado. **Esto** **NO es lo que se hace en la práctica!!** En la siguiente pestaña veremos como calcular el número de parcelas a medir para verificar este tipo de condiciones.
 
 #### Controles de la aplicación
 
