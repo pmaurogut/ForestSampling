@@ -59,36 +59,27 @@ $$
     \hat{\mu}_{final}\sim N(\mu,\frac{sd(\hat{\mu}_p)²}{n})
 $$
 
-**Segundo problema de estimación**
+#### Segundo problema de estimación
 
-El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$
+El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$.
 
 Para estimar $sd(\hat{\mu}_{final})$ nos apoyaremos en la propiedad 3. De estadística conocemos que podemos obtener un estimador insesgado de la varianza de una variable aleatoria, la varianza es el cuadrado de sd, a partir de $n$ realizaciones independientes de dicha variable empleando la siguiente fórmula:
 
-$$
-\hat{V}(\hat{\mu}_p)=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}
-$$
+$$\hat{V}(\hat{\mu}_p)=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}$$
 
 Podemos tomar raíces cuadradas para convertir varianzas estimadas en desviaciones típicas estimadas:
 
-$$
-\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}
-$$
+$$\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}$$
 
 IMPORTANTE: Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
 
-Ya casi hemos terminado el segundo problema de estimación, en base a la ultima ecuación y a la propiedad 3, tendremos que:
+Ya casi hemos terminado el segundo problema de estimación, en base a la última ecuación y a la propiedad 3, tendremos que:
 
-$$
-\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}
-$$
+$$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}$$
 
 y para desviaciones típicas tendremos:
 
-$$
-\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}
-$$
+$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$
+#### Intervalos de confianza y errores de muestreo
 
-#### Intervalos de confianza y error relativo
-
-#### Panel izquierdo
+a
