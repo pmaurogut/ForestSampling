@@ -41,7 +41,7 @@ $$
 E(\hat{\mu}_{final})=E(\hat{\mu}_p)=\mu
 $$
 
-3.  Por la independencia en la aleatorización de las $n$ parcelas, la desviación típica (se indica con sd de standard deviation y mide la variabilidad) del estimador de final es la desviación típica del estimador de parcela dividida por la raiz cuadrada del número de parcelas que se promedian en el estimador final.
+3.  Por la independencia en la aleatorización de las $n$ parcelas, la desviación típica (se indica con sd de standard deviation y mide la variabilidad) del estimador de final es la desviación típica del estimador de parcela dividida por la raíz cuadrada del número de parcelas que se promedian en el estimador final.
 
 $$
 sd(\hat{\mu}_{final})=\frac{sd(\hat{\mu}_p)}{\sqrt{n}}
@@ -79,6 +79,69 @@ $$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\su
 
 y para desviaciones típicas tendremos:
 
-$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$ \#### Intervalos de confianza y errores de muestreo
+#### $$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$ Intervalos de confianza
 
-a
+Una vez que hemos visto el segundo problema de estimación (estimar la dispersión de la distribución muestral del estimador final a través de la varianza o desviación ), podemos ver como se hace el reporte de incertidumbres o control de calidad de un muestreo. Para ello, nos vamos a apoyar en los estimadores de la desviación típica que acabamos de ver y en la aplicación del teorema del límite central que veíamos en la pestaña anterior.
+
+Asumiendo que se ha conseguido la normalidad, la siguiente fórmula nos permite crear intervalos que contienen el valor esperado del estimador final con un $(1-\alpha)\%$ de probabilidad:
+
+$$
+Intervalo \: confianza=[\hat{\mu}_{final}-q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})\:,\:\hat{\mu}_{final}+q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})]
+$$
+
+A $(1-\alpha)\%$ se le llama nivel de confianza o probabilidad fiducial. Una forma alternativa y más concisa de expresar estos intervalos es
+
+$$
+Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})
+$$
+
+Distintos autores consideran distintos valores para $q(1-\frac{\alpha}{2})$:
+
+1.  Algunos autores, como por ejemplo Särndal (2003), hace que $q(1-\frac{\alpha}{2})$ sea igual al cuantil de probabilidad $1-\frac{\alpha}{2}$ de una distribución normal estándar
+
+2.  Otros autores se ponen del lado de la seguridad y usan $q(1-\frac{\alpha}{2})=t(1-\frac{\alpha}{2},n-1)$ , donde $t(1-\frac{\alpha}{2},n-1)$ es el cuantil de probabilidad $1-\frac{\alpha}{2}$ de una distribución tipo t-student con $n-1$ grados de libertad (recuerda que $n$ es el número de parcelas.
+
+La fórmula 2 se suele preferir por hacer intervalos un poco más anchos, pero desde el punto de vista teórico ambas son aproximaciones ya que nunca podremos asegurar cuando se consigue la convergencia a una distribución normal. En ámbos casos, para un nivel de confianza del 95%, $1-\alpha\%=95\%$, y con un número razonable de parcelas, tendremos que los valores de $q(1-\frac{\alpha}{2})$ serán cercanos a 2.
+
+**IMPORTANTE:** Cuando estimamos totales o totales por unidad de área, el valor esperado de $\hat{\mu}_{final}$ coincidirá con $\mu_{final}$ (ausencia de sesgo). En este caso, si fuésemos capaces de repetir muchas veces el proceso de muestreo, los intervalos de confianza construidos contendrían el valor que queremos estimar en un $1-\alpha\%$ de las ocasiones.
+
+En la práctica, el proceso de construcción de los intervalos de confianza se realiza de las siguiente manera.
+
+1.  Obtenemos el estimador final ($\hat{\mu}_{final}$) como promedio de los estimadores de parcela.
+2.  Estimamos la desviación típica de $\hat{\mu}_{final}$ usando:
+
+$$
+\hat{sd}(\hat{\mu}_{final})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}
+$$
+
+3.  Construimos el intervalo de confianza como:
+
+$$
+Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})
+$$
+
+#### Error de muestreo
+
+Directamente relacionado con los intervalos de confianza tendremos la cantidad que llamamos error de muestreo. El error de muestreo para un nivel de probabilidad $1-\alpha\%$ es la cantidad que sustraemos o añadimos a $\hat{\mu}_{final}$ al construir el intervalo. Es decir, el error de muestreo es la mitad del ancho del intervalo de confianza.
+
+$$
+Error\: muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})
+$$
+
+Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo y los denotaremos con el símbolo $\varepsilon_{(1-\alpha)\%}$ y los calcularemos, expresándolos en tanto por ciento, con la siguiente fórmula:
+
+$$
+\varepsilon_{(1-\alpha)\%} = 100\frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}
+$$
+
+Los terminos que intervienen en el error de muestreo (en términos absolutos o relativos) implican los pasos 1 y 2 de la construcción de intervalos de confianza.
+
+#### Controles de la aplicación
+
+En esta pestaña, para el número de parcelas indicado, se repite el muestreo cinco veces. En el panel derecho, parte inferior, podemos ver en negro el valor teórico de $sd(\hat{\mu}_{final})$, en azul se mostrarán las 5 estimaciones de $\hat{sd}(\hat{\mu}_{final})$ . En el panel derecho, se muestran para cada una de las cinco replicaciones, $\hat{sd}(\hat{\mu}_{p})$, $\hat{sd}(\hat{\mu}_{final})$ (texto rojo y a la izquierda), el intervalo de confianza para $\hat{\mu}_{final}$ (en rojo y forma gráfica) y el error de muestreo (texto azul a la derecha). En rojo y con una ligera transparencia se muestra los $n$ valores de $\hat{\mu}_{p}$ para cada replica.
+
+En el panel izquierdo tendremos los valores de los parámetros de interés a estimar, un control para aumentar o reducir el nivel de confianza $(1-\alpha)\%$ y un botón que dice **Remuestrea** y que al ser pulsado descartará las cinco replicas de $n$ parcelas y tomará otras cinco nuevas. En esta pestaña el botón **Muestrea** no hará nada pero los controles para el tipo de parcela, densidad, tamaño del área a muestrear y número de parcelas seguirán activos.
+
+#### Referencias
+
+Särndal, C.-E., Swensson, B., Wretman, J., 2003. Model Assisted Survey Sampling (Springer Series in Statistics).

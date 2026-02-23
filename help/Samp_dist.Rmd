@@ -33,7 +33,7 @@ $$
 
 #### **Panel derecho aproximación de la distribución del estimador final a una distribución normal.**
 
-En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se hacen cada vez mas estrechas su desviación típica decrece a un ritmo proporcional a $\frac{1}{\sqrt{n}}$ . La varianza, el cuadrado de la desviación típica, decrece a un ritmo proporcional a $\frac{1}{n}$. Pero además ver como al aumentar $n$ la distribución muestral se hace más estrecha podemos ver algo muy importante: **al aumentar** $n$ **las distribuciones se aproximan cada vez más a una distribución normal.**
+En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se hacen cada vez mas estrechas su desviación típica decrece a un ritmo proporcional a $\frac{1}{\sqrt{n}}$ . La varianza, el cuadrado de la desviación típica, decrece a un ritmo proporcional a $\frac{1}{n}$. Pero además ver como al aumentar $n$ la distribución muestral se hace más estrecha podemos ver algo muy importante: **al aumentar** $n$ **las distribuciones se aproximan cada vez más a una distribución normal. Esto es una aplicación directa del teorema del límite central que has escuchado en la asignatura de estadística.**
 
 Cuando los efectos de borde son pequeños, tenemos además que para totales o totales por unidad de área se puede demostrar que:
 
