@@ -106,6 +106,8 @@ $$
 \end{cases}
 $$
 
+**IMPORTANTE:** Lee la sección **Uso e historia del relascopio** al final de esta página.
+
 ***Ejemplo 2:***
 
 $$
@@ -201,3 +203,47 @@ En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de
 -   **En la pestaña** **Selección de muestra** verás que, proporcionalmente, las áreas de inclusión que cortan el área muestreada pierden importancia
 
 -   **En esta pestaña** podrás ver como la media de estimaciones de totales por unidad de área se aproximan más y más al valor real, es decir, el sesgo para totales desaparece. Finalmente, a medida que añadimos más muestras, la media varia cada vez menos mientras que la variabilidad de las estimaciones de parcela se mantiene dentro de un rango más amplio. En las siguientes pestañas se puede ver la relación entre la variabilidad de la estimación por parcela y la variabilidad de una media de $n$ parcelas.
+
+#### Uso e historia del relascopio
+
+Vamos a retomar el ejemplo 1, ya que nos permite ver en detalle que estamos haciendo cuando seguimos las instrucciones del relascopio. Inicialmente vamos a diferenciar la estimación con el estimador de Horvitz-Thompson, la llamaremos $\hat{G}_{HT}$ y la estimación con el relascopio $\hat{G}_{relascopio}$
+
+$$
+\hat{G}_{HT}=\begin{cases}
+\sum\limits_{i\in muestra}g_iw_i  , & \text{si se ha seleccionado algún árbol} \\
+ & \\
+0, & \text{si no se ha seleccionado ningún árbol}
+\end{cases}
+$$
+
+Operando para expresar el área basimétrica en $m²/ha$ tedríamos que:
+
+$$
+\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}w_i
+$$donde $dn_i$ es el diámetro normal del árbol $i$ en cm y el 10000 en el denominador aparece al transformar los diámetros normales en centímetro a metros. El factor de expansión $w_i$ para parcelas se puede obtener recordando que diámetro (o radio) del área de inclusión será veces $k$ veces el diámetro normal (o radio) del árbol y que este área de inclusión se calculará en hectáreas. Es decir:
+
+$$wi=\frac{1}{\pi (\frac{kdn_i}{2*100}) ² \frac{1}{10000}}$$
+
+Sustituyendo en la ecuación de $\hat{G}_{HT}$ tenemos:
+
+$$
+\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}\frac{1}{\pi (\frac{kdn_i}{2*100}) ² \frac{1}{10000}}=\sum_{i \in muestra}\frac{1}{k ² \frac{1}{10000}}=\frac{10000}{k ²}\sum_{i \in muestra}1
+$$
+
+Según las instrucciones del relascopio, cuando usamos un BAF determinado, podemos estimar el área basimétrica en $m²/ha$ haciendo el conteo de los árboles que son seleccionados y multiplicando por el BAF. Siguiendo la idea que hemos usado para totales, ese conteo se puede expresar cómo:
+
+$$
+\hat{G}_{relascopio}=BAF\sum_{i \in muestra}1
+$$
+
+Al usar $\hat{G}_{relascopio}$ y $\hat{G}_{HT}$ estamos estimando la misma cantidad,por lo que si igualamos ambas expresiones tenemos que:
+
+$$
+\hat{G}_{HT}=\hat{G}_{relascopio} \rightarrow\frac{10000}{k ²}\sum_{i \in muestra}1=BAF\sum_{i \in muestra}1\rightarrow \frac{10000}{k^2}=1 \rightarrow k=100
+$$
+
+Es decir, un BAF igual a 1, equivale a que el diámetro del área de inclusión de los árboles tenga un diámetro igual 100 veces el diámetro normal en cm. Es decir, si un árbol tiene un diámetro normal de 13 cm, el diámetro del área de inclusión será 100 veces mayor o lo que es lo mismo 13 m. Esta forma de proceder nos permite deducir el factor de multiplicación $k$ para BAFs arbitrarios.
+
+Finalmente, es importante darse cuenta, que al estimar $G$ con un relascopio, no tenemos que medir nada, solo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ se cancela, pues este factor también aparece en $w_i$. En esta explicación, hemos visto el fundamento de álgo que a cuando se ve la primera vez resulta a misterioso. ¿Cómo puede ser que estimemos áreas contando árboles? La explicación está en el uso de factores de expansión inversamente proporcionales a la variable de la que estimar el total por unidad de área. O lo que es lo mismo, el conteo aparece porque hacemos probabilidades de inclusión proporcionales a la variable cuyo total queremos estimar.
+
+Sin duda, algo muy interesante de esta explicación es el orden temporal en los que aparecieron el relascopio y el estimador de Horvitz-Thompson. Uno podría pensar que el relascopio se desarrollo una vez se conocía la formulación del estimador de Horvitz-Thompson, sin embargo, el orden fue el contrario!!! Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicarón su artículo en 1952!! Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores. Por otro lado, la publicación de Horvitz y Thompson también supuso un hito importante pues mostraba que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales aveces sin darnos cuenta, carece de sesgo independientemente de cual sea el diseño de muestreo y la población con la que trabajamos.

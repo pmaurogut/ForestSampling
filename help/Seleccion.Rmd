@@ -99,10 +99,12 @@ $$
 
 **Relascopio**
 
-El último tipo de parcela considerado es el de parcelas de relascopio con un BAF de 1. Cuando el BAF es 1, el área de inclusión tiene un radio igual al radio del árbol pero expresado en metros. En este caso, el área de inclusión en hectáreas es igual a $\pi_i = \frac{\pi dn_i^2}{4*1000}$. En base a esto se puede calcular la probabilidad de inclusión del árbol $i$ como:
+El último tipo de parcela considerado es el de parcelas de relascopio con un BAF de 1. Cuando el BAF es 1, el área de inclusión de un árbol tiene un radio\\diámetro igual al radio\\diámetro del árbol pero expresado en metros. En este caso, el área de inclusión en hectáreas es igual a $\pi_i = \frac{\pi dn_i^2}{4*1000}$. En base a esto se puede calcular la probabilidad de inclusión del árbol $i$ como:
 
 $$\pi_i = \frac{\pi dn_i^2}{4*10000}*\frac{1}{A}$$ El factor de expansión en este caso es igual a
 
 $$
 w_i=\frac{1}{\frac{\pi dn_i^2}{4*10000}}
 $$
+
+En las parcelas de radios anidados solo hemos considerado dos clases de tamaño, pero esto no tiene porqué ser así siempre, podrían considerarse tantas clases como quisiésemos. En este sentido, el relascopio es una generalización de las parcelas de radios anidados donde hay infinitos posibles tamaños de parcela, uno por cada posible diámetro normal. También podemos ver esto de otra forma, cada árbol tiene un radio o diámetro de parcela propio y proporcional al diámetro normal.

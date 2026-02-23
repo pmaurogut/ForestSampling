@@ -551,8 +551,8 @@ confint_plot<-function(estimates, var, par_int,conf){
   means$label_rel_error<- paste("hat(epsilon)['final']==",round(means$rel_error,1),"~'%'",sep="")
   
   labels <- merge(par_int,means,by="parametro")
-  labels$pos1 <- labels$mean.x - 3*labels$sd.x
-  labels$pos2 <- labels$mean.x + 3*labels$sd.x
+  labels$pos1 <- labels$mean.x - 2*labels$sd.x
+  labels$pos2 <- labels$mean.x + 2*labels$sd.x
     # par_int <- filter(par_int, parametro%in%var$parametro)
 
   line_range <- merge(var,expand.grid(parametro=unique(var$parametro),Rep=1:reps),by="parametro")
