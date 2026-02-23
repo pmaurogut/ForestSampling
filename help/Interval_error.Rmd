@@ -79,15 +79,18 @@ $$
 
 Ya casi hemos terminado el segundo problema de estimación, en base a la ultima ecuación y a la propiedad 3, tendremos que:
 
+
 $$
-\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_{p})}{n}=\frac{1}{n}\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{(n-1)n}
+\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_{p})}{n}=\frac{1}{n}\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}
 $$
 
 y para desviaciones típicas tendremos:
 
+
 $$
-\hat{sd}(\hat{\mu}_{final})=\frac{1}{\sqrt{n}}\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{(n-1)n}}
+\hat{sd}(\hat{\mu}_{final})=\frac{1}{\sqrt{n}}\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}
 $$
+
 
 #### Intervalos de confianza y error relativo
 
