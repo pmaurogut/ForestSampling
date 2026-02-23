@@ -15,9 +15,7 @@ Sin embargo, las simulaciones son útiles para acercarnos al problema del muestr
 
 De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada $A$ . Si usamos el símbolo $\cal{N}$ (N de bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido) tenemos que totales y totales por unidad de área se expresan como:
 
-$$
-Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total\:por\:unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i
-$$
+$$Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total \: por \: unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i$$
 
 Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (N con bordes rectos), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
 

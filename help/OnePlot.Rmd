@@ -67,21 +67,17 @@ Cuando nuestro objetivo es estimar un total o un total por unidad de área emple
 
 Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés.
 
-$$
-\hat{Total(y)}=\begin{cases}
+$$\hat{Total(y)}=\begin{cases}
 \sum\limits_{i\in muestra}\frac{y_i}{\pi_i} , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si la no se ha seleccionado ningún árbol}
-\end{cases}
-$$
+\end{cases}$$
 
-$$
-\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
+$$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 \frac{1}{A}\sum\limits_{i\in muestra}\frac{y_i}{\pi_i} = \sum\limits_{i\in muestra}\frac{y_i}{A\frac{a_{parcela}}{A}} = \sum\limits_{i\in muestra}y_iw_i , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si la no se ha seleccionado ningún árbol}
-\end{cases}
-$$
+\end{cases}$$
 
 **Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área, cuando estimamos totales por unidad de área, el área a muestrear** $A$**, aparece dividiendo al total, pero también aparece de forma implícita en las** $\pi_i$ **. Estas áreas se cancelan y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés por su factor de expansión.**
 
@@ -89,8 +85,7 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 \sum\limits_{i\in muestra}y_iw_i  , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si la no se ha seleccionado ningún árbol}
-\end{cases}
-$$
+\end{cases}$$
 
 **Si recordamos la interpretación de factor de expansión como número de árboles similares al árbol muestreado que esperamos encontrar en una hectárea de terreno podemos deducir la fórmula anterior recordando que total por unidad de área es la suma de la variable de interés para todos los árboles de la hectárea. Como cada árbol muestreado representa** $w_i$ **árboles en la hectárea de terreno, lo único que hay que hacer es sumar la variable de interés** $y_i$ **por** $w_i$
 
@@ -98,25 +93,21 @@ $$
 
 ***Ejemplo 1:***
 
-$$
-\hat{G}=\begin{cases}
+$$\hat{G}=\begin{cases}
 \sum\limits_{i\in muestra}g_iw_i  , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si no se ha seleccionado ningún árbol}
-\end{cases}
-$$
+\end{cases}$$
 
 **IMPORTANTE:** Lee la sección **Uso e historia del relascopio** al final de esta página.
 
 ***Ejemplo 2:***
 
-$$
-\hat{N}=\begin{cases}
+$$\hat{N}=\begin{cases}
 \sum\limits_{i\in muestra}1w_i  , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si la no se ha seleccionado ningún árbol}
-\end{cases}
-$$
+\end{cases}$$
 
 #### Estimador de parcela para ratios y funciones de totales
 
@@ -130,31 +121,23 @@ $$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\
 
 La altura media es el ratio de dos totales por unidad de área, el total de las alturas $y_i\rightarrow h_i$ y $N$ (el total de una variable que vale 1 para todos los árboles. En este caso, simplemente haremos el estimador de parcela para el numerador y el estimador por parcela para el denominador y después haremos el ratio.
 
-$$
-\hat{\bar{h}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestra}1w_i}
-$$
+$$\hat{\bar{h}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestra}1w_i}$$
 
 ***Ejemplo 4:***
 
 Para estimar $d_g$ estimaremos $G$ y $N$ tal como se hace en los ejemplos 1 y 2, y después sustituiremos en la ecuación de $d_g$ para obtener el estimador de parcela.
 
-$$
-\hat{d_g} = \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}
-$$
+$$\hat{d_g} = \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}$$
 
 #### Estimador de parcela para parámetros complejos (alturas y diámetros dominantes)
 
 Para alturas y diámetros dominantes, la estimación se hará construyendo análogos de parcela. En este caso, lo primero que haremos será ordenar la tabla de mediciones por diámetro en orden decreciente. Después, iremos sumando los factores de expansión hasta alcanzar 100 árboles por hectárea. Esto nos permitirá estimar el conjunto de árboles dominantes de la parcela. Una vez tengamos este conjunto $\hat{dominantes}$ simplemente calcularemos los valores medios como hemos hecho en el ejemplo 3, pero trabajando sobre el conjunto de los árboles dominantes.
 
-$$
-\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
-$$
+$$\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}$$
 
 y
 
-$$
-\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}
-$$
+$$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}$$
 
 Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol sumado, deberíamos reducir el factor de expansión de forma que la suma de todos los factores de expansión para el conjunto de árboles dominante sea 100 (podemos usar el símbolo $w_i^*$ para indicar que estos factores de expansión se han modificado para el último árbol dominante). La suma del denominador, en este caso se reduce a 100 árboles en una hectárea.
 
@@ -170,15 +153,11 @@ $$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\i
 
 Cuando consideramos totales o totales por unidad de área, es posible demostrar que el estimador de parcela que hemos empleado no tendrá sesgo si los efectos de borde no son importantes. Es decir, si los efectos de borde se pueden despreciar, tenemos que el valor esperado del estimador coincide con el valor que queremos estimar.
 
-$$
-\boxed{\boxed{ E(\hat{Total(y)}) = Total(y)}}
-$$
+$$\boxed{\boxed{ E(\hat{Total(y)}) = Total(y)}}$$
 
 o
 
-$$
-\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}
-$$
+$$\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}$$
 
 Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calcular el estimador, la media de esas infinitas estimaciones coincidiría con el valor a estimar. **Esta propiedad es muy fuerte pues se cumple sea cual sea la población y el tipo de parcela, lo único que debe ser despreciable son los efectos de borde, cosa que normalmente ocurre.**
 
@@ -208,39 +187,30 @@ En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de
 
 Vamos a retomar el ejemplo 1, ya que nos permite ver en detalle que estamos haciendo cuando seguimos las instrucciones del relascopio. Inicialmente vamos a diferenciar la estimación con el estimador de Horvitz-Thompson, la llamaremos $\hat{G}_{HT}$ y la estimación con el relascopio $\hat{G}_{relascopio}$
 
-$$
-\hat{G}_{HT}=\begin{cases}
+$$\hat{G}_{HT}=\begin{cases}
 \sum\limits_{i\in muestra}g_iw_i  , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si no se ha seleccionado ningún árbol}
-\end{cases}
-$$
+\end{cases}$$
 
 Operando para expresar el área basimétrica en $m²/ha$ tedríamos que:
 
-$$
-\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}w_i
-$$donde $dn_i$ es el diámetro normal del árbol $i$ en cm y el 10000 en el denominador aparece al transformar los diámetros normales en centímetro a metros. El factor de expansión $w_i$ para parcelas se puede obtener recordando que diámetro (o radio) del área de inclusión será veces $k$ veces el diámetro normal (o radio) del árbol y que este área de inclusión se calculará en hectáreas. Es decir:
+$$\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}w_i$$
+donde $dn_i$ es el diámetro normal del árbol $i$ en cm y el 10000 en el denominador aparece al transformar los diámetros normales en centímetro a metros. El factor de expansión $w_i$ para parcelas se puede obtener recordando que diámetro (o radio) del área de inclusión será veces $k$ veces el diámetro normal (o radio) del árbol y que este área de inclusión se calculará en hectáreas. Es decir:
 
 $$wi=\frac{1}{\pi (\frac{kdn_i}{2*100}) ² \frac{1}{10000}}$$
 
 Sustituyendo en la ecuación de $\hat{G}_{HT}$ tenemos:
 
-$$
-\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}\frac{1}{\pi (\frac{kdn_i}{2*100}) ² \frac{1}{10000}}=\sum_{i \in muestra}\frac{1}{k ² \frac{1}{10000}}=\frac{10000}{k ²}\sum_{i \in muestra}1
-$$
+$$\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}\frac{1}{\pi (\frac{kdn_i}{2*100}) ² \frac{1}{10000}}=\sum_{i \in muestra}\frac{1}{k ² \frac{1}{10000}}=\frac{10000}{k ²}\sum_{i \in muestra}1$$
 
 Según las instrucciones del relascopio, cuando usamos un BAF determinado, podemos estimar el área basimétrica en $m²/ha$ haciendo el conteo de los árboles que son seleccionados y multiplicando por el BAF. Siguiendo la idea que hemos usado para totales, ese conteo se puede expresar cómo:
 
-$$
-\hat{G}_{relascopio}=BAF\sum_{i \in muestra}1
-$$
+$$\hat{G}_{relascopio}=BAF\sum_{i \in muestra}1$$
 
 Al usar $\hat{G}_{relascopio}$ y $\hat{G}_{HT}$ estamos estimando la misma cantidad,por lo que si igualamos ambas expresiones tenemos que:
 
-$$
-\hat{G}_{HT}=\hat{G}_{relascopio} \rightarrow\frac{10000}{k ²}\sum_{i \in muestra}1=BAF\sum_{i \in muestra}1\rightarrow \frac{10000}{k^2}=1 \rightarrow k=100
-$$
+$$\hat{G}_{HT}=\hat{G}_{relascopio} \rightarrow\frac{10000}{k ²}\sum_{i \in muestra}1=BAF\sum_{i \in muestra}1\rightarrow \frac{10000}{k^2}=1 \rightarrow k=100$$
 
 Es decir, un BAF igual a 1, equivale a que el diámetro del área de inclusión de los árboles tenga un diámetro igual 100 veces el diámetro normal en cm. Es decir, si un árbol tiene un diámetro normal de 13 cm, el diámetro del área de inclusión será 100 veces mayor o lo que es lo mismo 13 m. Esta forma de proceder nos permite deducir el factor de multiplicación $k$ para BAFs arbitrarios.
 

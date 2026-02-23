@@ -38,14 +38,14 @@ En el panel derecho se puede ver como al aumentar $n$, las distribuciones de val
 Cuando los efectos de borde son pequeños, tenemos además que para totales o totales por unidad de área se puede demostrar que:
 
 $$
-\boxed{\boxed{ E(estimador final) = E(estimador \: parcela)=Parámetro\:interés}}
+\boxed{\boxed{ E(estimador final) = E(estimador \: parcela)=Parámetro \: interés}}
 $$
 
 Por lo que la distribución muestral del estimador final verificará que estará centrada en torno al parámetro de interés y además, se aproximará a una distribución normal. Es decir, al aumentar $n$ el estimador final tenderá a distribuirse como una distribución normal (curva azul) centrada en el parámetro de interés.
 
 $$
 \boxed{\boxed{
-estimador\:final \sim N(Parámetro\:interés,\frac{sd(estimador\:parcela)}{\sqrt{n}})
+estimador \: final \sim N(Parámetro \: interés,\frac{sd(estimador \: parcela)}{\sqrt{n}})
 }}
 $$
 
