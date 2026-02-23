@@ -71,7 +71,7 @@ Podemos tomar raíces cuadradas para convertir varianzas estimadas en desviacion
 
 $$\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}$$
 
-IMPORTANTE: Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
+**IMPORTANTE:** Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
 
 Ya casi hemos terminado el segundo problema de estimación, en base a la última ecuación y a la propiedad 3, tendremos que:
 
@@ -79,7 +79,6 @@ $$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\su
 
 y para desviaciones típicas tendremos:
 
-$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$
-#### Intervalos de confianza y errores de muestreo
+$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$ \#### Intervalos de confianza y errores de muestreo
 
 a
