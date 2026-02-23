@@ -7,14 +7,82 @@ output: html_document
 
 En la pestaña anterior nos hemos apoyado en simulaciones del proceso de muestreo para ver que ocurre con la distribución muestral del estimador final. Repetíamos cientos de veces el proceso de muestreo y cálculo del estimador final. En esta pestaña vamos a usar menos la simulación (simularemos pero solo unas pocas veces) y **vamos a ver cómo procederíamos para calcular intervalos de confianza y errores de muestreo para el estimador final.**
 
+Como resumen del procedimiento, podemos decir que el muestreo realmente implica dos problemas de estimación. El primer problema (obtener el estimador final) sabemos cómo se aborda, pero hay un segundo problema de estimación que se emplea para informar sobre la calidad del muestreo. En este segundo problema estaremos interesado en estimar la variabilidad del estimador final.
+
+#### Notación simplificada
+
 Para simplificar la notación vamos a usar el símbolo $\mu$ para el parámetro de interés (es un símbolo genérico), y recordamos que:
 
-1.  Usaremos el subíndice $p$ para indicar que estamos usando el estimador de la parcela $p$ y el subíndice $final$ par indicar que consideramos un estimador final, media de $n$ estimadores de parcela.
+1.  Usaremos el subíndice $p$ para indicar que estamos usando el estimador de la parcela $p$ y el subíndice $final$ para indicar que consideramos un estimador final, media de $n$ estimadores de parcela.
 
 2.  Las estimaciones de un parámetro de interés se indican poniendo un acento circunflejo sobre el símbolo del parámetro a estimar.
 
 En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parcela del parámetro $\mu$ en la parcela $p$, y que $\hat{\mu}_{final}=\sum_{p=1}^n\hat{\mu}_p$ sería el estimador final del parámetro de interés $\mu$ basado en $n$ parcelas.
 
-Cuando hagamos un inventario real mediremos $n$ parcelas y no podremos repetir ese proceso cientos de veces como hacíamos en la pestaña anterior. Entonces, ¿Como podemos obtener información sobre la distribución muestral del estimador final?
+Cuando hagamos un inventario real mediremos $n$ parcelas y no podremos repetir ese proceso cientos de veces como hacíamos en la pestaña anterior. Entonces, **¿Cómo podemos obtener información sobre la distribución muestral del estimador final?**
+
+El análisis de la fiabilidad del inventario se apoyará en las relaciones que existe entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final.
+
+**Es importante tener en cuenta que al realizar nuestro inventario mediremos** $n$ **parcelas y haremos su media y sólo tendremos un valor del estimador final por lo que será imposible analizar su variabilidad sin hacer uso de las relaciones que hemos estudiado entre estimador final y estimador de parcela.**
+
+#### Relaciones entre las distribuciones muestrales del estimador de parcela y el estimador final.
+
+Hemos visto en pestañas anteriores que
+
+1.  La esperanza del estimador final es la esperanza del estimador de parcela.
+
+$$
+E(\hat{\mu}_{final})=E(\hat{\mu}_p)
+$$
+
+2.  Si el parámetro de interés es un total o total por unidad de área y se puden despreciar los efectos de borde:
+
+$$
+E(\hat{\mu}_{final})=E(\hat{\mu}_p)=\mu
+$$
+
+3.  Por la independencia en la aleatorización de las $n$ parcelas, la desviación típica (se indica con sd de standard deviation y mide la variabilidad) del estimador de final es la desviación típica del estimador de parcela dividida por la raiz cuadrada del número de parcelas que se promedian en el estimador final.
+
+$$
+sd(\hat{\mu}_{final})=\frac{sd(\hat{\mu}_p)}{\sqrt{n}}
+$$
+
+4.  Para $n$ grande (no podemos saber cómo de grande ha de ser $n$), se tiene que la distribución muestral del estimador final sera una normal
+
+$$
+    \hat{\mu}_{final}\sim N(E(\hat{\mu}_p),\frac{sd(\hat{\mu}_p)²}{n})
+$$
+
+5.  Por la propiedad 2, si el parámetro de interés es un total o total por unidad de área y se pueden despreciar los efectos de borde, dicha distribución normal estará centrada en el parámetro de interés $\mu$:
+
+$$
+    \hat{\mu}_{final}\sim N(\mu,\frac{sd(\hat{\mu}_p)²}{n})
+$$
+
+**Segundo problema de estimación**
+
+El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$
+
+Para estimar $sd(\hat{\mu}_{final})$ nos apoyaremos en la propiedad 3. De estadística conocemos que podemos obtener un estimador insegado de la varianza de una variable aleatoria (el cuadrado de sd) a partir de $n$ realizaciones independientes de dicha variable empleando la siguiente fórmula:
+
+$$
+\hat{V}(\hat{\mu}_{p})=\frac{1}{n-1}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2
+$$
+
+Tomando raices cuadradas par convertir varianzas estimadas en desviaciones típicas estimadas. :
+
+$$
+\hat{sd}(\hat{\mu}_{p})=\sqrt{\frac{1}{n-1}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}
+$$
+
+**Importante:** Las varianzas es y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circumflejo.
+
+Ya casi hemos terminado el segundo problema de estimación, en base a la ultima ecuación y a la propiedad 3, tendremos que:
+
+$$
+\hat{sd}(\hat{\mu}_{final})=\frac{1}{\sqrt{n}}\sqrt{\frac{1}{n-1}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}=\sqrt{\frac{1}{(n-1)n}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}
+$$
+
+#### Intervalos de confianza y error relativo
 
 #### Panel izquierdo
