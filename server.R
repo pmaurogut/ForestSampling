@@ -275,7 +275,7 @@ server <- function(input, output, session) {
     var <- variation()
     var <- var[var$Type==type ,]
     
-    standard_dev2(var,n,estimatesIC())
+    standard_dev2(var,n)
   })
   
   output$normal_approx<-renderPlot({

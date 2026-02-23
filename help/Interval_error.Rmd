@@ -21,7 +21,7 @@ En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parce
 
 Cuando hagamos un inventario real mediremos $n$ parcelas y no podremos repetir ese proceso cientos de veces como hacíamos en la pestaña anterior. Entonces, **¿Cómo podemos obtener información sobre la distribución muestral del estimador final?**
 
-El análisis de la fiabilidad del inventario se apoyará en las relaciones que existe entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final.
+El análisis de la fiabilidad del inventario se apoyará en las relaciones que existe entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final prestando atención a la varianza y desviación típica de estas distribuciones.
 
 **Es importante tener en cuenta que al realizar nuestro inventario mediremos** $n$ **parcelas y haremos su media y sólo tendremos un valor del estimador final por lo que será imposible analizar su variabilidad sin hacer uso de las relaciones que hemos estudiado entre estimador final y estimador de parcela.**
 
@@ -35,7 +35,7 @@ $$
 E(\hat{\mu}_{final})=E(\hat{\mu}_p)
 $$
 
-2.  Si el parámetro de interés es un total o total por unidad de área y se puden despreciar los efectos de borde:
+2.  Si el parámetro de interés es un total o total por unidad de área y se pueden despreciar los efectos de borde:
 
 $$
 E(\hat{\mu}_{final})=E(\hat{\mu}_p)=\mu
@@ -63,24 +63,30 @@ $$
 
 El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$
 
-Para estimar $sd(\hat{\mu}_{final})$ nos apoyaremos en la propiedad 3. De estadística conocemos que podemos obtener un estimador insegado de la varianza de una variable aleatoria (el cuadrado de sd) a partir de $n$ realizaciones independientes de dicha variable empleando la siguiente fórmula:
+Para estimar $sd(\hat{\mu}_{final})$ nos apoyaremos en la propiedad 3. De estadística conocemos que podemos obtener un estimador insegado de la varianza de una variable aleatoria (la varianza es el cuadrado de sd) a partir de $n$ realizaciones independientes de dicha variable empleando la siguiente fórmula:
 
 $$
-\hat{V}(\hat{\mu}_{p})=\frac{1}{n-1}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2
+\hat{V}(\hat{\mu}_{p})=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}
 $$
 
-Tomando raices cuadradas par convertir varianzas estimadas en desviaciones típicas estimadas. :
+Podemos tomar raices cuadradas para convertir varianzas estimadas en desviaciones típicas estimadas. :
 
 $$
-\hat{sd}(\hat{\mu}_{p})=\sqrt{\frac{1}{n-1}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}
+\hat{sd}(\hat{\mu}_{p})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}
 $$
 
-**Importante:** Las varianzas es y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circumflejo.
+**Importante:** Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
 
 Ya casi hemos terminado el segundo problema de estimación, en base a la ultima ecuación y a la propiedad 3, tendremos que:
 
 $$
-\hat{sd}(\hat{\mu}_{final})=\frac{1}{\sqrt{n}}\sqrt{\frac{1}{n-1}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}=\sqrt{\frac{1}{(n-1)n}\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}
+\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_{p})}{n}=\frac{1}{n}\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{(n-1)n}
+$$
+
+y para desviaciones típicas tendremos:
+
+$$
+\hat{sd}(\hat{\mu}_{final})=\frac{1}{\sqrt{n}}\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{(n-1)n}}
 $$
 
 #### Intervalos de confianza y error relativo
