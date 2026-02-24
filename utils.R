@@ -280,7 +280,7 @@ add_samples_plot<-function(p_int,first,variation){
   p_int <- rbind(p_int,p_int2)
   p_int$type_est <- factor(p_int$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
 
-  print(first)
+  # print(first)
   to_plot <- prepare_long1(first)
   
   variation <- variation[variation$Type==first$Type[1],]
@@ -515,17 +515,41 @@ standard_dev2<- function(var,n,samples=NULL){
 }
 
 get_estimatesIC <- function(estimates,type,n,K,reps){
+  
   estimates <- estimates |> filter(Type==type)
   print(estimates)
   estimates <- estimates[sample(1:K,n*reps,replace=TRUE),]
 
   estimates$Parc <- rep(1:n,reps)
   estimates$Rep <- rep(1:reps,each=n)
+  
   estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
                             cols = c("N","G","V","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
-  estimates
+  
+  return(estimates)
 }
+
+get_pilot <- function(estimates,type,n_pilot,wide=FALSE){
+  
+  estimates <- estimates |> filter(Type==type)
+  estimates <- estimates[sample(1:K,n_pilot,replace=TRUE),]
+  estimates$Parc <- 1:n_pilot
+  estimates$Rep <- 1
+  
+  if(wide){
+    return(estimates)
+  }else{
+    estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
+                              cols = c("N","G","V","h_media","dg","ho"),
+                              names_to = "parametro",values_to = "estimacion")
+    
+    return(estimates)
+  }
+  
+}
+
+
 
 
 confint_plot<-function(estimates, var, par_int,conf){
@@ -537,7 +561,7 @@ confint_plot<-function(estimates, var, par_int,conf){
   
   reps <- max(estimates$Rep)
   
-  print(estimates)
+  # print(estimates)
   estimates <- estimates[!is.na(estimates$estimacion),]
   means <- estimates |> group_by(Rep,parametro) |> summarize(mean=mean(estimacion,na.rm=TRUE),
                                                    sd=sd(estimacion,na.rm=TRUE)/sqrt(n()),n=n()) |> ungroup()
@@ -586,3 +610,85 @@ confint_plot<-function(estimates, var, par_int,conf){
   
 }
 
+
+prepare_error_pol <- function(means_sd,conf_level=0.95){
+  
+  variation_n <- expand.grid(parametro=unique(means_sd$parametro),n_samp=1:50,side=1:2)
+  variation_n <- merge(means_sd,variation_n,by="parametro")
+
+  variation_n$q <- ifelse(variation_n$n==1,-2,-qt((1-conf_level)/2,variation_n$n-1))
+  
+  variation_n$bound <- ifelse(variation_n$side==1,variation_n$q*variation_n$sd,
+                              -variation_n$q*variation_n$sd)
+  variation_n$bound <- variation_n$mean + variation_n$bound/sqrt(variation_n$n_samp)
+  
+  v1 <- filter(variation_n,side==1) |> group_by(parametro) |> 
+    arrange(desc(n_samp)) |> mutate(order=1:50)|> ungroup()
+  
+  
+  v2 <- filter(variation_n,side==2)|> group_by(parametro) |> 
+    arrange(n_samp) |> mutate(order=51:100)|> ungroup()
+  
+  v3 <- v1[v1$order==1,]
+  v3$order <- 101
+  res <- rbind(v1,v2,v3)
+  
+  return(res[order(res$parametro,res$order),])
+}
+
+sample_alloc_plot <- function(piloto,conf_level=0.95,max_rel_error=0.1,current_n){
+  
+  piloto<-pivot_longer(piloto[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
+               cols = c("N","G","V","h_media","dg","ho"),
+               names_to = "parametro",values_to = "estimacion")
+  
+  means_sd <- group_by(piloto,parametro)|> 
+    summarize(mean=mean(estimacion,na.rm=TRUE),
+              sd=sd(estimacion,na.rm=TRUE),n=n())|>
+    ungroup()
+  
+  max_y <- max(means_sd$n)
+  
+  means_sd$sd_n <- means_sd$sd/sqrt(means_sd$n)
+  means_sd$q <- NA
+  means_sd$q2 <- NA
+  
+
+  current_n <- ifelse(current_n<2,2,current_n)
+  
+  means_sd[["q"]]<- ifelse(means_sd$n<2,NA,qt(p = (1-conf_level)/2,df=means_sd$n-1))
+  means_sd[["q2"]] <- ifelse(current_n<2,NA,qt(p=(1-conf_level)/2,df=current_n-1))
+  
+  means_sd$error <- (means_sd$q*means_sd$sd_n)
+  means_sd$rel_error <- means_sd$error/means_sd$mean
+  
+  means_sd$error_curr <- means_sd$q2*(means_sd$sd/sqrt(current_n))
+  means_sd$rel_error_curr <- means_sd$error_curr/means_sd$mean
+  
+  means_sd$bound_min <- means_sd$mean*(1-max_rel_error)
+  means_sd$bound_max <- means_sd$mean*(1+max_rel_error)
+  
+  means_sd$bound_min_curr <- means_sd$mean*(1-means_sd$rel_error_curr)
+  means_sd$bound_max_curr <- means_sd$mean*(1+means_sd$rel_error_curr)
+
+  variation_n <- prepare_error_pol(means_sd,conf_level)
+
+  
+  ggplot(variation_n) +
+    facet_wrap(.~parametro,scales="free_x") +
+    geom_rect(data=means_sd,aes(xmin=bound_min,xmax=bound_max,ymin=1,ymax=50),
+              col="black",fill="grey20",alpha=0.2)+
+    geom_vline(data=means_sd,aes(xintercept=mean),col="black",linetype=2)+
+    
+    geom_polygon(aes(x=bound,y=n_samp),col="blue",fill="purple",alpha=0.1)+
+    
+    geom_point(data=piloto,aes(x=estimacion),y=1,col="red",shape=20,alpha=0.8)+
+    
+    geom_point(data=means_sd,aes(x=mean),y=max_y,col="blue",shape=20,alpha=0.5,size=3)+
+    geom_linerange(data=means_sd,aes(xmin=(mean-error),xmax=(mean+error)),y=max_y,col="blue",alpha=0.5) + 
+    
+    geom_point(data=means_sd,aes(x=mean),y=current_n,col="darkgreen",shape=20,alpha=0.5,size=3)+
+    geom_linerange(data=means_sd,aes(xmin=bound_min_curr,xmax=bound_max_curr),y=current_n,col="darkgreen",alpha=0.5) + 
+    ylim(1,50)
+ 
+}

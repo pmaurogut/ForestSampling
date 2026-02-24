@@ -108,7 +108,7 @@ ui <- page_navbar(
                             ),
                          card(card_header("Datos Población"),
                               list(
-                                downloadButton("downloadPop", "Deccarga Población"),
+                                downloadButton("downloadPop", "Descarga Población"),
                                 tableOutput('poblacion')
                               )
                             ),
@@ -153,7 +153,7 @@ ui <- page_navbar(
                                   )),
                                   card(card_header("Muestra"),
                                        list(
-                                         downloadButton("download1Samp", "Deccarga muestra"),
+                                         downloadButton("download1Samp", "Descarga muestra"),
                                          tableOutput('muestra')
                                        )
                                   )
@@ -183,7 +183,7 @@ ui <- page_navbar(
                                   ), min_height=350),
                                   card(card_header("Muestras"),
                                        list(
-                                         downloadButton("download1Samp", "Deccarga muestra"),
+                                         downloadButton("download1Samp", "Descarga muestra"),
                                          tableOutput("n_estimaciones")
                                        )
                                     ),
@@ -265,33 +265,48 @@ ui <- page_navbar(
   #### Sample alloc ####
   nav_panel("7. tamaño muestra",
             fluidRow({
-              layout_columns(col_widths=c(4,8),height = 900,
+              layout_columns(col_widths=c(5,7),height = 900,
+                          card(card_header("Paráemtro de interés y muestra piloto"),
+                            card(
+                              layout_columns(
+                                col_widths = c(5,7),
+                                card(tableOutput('tabla_interes6')),
+                                card(
+                                  downloadButton("downloadpilotSamp", "Descarga muestra piloto"),
+                                  plotOutput("plot_selected4")
+                                )
+                              )
+                             ),
                              card(
-                               card_header("Parámetro de interés y estimación final"),
-                               card(height=600,layout_columns(col_widths = c(7,5),
-                                                              tableOutput('tabla_interes6'),
-                                                              card(
-                                                                tableOutput("estimate7"),
-                                                                actionButton("remuestreaIC2","Remuestrea"))
-                               )
-                               ),
-                               
-                               card(
-                                 card_header("Muestra"),
-                                 tableOutput('sample7')
-                               )
-                              ),
-                             card(card_header("Intervalos de confianza"),
-                                  plotOutput("intervals2"),height=1000
-                             )
+                                  layout_columns(col_widths = c(6,6),
+                                    card(card_header("Requisitos de muestreo"),
+                                      sliderInput("conf_level2","Nivel de confianza",
+                                                  min=0.75,max=0.99,step = 0.01,value = 0.95),
+                                      sliderInput("rel_error","Error relativo aceptable(%)",
+                                                  min=5,max=20,step = 1,value = 5, post="%")
+                                      
+                                    ),
+                                    card(card_header("Opciones muestreo piloto"),
+                                      sliderInput("n_pilot","n muestreo piloto",
+                                                  min=5,max=20,step = 1,value = 5),
+                                      actionButton("remuestreaError","Rehacer muestreo piloto")
+                                    )
+                              )
+                          )
+                        ),
+                        card(
+                            card_header("Intervalos de confianza"),
+                            plotOutput("samp_alloc"),height=1000
+                        )
               )
-            }),
-            fluidRow(
+          }
+        ),
+        fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
                 withMathJax(htmltools::includeMarkdown("help/Samp_aloc.Rmd")),full_screen = TRUE#, height=200
               )
-            )
+        )
             
   )
   # )

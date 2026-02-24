@@ -23,9 +23,16 @@ server <- function(input, output, session) {
   pos <- reactiveVal(c(1))
   
   conf <- reactive(input$conf_level)
+  conf2 <- reactive(input$conf_level2)
+  
   estimatesIC <- reactive({
     input$remuestreaIC
     get_estimatesIC(est(),input$plot_type1,input$n,K,reps)
+  })
+  
+  error <- reactive({
+    input$remuestreaError
+    get_pilot(est(),input$plot_type1,input$n_pilot,wide=TRUE)
   })
   
   variation<-reactive({
@@ -104,7 +111,7 @@ server <- function(input, output, session) {
         paste('poblacion-', Sys.Date(), '.csv', sep='')
       },
       content = function(con) {
-        write.csv(forest()[,1:7], con,row.names = FALSE)
+        write.csv2(forest()[,1:7], con,row.names = FALSE)
       }
     )
   
@@ -168,7 +175,7 @@ server <- function(input, output, session) {
     content = function(con) {
       samp<-get_trees(forest(),table()[1,],input$plot_type1)
       samp$Parc <- max(table()$Parc)
-      write.csv(samp, con,row.names = FALSE)
+      write.csv2(samp, con,row.names = FALSE)
     }
   )
   output$muestra <- renderTable({
@@ -218,6 +225,8 @@ server <- function(input, output, session) {
     selected_list <- group_split(selected,Rep,Parc)
     forest_all <- forest()
     type <- input$plot_type1
+    # print("hola")
+    # print(selected)
     selected_trees <- map_dfr(selected_list,function(x,population,type){
       res<- get_trees(population,x,type)
       res$Parc <- x$Parc[1]
@@ -246,7 +255,7 @@ server <- function(input, output, session) {
         res$Rep <- x$Rep[1]
         res
       },population=forest_all,type=type)
-      write.csv(selected_trees, con,row.names = FALSE)
+      write.csv2(selected_trees, con,row.names = FALSE)
     }
   )
   
@@ -311,8 +320,63 @@ server <- function(input, output, session) {
   
   
   # ##### Samp alloc #####
+  output$tabla_interes6<-renderTable({
+    print("Uno")
+    print(error())
+    par_int()
+  })
   
-
+  output$downloadpilotSamp<-downloadHandler(
+    
+    filename = function() {
+      paste('piloto-', Sys.Date(), '.csv', sep='')
+    },
+    content = function(con) {
+      selected <- error()
+      selected_list <- group_split(selected,Rep,Parc)
+      forest_all <- forest()
+      type <- input$plot_type1
+      selected_trees <- map_dfr(selected_list,function(x,population,type){
+        res<- get_trees(population,x,type)
+        res$Parc <- x$Parc[1]
+        res$Rep <- x$Rep[1]
+        res
+      },population=forest_all,type=type)
+      
+      write.csv2(selected_trees, con,row.names = FALSE)
+    }
+  )
+  
+  output$plot_selected4<-renderPlot({
+    
+    selected <- error()
+    print("Dos")
+    print(error())
+    selected_list <- group_split(selected,Rep,Parc)
+    forest_all <- forest()
+    type <- input$plot_type1
+    # print("hola")
+    # print(selected)
+    selected_trees <- map_dfr(selected_list,function(x,population,type){
+      res<- get_trees(population,x,type)
+      res$Parc <- x$Parc[1]
+      res$Rep <- x$Rep[1]
+      res
+    },population=forest_all,type=type)
+    
+    plot_n_selections(base_plot(),selected_trees,
+                      tree_center = input$centered=="arbol",
+                      all=input$all_trees)
+  })
+  
+  
+  output$samp_alloc<-renderPlot({
+    sample_alloc_plot(error(),
+                      conf_level = input$conf_level2,
+                      max_rel_error = input$rel_error/100,
+                      current_n = input$n)
+  })
+  
   
 }
 
