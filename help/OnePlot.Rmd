@@ -19,6 +19,8 @@ Antes de continuar, se recomienda pulsar el botón **Regenera población** para 
 
 #### Parámetros de interés
 
+Vamos a hacer un pequeño recordatorio de los tipos de parámetros de interés que vimos en la pestaña 1 Población. Es importante tener en cuenta que estos valores nunca los conoceremos en casos reales y que nuestro objetivo es estimarlos.
+
 ***Totales***
 
 De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada. Si usamos el símbolo $\cal{N}$ (**N de bordes redondeados**) para representar el número de árboles en la zona a muestrear (**parámetro desconocido**) tenemos que totales y totales por unidad de área se expresan como:
@@ -57,7 +59,7 @@ $$
 d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
-Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos tendremos que decidir como aproximarnos a dichos problemas.
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea.
 
 #### Estimador de Horvitz-Thompson de parcela para totales o totales por unidad de área.
 
@@ -65,7 +67,7 @@ En esta sección se explica como se obtienen estimaciones de parcela (panel cent
 
 Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área.
 
-Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés.
+Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés. A continuación se indica cómo se calcula el estimador de parcela para un total y para un total por unidad
 
 $$\hat{Total(y)}=\begin{cases}
 \sum\limits_{i\in muestra}\frac{y_i}{\pi_i} , & \text{si se ha seleccionado algún árbol} \\
@@ -79,7 +81,7 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
 
-**Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área, cuando estimamos totales por unidad de área, el área a muestrear** $A$**, aparece dividiendo al total, pero también aparece de forma implícita en las** $\pi_i$ **. Estas áreas se cancelan y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés por su factor de expansión.**
+Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área, cuando estimamos totales por unidad de área, el área a muestrear $A$, aparece dividiendo al total, pero también aparece de forma implícita en las $\pi_i$ . Estas áreas se cancelan y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés por su factor de expansión.
 
 $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 \sum\limits_{i\in muestra}y_iw_i  , & \text{si se ha seleccionado algún árbol} \\
@@ -87,9 +89,9 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
 
-**Si recordamos la interpretación de factor de expansión como número de árboles similares al árbol muestreado que esperamos encontrar en una hectárea de terreno podemos deducir la fórmula anterior recordando que total por unidad de área es la suma de la variable de interés para todos los árboles de la hectárea. Como cada árbol muestreado representa** $w_i$ **árboles en la hectárea de terreno, lo único que hay que hacer es sumar la variable de interés** $y_i$ **por** $w_i$
+Si recordamos la interpretación de factor de expansión como número de árboles similares al árbol muestreado que esperamos encontrar en una hectárea de terreno podemos deducir la fórmula anterior recordando que total por unidad de área es la suma de la variable de interés para todos los árboles de la hectárea. Como cada árbol muestreado representa\*\* $w_i$ árboles en la hectárea de terreno, lo único que hay que hacer es sumar la variable de interés $y_i$ por $w_i$
 
-**En el panel izquierdo de esta pestaña tienes las mediciones a nivel de árbol que se haría en la parcela. Para obtener un determinado total por unidad de área solo tenemos que multiplicar la columna de la variable para la que queremos hacer el total por unidad de área (si queremos estimar** $N$ **esta columna siempre valdría 1) por el factor de expansión correspondiente y sumar.**
+En el panel izquierdo de esta pestaña tienes las mediciones a nivel de árbol que se haría en la parcela. Para obtener un determinado total por unidad de área solo tenemos que multiplicar la columna de la variable para la que queremos hacer el total por unidad de área (si queremos estimar $N$ esta columna siempre valdría 1) por el factor de expansión correspondiente y sumar.
 
 ***Ejemplo 1:***
 
@@ -139,7 +141,7 @@ y
 
 $$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}$$
 
-Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol sumado, deberíamos reducir el factor de expansión de forma que la suma de todos los factores de expansión para el conjunto de árboles dominante sea 100 (podemos usar el símbolo $w_i^*$ para indicar que estos factores de expansión se han modificado para el último árbol dominante). La suma del denominador, en este caso se reduce a 100 árboles en una hectárea.
+Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol del conjunto de árboles dominantes podemos reducir el factor de expansión de forma que la suma de todos los factores de expansión sea 100 (podemos usar el símbolo $w_i^*$ para indicar que estos factores de expansión se han modificado para el último árbol dominante). La suma del denominador, en este caso se reduce a 100 árboles en una hectárea y los estimadores se expresan de la siguiente forma
 
 $$\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}\frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{100}$$
 
@@ -151,7 +153,7 @@ $$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\i
 
 ***Valor esperado***
 
-Cuando consideramos totales o totales por unidad de área, es posible demostrar que el estimador de parcela que hemos empleado no tendrá sesgo si los efectos de borde no son importantes. Es decir, si los efectos de borde se pueden despreciar, tenemos que el valor esperado del estimador coincide con el valor que queremos estimar.
+Cuando consideramos totales o totales por unidad de área, es posible demostrar que el estimador de parcela que hemos empleado no tendrá sesgo si los efectos de borde no son importantes. Es decir, si los efectos de borde se pueden despreciar, tenemos que, para totales, el valor esperado del estimador coincide con el valor que queremos estimar.
 
 $$\boxed{\boxed{ E(\hat{Total(y)}) = Total(y)}}$$
 
@@ -161,29 +163,31 @@ $$\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}$$
 
 Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calcular el estimador, la media de esas infinitas estimaciones coincidiría con el valor a estimar. **Esta propiedad es muy fuerte pues se cumple sea cual sea la población y el tipo de parcela, lo único que debe ser despreciable son los efectos de borde, cosa que normalmente ocurre.**
 
-Desafortunadamente, esta propiedad aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
+Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
 
 ***Varianza y desviación típica***
 
-Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la dispersión del mismo. Desafortunadamente, la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, **por lo que sólo podemos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
+Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la dispersión del mismo. Desafortunadamente, la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, **por lo que sólo podremos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
 
 #### Repetición del experimento de ubicar una parcela al azar (Panel derecho)
 
 Como puente al proceso más realista en el que se miden múltiples parcelas, podemos ver que ocurre si repetimos múltiples veces el proceso de seleccionar un punto, tomar la muestra de árboles y calcular los estimadores correspondientes.
 
-En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para cinco variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical negra. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
+En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para seis variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical negra. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
 
-[En este panel es importante observar dos cosas:]{.underline}
+Finalmente, a medida que añadamos parcelas podemos ver las distribuciones de frecuencias de los valores estimados (curva gris). Si pudiésemos repetir muchas veces la selección de muestras, la distribución de frecuencias que obtendríamos es lo que llamamos distribución muestral del estimador.
 
-Para totales, a medida que hacemos más y más parcelas y tomamos la media, el punto azul se aproxima más y más al parámetro de interés. Si el lado de tu población es pequeño, puede que haya cierta desviación sistemática o sesgo ya que las probabilidades de inclusión o factores de expansión que tomamos no consideran efectos de bordes que se dan cuando el área de inclusión de un árbol corta los límites de la zona a muestrear.
+**En este panel es importante observar dos cosas:**
 
-En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de borde tienden a ser pequeños, algo similar ocurre si se aumenta el lado del área simulada, estos efectos de borde tienden a tener una importancia casi nula. Prueba a generar poblaciones con un lado mayor:
+Para totales, a medida que hacemos más y más parcelas y tomamos la media, el punto azul se aproxima más y más al parámetro de interés. Esto es consecuencia directa de la ausencia de sesgo en los estimadores de parcela para totales y totales por unidad de área. En la introducción los hemos llamado estimadores tipo Horvitz-Thompson, vamos a retomar brevemente este nombre.
+
+Si el lado de tu población es pequeño, puede que haya cierta desviación sistemática o sesgo ya que las probabilidades de inclusión o factores de expansión que tomamos no consideran efectos de bordes que se dan cuando el área de inclusión de un árbol corta los límites de la zona a muestrear. En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de borde tienden a ser pequeños puedes observar esto aumentando el lado del área muestreada, simplemente prueba a generar poblaciones con un lado mayor:
 
 -   **En la pestaña** **Selección de muestra** verás que, proporcionalmente, las áreas de inclusión que cortan el área muestreada pierden importancia
 
 -   **En esta pestaña** podrás ver como la media de estimaciones de totales por unidad de área se aproximan más y más al valor real, es decir, el sesgo para totales desaparece. Finalmente, a medida que añadimos más muestras, la media varia cada vez menos mientras que la variabilidad de las estimaciones de parcela se mantiene dentro de un rango más amplio. En las siguientes pestañas se puede ver la relación entre la variabilidad de la estimación por parcela y la variabilidad de una media de $n$ parcelas.
 
-#### Uso e historia del relascopio
+#### Uso del relascopio para estimar áreas basimétricas
 
 Vamos a retomar el ejemplo 1, ya que nos permite ver en detalle que estamos haciendo cuando seguimos las instrucciones del relascopio. Inicialmente vamos a diferenciar la estimación con el estimador de Horvitz-Thompson, la llamaremos $\hat{G}_{HT}$ y la estimación con el relascopio $\hat{G}_{relascopio}$
 
@@ -195,8 +199,7 @@ $$\hat{G}_{HT}=\begin{cases}
 
 Operando para expresar el área basimétrica en $m²/ha$ tedríamos que:
 
-$$\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}w_i$$
-donde $dn_i$ es el diámetro normal del árbol $i$ en cm y el 10000 en el denominador aparece al transformar los diámetros normales en centímetro a metros. El factor de expansión $w_i$ para parcelas se puede obtener recordando que diámetro (o radio) del área de inclusión será veces $k$ veces el diámetro normal (o radio) del árbol y que este área de inclusión se calculará en hectáreas. Es decir:
+$$\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}w_i$$ donde $dn_i$ es el diámetro normal del árbol $i$ en cm y el 10000 en el denominador aparece al transformar los diámetros normales en centímetro a metros. El factor de expansión $w_i$ para parcelas se puede obtener recordando que diámetro (o radio) del área de inclusión será veces $k$ veces el diámetro normal (o radio) del árbol y que este área de inclusión se calculará en hectáreas. Es decir:
 
 $$wi=\frac{1}{\pi (\frac{kdn_i}{2*100}) ² \frac{1}{10000}}$$
 
@@ -212,8 +215,16 @@ Al usar $\hat{G}_{relascopio}$ y $\hat{G}_{HT}$ estamos estimando la misma canti
 
 $$\hat{G}_{HT}=\hat{G}_{relascopio} \rightarrow\frac{10000}{k ²}\sum_{i \in muestra}1=BAF\sum_{i \in muestra}1\rightarrow \frac{10000}{k^2}=1 \rightarrow k=100$$
 
-Es decir, un BAF igual a 1, equivale a que el diámetro del área de inclusión de los árboles tenga un diámetro igual 100 veces el diámetro normal en cm. Es decir, si un árbol tiene un diámetro normal de 13 cm, el diámetro del área de inclusión será 100 veces mayor o lo que es lo mismo 13 m. Esta forma de proceder nos permite deducir el factor de multiplicación $k$ para BAFs arbitrarios.
+Es decir, un BAF igual a 1, equivale a que el diámetro del área de inclusión de los árboles tenga un diámetro igual 100 veces el diámetro normal en cm. Es decir, si un árbol tiene un diámetro normal de 13 cm, el diámetro del área de inclusión será 100 veces mayor o lo que es lo mismo 13 m. Esta forma de proceder, basada en igualar la receta del relascopio con el estimador de Horvitz-Thompson, nos permite deducir el factor de multiplicación $k$ para un BAF arbitrario y viceversa.
 
-Finalmente, es importante darse cuenta, que al estimar $G$ con un relascopio, no tenemos que medir nada, solo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ se cancela, pues este factor también aparece en $w_i$. En esta explicación, hemos visto el fundamento de álgo que a cuando se ve la primera vez resulta a misterioso. ¿Cómo puede ser que estimemos áreas contando árboles? La explicación está en el uso de factores de expansión inversamente proporcionales a la variable de la que estimar el total por unidad de área. O lo que es lo mismo, el conteo aparece porque hacemos probabilidades de inclusión proporcionales a la variable cuyo total queremos estimar.
+Finalmente, es importante darse cuenta, que al estimar $G$ con un relascopio, no tenemos que medir nada, solo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ se cancela, pues este factor también aparece en $w_i$.
 
-Sin duda, algo muy interesante de esta explicación es el orden temporal en los que aparecieron el relascopio y el estimador de Horvitz-Thompson. Uno podría pensar que el relascopio se desarrollo una vez se conocía la formulación del estimador de Horvitz-Thompson, sin embargo, el orden fue el contrario!!! Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicarón su artículo en 1952!! Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores. Por otro lado, la publicación de Horvitz y Thompson también supuso un hito importante pues mostraba que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales aveces sin darnos cuenta, carece de sesgo independientemente de cual sea el diseño de muestreo y la población con la que trabajamos.
+En esta explicación, hemos visto el fundamento de algo que cuando se ve la primera vez resulta hasta misterioso. ¿Cómo puede ser que estimemos áreas contando árboles? La explicación está en el uso de factores de expansión inversamente proporcionales a la variable de la que estimar el total por unidad de área. O lo que es lo mismo, el conteo aparece porque hacemos probabilidades de inclusión proporcionales a la variable cuyo total queremos estimar.
+
+#### Nota histórica
+
+Sin duda, algo muy interesante de esta explicación es el orden temporal en que aparecieron el relascopio y el estimador de Horvitz-Thompson (o estimador de parcelas para totales). Uno podría pensar que el relascopio se desarrollo una vez se conocía la formulación del estimador de Horvitz-Thompson, sin embargo, el orden fue el contrario!!!
+
+Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicarón su artículo en 1952. Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores al diseño del relascopio.
+
+Por otro lado, es muy importante destacar la impoartancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues mostraba que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales aveces sin darnos cuenta, carece de sesgo independientemente de cual sea el diseño de muestreo y la población con la que trabajamos.
