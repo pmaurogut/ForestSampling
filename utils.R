@@ -616,7 +616,9 @@ prepare_error_pol <- function(means_sd,conf_level=0.95){
   variation_n <- expand.grid(parametro=unique(means_sd$parametro),n_samp=1:50,side=1:2)
   variation_n <- merge(means_sd,variation_n,by="parametro")
 
-  variation_n$q <- ifelse(variation_n$n==1,-2,-qt((1-conf_level)/2,variation_n$n-1))
+  variation_n$q <- ifelse(variation_n$n_samp<3,
+                          -qt((1-conf_level)/2,2),
+                          -qt((1-conf_level)/2,variation_n$n_samp-1))
   
   variation_n$bound <- ifelse(variation_n$side==1,variation_n$q*variation_n$sd,
                               -variation_n$q*variation_n$sd)
