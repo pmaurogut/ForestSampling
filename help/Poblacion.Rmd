@@ -5,23 +5,61 @@ output: html_document
 
 #### Introducción
 
-**Estás viendo la población simulada**. Al hacer un inventario, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valores de sus alturas y diámetros. Esto implica que en aplicaciones reales no conoceremos los valores de los parámetros de interés que querremos estimar.
-
-Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a maestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.
+**Estás viendo la población simulada**. Al hacer un inventario, no conocemos la población, no sabemos cuantos individuos hay, ni cuales son los valores de sus alturas, diámetros, etc. Esto implica que en aplicaciones reales no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo en unas condiciones donde conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.
 
 #### Parámetros de interés (General)
 
-**Totales y totales por unidad de área**
+En esta pestaña puedes ver distintos parámetros de interés y podrás diferenciar entre totales, totales por unidad de área, valores medios, etc. La aplicación te permite configurar distintas poblaciones y obtener una tabla con todos los individuos de dicha población que puedes usar para calcular distintas variables de masa.
 
-De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada $A$ . Si usamos el símbolo $\cal{N}$ (N de bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido) tenemos que totales y totales por unidad de área se expresan como:
+En la aplicación se consideran los siguientes tipos de parámetros de interés:
+
+1.  Totales y totales por unidad de área
+
+2.  Valores medios, ratios y funciones de totales
+
+3.  Parámetros complejos (valores dominantes)
+
+#### Totales y totales por unidad de área
+
+De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir un total por el área muestreada $A$ . Si usamos el símbolo $\cal{N}$ (con bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido en aplicaciones reales) tenemos que totales y totales por unidad de área se expresan como:
 
 $$Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total \: por \: unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i$$
 
-Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (N con bordes rectos), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
+Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (con bordes rectos), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
 
-**Ratios y funciones de totales**
+**Ejemplos de totales**
 
-Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
+-   Si consideramos una variable que valga 1 para todos los árboles $y_i=1$ tenemos que el tamaño de la población $\cal{N}$ es el total de dicha variable (al sumar 1 por cada individuo es como si estuviésemos contándolos). Esta variable es el total de individuos.
+
+$$Total\:individuos= \sum_{i=1}^{\cal{N}}1$$
+
+-   Total secciones normales
+
+$$Total\:secciones\:normales(m²)=\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
+
+-   Total de volumen con corteza
+
+$$Total\:volumen\:con\:corteza(m³)=\sum_{i=1}^{\cal{N}}vcc_i$$
+
+**Ejemplos de totales por unidad de área**
+
+A continuación tenemos las variantes por unidad de área de los totales anteriores. La diferencia con los totales, es que referimos las sumas a la unidad de área. Normalmente usamos la hectárea como unidad de área, por lo que $A$ en las siguientes fórmulas es el área en hectáreas de la zona a muestrear.
+
+-   Densidad (pies por ha) (Total por unidad de área)
+
+$$N(individuos/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}1$$
+
+-   Área basimétrica (Total por unidad de área)
+
+$$G(m²/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
+
+-   Volumen con corteza por unidad de área (Volumen con corteza por ha)
+
+$$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}vcc_i$$
+
+#### Ratios y funciones de totales
+
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican a más de un total. En este sentido destacan los valores medios.
 
 $$
 Media(y)=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\sum_{i=1}^{\cal{N}}1}
@@ -35,7 +73,17 @@ $$
 \frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g = \sqrt{\frac{4G}{\pi N}}
 $$
 
-**Otros parámetros complejos**
+**Ejemplos de ratios y funciones de totales o totales por unidad de área**
+
+-   Diámetro cuadrático medio (función de totales)
+
+$$dg(cm)=\sqrt{\frac{4}{\pi}\frac{G}{N}}=\sqrt{\frac{4}{\pi}\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}}$$
+
+-   Altura media (ratio de totales)
+
+$$\bar{h}(m)=\frac{\sum_{i=1}^{\cal{N}}h_i}{\sum_{i=1}^{\cal{N}}1}$$
+
+#### Otros parámetros complejos
 
 Hay variables dasométricas que no son totales o funciones o ratios de totales. En este apartado destacan las alturas y diámetros dominantes, que suelen definirse como alturas o diámetros medios del conjunto de árboles dominantes.
 
@@ -47,52 +95,4 @@ $$
 d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
-Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos tendremos que decidir como aproximarnos a dichos problemas.
-
-#### Parámetros de interés (aplicación)
-
-En este caso hemos considerado los siguientes parámetros de interés donde $A$ es el área conocida de la zona a muestrear:
-
-**Totales**
-
--   Total de individuos
-
-$$Total\:individuos= \sum_{i=1}^{\cal{N}}1$$
-
--   Total secciones normales
-
-$$Total\:secciones\:normales(m²)=\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$
-
--   Total de volumen con corteza
-
-$$Total\:volumen\:con\:corteza(m³)=\sum_{i=1}^{\cal{N}}vcc_i$$
-
-**Totales por unidad de área**
-
--   Densidad (pies por ha) (Total por unidad de área)
-
-$$N(individuos/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}1$$
-
--   Área basimétrica (Total por unidad de área)
-
-$$G(m²/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2$$ - Volumen con corteza por unidad de área (Volumen con corteza por ha)
-
-$$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\cal{N}}vcc_i$$
-
-**Ratios y funciones de totales o totales por unidad de área**
-
--   Diámetro cuadrático medio (función de totales)
-
-$$dg(cm)=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}\frac{4}{\pi}}$$
-
--   Altura media (ratio de totales)
-
-$$\bar{h}(m)=\frac{\sum_{i=1}^{\cal{N}}h_i}{\sum_{i=1}^{\cal{N}}1}$$
-
-**Parámetros de dominancia**
-
--   Altura dominante (otros parámetros complejos)
-
-$$h_o(m) =\sum_{i \in \cal{D}}^{\cal{N}}g_i=\sum_{i=1}^{\cal{N}}\frac{\pi}{4}dn_i² \:\: ,donde \: \cal{D} \text{ es el conjunto de árboles dominantes}$$
-
-Bajo el criterio de Assman $\cal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos tendremos que decidir como aproximarnos a dichos problemas. Sin que es importante tener en cuenta que desde el punto de vista del muestreo, estos parámetros no son totales ni valores medios al uso, ya que se refieren a una fracción de la población.
