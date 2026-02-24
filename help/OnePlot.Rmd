@@ -163,6 +163,10 @@ $$\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}$$
 
 Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calcular el estimador, la media de esas infinitas estimaciones coincidiría con el valor a estimar. **Esta propiedad es muy fuerte pues se cumple sea cual sea la población y el tipo de parcela, lo único que debe ser despreciable son los efectos de borde, cosa que normalmente ocurre.**
 
+Hemos visto en teoría dos propiedades de los estimadores que son interesantes. El sesgo y la varianza. El sesgo nos dice cómo de cerca nos quedamos, en promedio, del parámetro que queremos estimar. La precisión, medida a través de la varianza o la desviación típica, nos informa sobre la variabilidad de los valores que podemos obtener al emplear un estimador.
+
+Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda o a la derecha, pero si que sabemos que estamos en la fila de abajo.
+
 Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
 
 ***Varianza y desviación típica***
@@ -225,6 +229,6 @@ En esta explicación, hemos visto el fundamento de algo que cuando se ve la prim
 
 Sin duda, algo muy interesante de esta explicación es el orden temporal en que aparecieron el relascopio y el estimador de Horvitz-Thompson (o estimador de parcelas para totales). Uno podría pensar que el relascopio se desarrollo una vez se conocía la formulación del estimador de Horvitz-Thompson, sin embargo, el orden fue el contrario!!!
 
-Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicarón su artículo en 1952. Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores al diseño del relascopio.
+Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicaron su artículo en 1952. Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores al diseño del relascopio.
 
 Por otro lado, es muy importante destacar la impoartancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues mostraba que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales aveces sin darnos cuenta, carece de sesgo independientemente de cual sea el diseño de muestreo y la población con la que trabajamos.
