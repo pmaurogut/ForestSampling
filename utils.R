@@ -616,8 +616,8 @@ prepare_error_pol <- function(means_sd,conf_level=0.95){
   variation_n <- expand.grid(parametro=unique(means_sd$parametro),n_samp=1:50,side=1:2)
   variation_n <- merge(means_sd,variation_n,by="parametro")
 
-  variation_n$q <- ifelse(variation_n$n_samp<3,
-                          -qt((1-conf_level)/2,2),
+  variation_n$q <- ifelse(variation_n$n_samp<2,
+                          -qt((1-conf_level)/2,1),
                           -qt((1-conf_level)/2,variation_n$n_samp-1))
   
   variation_n$bound <- ifelse(variation_n$side==1,variation_n$q*variation_n$sd,
@@ -664,7 +664,7 @@ sample_alloc_plot <- function(piloto,conf_level=0.95,max_rel_error=0.1,current_n
   means_sd$error <- (means_sd$q*means_sd$sd_n)
   means_sd$rel_error <- means_sd$error/means_sd$mean
   
-  means_sd$error_curr <- means_sd$q2*(means_sd$sd/sqrt(current_n))
+  means_sd$error_curr <- means_sd$q*(means_sd$sd/sqrt(current_n))
   means_sd$rel_error_curr <- means_sd$error_curr/means_sd$mean
   
   means_sd$bound_min <- means_sd$mean*(1-max_rel_error)
