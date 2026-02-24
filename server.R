@@ -32,7 +32,7 @@ server <- function(input, output, session) {
   
   error <- reactive({
     input$remuestreaError
-    get_pilot(est(),input$plot_type1,input$n_pilot,wide=TRUE)
+    get_pilot(est(),input$plot_type1,input$n_pilot,K=K,wide=TRUE)
   })
   
   variation<-reactive({

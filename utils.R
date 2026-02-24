@@ -530,7 +530,7 @@ get_estimatesIC <- function(estimates,type,n,K,reps){
   return(estimates)
 }
 
-get_pilot <- function(estimates,type,n_pilot,wide=FALSE){
+get_pilot <- function(estimates,type,n_pilot,K,wide=FALSE){
   
   estimates <- estimates |> filter(Type==type)
   estimates <- estimates[sample(1:K,n_pilot,replace=TRUE),]
