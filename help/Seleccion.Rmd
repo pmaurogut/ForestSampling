@@ -5,21 +5,19 @@ output: html_document
 
 #### Introducción
 
-Vamos a considerar el experimento aleatorio de ubicar una parcela uniformemente al azar en la zona a maestrear. A partir de la ubicación de este punto se determinarán los árboles que formarán parte de la muestra. Como la ubicación del punto de muestreo es aleatoria, los árboles que formarán la muestra también lo serán. Podemos analizar el proceso de selección de muestras desde dos puntos de vista complementarios que nos permitirán deducir, de una forma sencilla y visual, probabilidades de inclusión en la muestra ($\pi_i$) y factores de expansión ($w_i$) que nos serán útiles en el proceso de estimación.
-
-Antes de continuar vemos que para un radio determinado, un árbol se mide si está a a una distancia del punto de medición menor de dicho radio. Esto se puede ver de dos formas complementarias
+Vamos a considerar el experimento aleatorio de ubicar una parcela uniformemente al azar en la zona a maestrear. A partir de la ubicación de este punto se determinarán los árboles que formarán parte de la muestra. Como la ubicación del punto de muestreo es aleatoria, los árboles que formarán la muestra también lo serán. Podemos analizar el proceso de selección de muestras desde dos puntos de vista complementarios que nos permitirán deducir, de una forma sencilla y visual, probabilidades de inclusión en la muestra ($\pi_i$) y factores de expansión ($w_i$) que nos serán útiles en el proceso de estimación. Antes de continuar vamos a ver con algo más de detalle ambas formas de visualizar el problema.-
 
 #### Selección basada en áreas de inclusión centradas en los árboles
 
-La primera, forma de ver esto seria haciendo un círculo del radio correspondiente en torno a cada árbol. Si llamamos área de inclusión al área de dicho círculo, podemos decir que mediremos aquellos árboles para los que el punto de medición que hemos aleatorizado cae dentro del área de inclusión del árbol.
-
-![*Selección de muestra vista desde el árbol con áreas de inclusión*](areas_inclusion_arbol.png)
-
-#### Selección basada en áreas de inclusión centradas en los árboles
-
-Hay una forma alternativa de ver si debemos muestrear un árbol o no. Dado que da igual que punto escojamos para medir distancias, esta vez, podemos centrarnos en el punto de medición y hacer un circulo (o círculos para parcelas con radio variable). Se medirán los arboles que estén dentro del círculo realizado en torno al punto de medición o centro de parcela.
+La forma de seleccionar la muestra más parecida a lo que realizamos en campo es centrarnos en el punto de medición y hacer un circulo (o círculos para parcelas con radio variable y de relascopio) en torno al punto de medición o centro de parcela. Los árboles que formarán la muestra serán aquellos que estén dentro del círculo (o círculos) realizados en torno al centro de parcela. 
 
 ![*Selección de muestra vista desde el centro de la parcela*](areas_inclusion_parcela.png)
+
+#### Selección basada en áreas de inclusión centradas en los árboles
+
+La segunda forma de ver este problema seria centrarse en árbol. En torno a cada árbol realizaremos un círculo del radio que le corresponda en base a su diámetro. Si llamamos área de inclusión al área de dichos círculos, podemos ver que los árboles a medir serán aquellos cuyas áreas de inclusión contengan al punto de medición que hemos aleatorizado. 
+
+![*Selección de muestra vista desde el árbol con áreas de inclusión*](areas_inclusion_arbol.png)
 
 Mientras que el punto de vista centrado en los árboles es muy gráfico a la hora de determinar probabilidades de incluir un determinado árbol en la muestra. El punto de vista basado en la parcela tiene una interpretación alternativa que es muy útil.
 
