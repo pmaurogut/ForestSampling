@@ -99,6 +99,12 @@ server <- function(input, output, session) {
     new_val <- ifelse(new_val>50,1,new_val)
     updateSelectInput(inputId = "n",selected = new_val)
   })
+  observeEvent(input$samp_dist2,{
+    new_val <- isolate(input$n)
+    new_val <- new_val-1
+    new_val <- ifelse(new_val<1,1,new_val)
+    updateSelectInput(inputId = "n",selected = new_val)
+  })
   
   ##### Population #####
   

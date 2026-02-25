@@ -39,6 +39,7 @@ areas_inclusion <- checkboxInput("all_trees","Todas las areas de inclusion",valu
 add_hd<- checkboxInput("add_hd","Añade altura y diámetro",value = FALSE)
 
 samp_dist <- actionButton("samp_dist", "Aumenta n")
+samp_dist <- actionButton("samp_dist2", "Reduce n")
 reps <- sliderInput("reps","Replicas",value = 3,min = 1,max = 5,step=1)
 
 controls <- list(lado,pop_size,samp_size,plot_type,space,
