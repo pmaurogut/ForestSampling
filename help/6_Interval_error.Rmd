@@ -19,11 +19,9 @@ Para simplificar la notación vamos a usar el símbolo $\mu$ para el parámetro 
 
 En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parcela del parámetro $\mu$ en la parcela $p$, y que $\hat{\mu}_{final}=\sum_{p=1}^n\hat{\mu}_p$ sería el estimador final del parámetro de interés $\mu$ basado en $n$ parcelas.
 
-Cuando hagamos un inventario real mediremos $n$ parcelas y no podremos repetir ese proceso cientos de veces como hacíamos en la pestaña anterior. Entonces, **¿Cómo podemos obtener información sobre la distribución muestral del estimador final?**
+Cuando hagamos un inventario real mediremos solo $n$ parcelas y no podremos repetir ese proceso muestreo cientos de veces como hacíamos en la pestaña anterior. Entonces, **¿Cómo podemos obtener información sobre la distribución muestral del estimador final con un único valor?**
 
-El análisis de la fiabilidad del inventario se apoyará en las relaciones que existen entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final prestando atención a la varianza y desviación típica de estas distribuciones. Estas relaciones se han visto en las dos pestañas anteriores.
-
-**Es importante tener en cuenta que al realizar nuestro inventario mediremos** $n$ **parcelas y haremos su media por lo que sólo tendremos un valor del estimador final. Con un único valor será imposible analizar su variabilidad por lo que tendremos que hacer uso de las relaciones que hemos estudiado entre estimador final y estimador de parcela de los que tenemos** $n$ valores**.**
+El análisis de la fiabilidad del inventario se apoyará en las relaciones que existen entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final, prestando especial atención a la varianza y desviación típica de estas distribuciones. Estas relaciones se han visto en las dos pestañas anteriores.
 
 #### Relaciones entre las distribuciones muestrales del estimador de parcela y el estimador final.
 
@@ -47,7 +45,7 @@ $$
 sd(\hat{\mu}_{final})=\frac{sd(\hat{\mu}_p)}{\sqrt{n}}
 $$
 
-4.  Para $n$ grande (no podemos saber cómo de grande ha de ser $n$), se tiene que la distribución muestral del estimador final sera una normal
+4.  Para $n$ grande (no podemos saber cómo de grande ha de ser $n$), se tiene que la distribución muestral del estimador final será una normal
 
 $$
     \hat{\mu}_{final}\sim N(E(\hat{\mu}_p),\frac{sd(\hat{\mu}_p)²}{n})
@@ -61,7 +59,7 @@ $$
 
 #### Segundo problema de estimación
 
-El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final y que se presentó en la pestaña 5. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$.
+El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final que se presentó en la pestaña 5. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$.
 
 Para estimar $sd(\hat{\mu}_{final})$ nos apoyaremos en la propiedad 3. De estadística conocemos que podemos obtener un estimador insesgado de la varianza de una variable aleatoria, la varianza es el cuadrado de sd, a partir de $n$ realizaciones independientes de dicha variable empleando la siguiente fórmula:
 
@@ -73,7 +71,7 @@ $$\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^
 
 **IMPORTANTE:** Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
 
-Ya casi hemos terminado el segundo problema de estimación, en base a la última ecuación y a la propiedad 3, tendremos que:
+Ya casi hemos terminado el segundo problema de estimación, en base a estas ecuaciones estimamos la varianza o desviación típica del estimador de parcela para el que tenemos $n$ repeticiones, basandonos en la propiedad 3 convertiremos, tendremos que:
 
 $$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}$$
 
@@ -83,7 +81,7 @@ $$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt
 
 #### Intervalos de confianza
 
-Una vez que hemos visto el segundo problema de estimación (estimar la dispersión de la distribución muestral del estimador final a través de la varianza o desviación ), podemos ver como se hace el reporte de incertidumbres o control de calidad de un muestreo. Para ello, nos vamos a apoyar en los estimadores de la desviación típica que acabamos de ver y en la aplicación del teorema del límite central que veíamos en la pestaña anterior.
+Una vez que hemos visto el segundo problema de estimación (estimar la dispersión de la distribución muestral del estimador final a través de la varianza o desviación típica), podemos ver como se hace el reporte de incertidumbres o control de calidad de un muestreo. Para ello, nos vamos a apoyar en los estimadores de la desviación típica que acabamos de ver y en la aplicación del teorema del límite central que veíamos en la pestaña anterior.
 
 Asumiendo que se ha conseguido la normalidad, la siguiente fórmula nos permite crear intervalos que contienen el valor esperado del estimador final con un $(1-\alpha)\%$ de probabilidad:
 
@@ -124,7 +122,7 @@ Directamente relacionado con los intervalos de confianza tendremos la cantidad q
 
 $$Error\: muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
-Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo y los denotaremos con el símbolo $\hat{\varepsilon}_{(1-\alpha)\%}$ y los calcularemos, expresándolos en tanto por uno, con la siguiente fórmula:
+Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo. Los errores relativos los denotaremos con el símbolo $\hat{\varepsilon}_{(1-\alpha)\%}$ y los calcularemos expresándolos en tanto por uno con la siguiente fórmula:
 
 $$\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}$$
 
@@ -134,7 +132,7 @@ Los términos que intervienen en el error de muestreo (en términos absolutos o 
 
 #### Controles de la aplicación
 
-En esta pestaña, para el número de parcelas indicado, se repite el muestreo cinco veces. En el panel derecho, parte inferior, podemos ver en negro el valor teórico de $sd(\hat{\mu}_{final})$, en azul se mostrarán las 5 estimaciones de $\hat{sd}(\hat{\mu}_{final})$ . En el panel derecho, se muestran para cada una de las cinco replicaciones, $\hat{sd}(\hat{\mu}_{p})$, $\hat{sd}(\hat{\mu}_{final})$ (texto rojo y a la izquierda), el intervalo de confianza para $\hat{\mu}_{final}$ (en rojo y forma gráfica) y el error de muestreo (texto azul a la derecha). En rojo y con una ligera transparencia se muestra los $n$ valores de $\hat{\mu}_{p}$ para cada replica.
+En esta pestaña, para el número de parcelas indicado, **se repite el muestreo cinco veces**. En el panel derecho, parte inferior, podemos ver en negro el valor teórico de $sd(\hat{\mu}_{final})$, en azul se mostrarán las 5 estimaciones de $\hat{sd}(\hat{\mu}_{final})$ . En el panel derecho, se muestran para cada una de las cinco replicaciones, $\hat{sd}(\hat{\mu}_{p})$, $\hat{sd}(\hat{\mu}_{final})$ (texto rojo y a la izquierda), el intervalo de confianza para $\hat{\mu}_{final}$ (en rojo y forma gráfica) y el error de muestreo (texto azul a la derecha). En rojo y con una ligera transparencia se muestra los $n$ valores de $\hat{\mu}_{p}$ para cada replica.
 
 En el panel izquierdo tendremos los valores de los parámetros de interés a estimar, un control para aumentar o reducir el nivel de confianza $(1-\alpha)\%$ y un botón que dice **Remuestrea** y que al ser pulsado descartará las cinco replicas de $n$ parcelas y tomará otras cinco nuevas. En esta pestaña el botón **Muestrea** no hará nada pero los controles para el tipo de parcela, densidad, tamaño del área a muestrear y número de parcelas seguirán activos.
 
