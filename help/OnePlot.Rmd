@@ -13,9 +13,7 @@ En esta pestaña se explica cómo se hace la estimación de un parámetro de int
 
 3.  Calcular estimaciones de parcela a partir del conjunto de árboles seleccionados
 
-La base de la estimación será el estimador de Horvitz-Thompson para totales o su versión para totales por unidad de área. Ambas versiones pueden intercambiarse casi de forma directa ya que el área a muestrear $A$ normalmente es conocida.
-
-Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
+La base de la estimación será el estimador de Horvitz-Thompson para totales o su versión para totales por unidad de área. Ambas versiones pueden intercambiarse casi de forma directa ya que el área a muestrear $A$ normalmente es conocida. Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
 
 #### Parámetros de interés
 
@@ -63,11 +61,7 @@ Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de
 
 #### Estimador de Horvitz-Thompson de parcela para totales o totales por unidad de área.
 
-En esta sección se explica como se obtienen estimaciones de parcela (panel central y medio) a partir de las mediciones de árboles (panel izquierdo).
-
-Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área.
-
-Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés. A continuación se indica cómo se calcula el estimador de parcela para un total y para un total por unidad
+Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área. Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés. A continuación se indica cómo se calcula el estimador de parcela para un total y para un total por unidad
 
 $$\hat{Total(y)}=\begin{cases}
 \sum\limits_{i\in muestra}\frac{y_i}{\pi_i} , & \text{si se ha seleccionado algún árbol} \\
@@ -81,7 +75,7 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
 
-Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área, cuando estimamos totales por unidad de área, el área a muestrear $A$, aparece dividiendo al total, pero también aparece de forma implícita en las $\pi_i$ . Estas áreas se cancelan y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés por su factor de expansión.
+La definición del estimador de parcela para totales y totales por unidad de área es sencilla, pero es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Segundo, cuando estimamos totales por unidad de área, el área a muestrear $A$, aparece dividiendo al total, pero también aparece de forma implícita en las $\pi_i$ . Esto permite cancelar $A$ y el estimador tiene una forma aún mñas sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés por su factor de expansión.
 
 $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 \sum\limits_{i\in muestra}y_iw_i  , & \text{si se ha seleccionado algún árbol} \\
@@ -89,9 +83,11 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
 
-Si recordamos la interpretación de factor de expansión como número de árboles similares al árbol muestreado que esperamos encontrar en una hectárea de terreno podemos deducir la fórmula anterior recordando que total por unidad de área es la suma de la variable de interés para todos los árboles de la hectárea. Como cada árbol muestreado representa\*\* $w_i$ árboles en la hectárea de terreno, lo único que hay que hacer es sumar la variable de interés $y_i$ por $w_i$
+Si recordamos la interpretación de factor de expansión como número de árboles similares al árbol muestreado que esperamos encontrar en una hectárea de terreno podemos deducir la fórmula anterior recordando que total por unidad de área es la suma de la variable de interés para todos los árboles de la hectárea. Como cada árbol muestreado representa $w_i$ árboles en la hectárea de terreno, lo único que hay que hacer es sumar la variable de interés $y_i$ por $w_i$
 
-En el panel izquierdo de esta pestaña tienes las mediciones a nivel de árbol que se haría en la parcela. Para obtener un determinado total por unidad de área solo tenemos que multiplicar la columna de la variable para la que queremos hacer el total por unidad de área (si queremos estimar $N$ esta columna siempre valdría 1) por el factor de expansión correspondiente y sumar.
+En el panel izquierdo de esta pestaña tienes las mediciones a nivel de árbol que se harían en la parcela generada al pulsar el botón **Muestrea**. Para obtener un determinado total por unidad de área solo tenemos que multiplicar la columna de la variable para la que queremos hacer el total por unidad de área (si queremos estimar $N$ esta columna siempre valdría 1) por el factor de expansión correspondiente y sumar. Puedes practicar descargando los datos de la parcela o parcelas que generes. Para ello tendrás que calcular tus factores de expansión en función del tipo de parcela que hayas seleccionado.
+
+Vamos a ver dos pequeños ejemplos de las operaciones que tendriamos que hacer para estimar $G$ y $N$
 
 ***Ejemplo 1:***
 
@@ -106,34 +102,34 @@ $$\hat{G}=\begin{cases}
 ***Ejemplo 2:***
 
 $$\hat{N}=\begin{cases}
-\sum\limits_{i\in muestra}1w_i  , & \text{si se ha seleccionado algún árbol} \\
+\sum\limits_{i\in muestra}1w_i = \sum\limits_{i\in muestra}w_i  , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
 
 #### Estimador de parcela para ratios y funciones de totales
 
-Cuando consideremos la estimación de parámetros medios (ratios de totales) o funciones de totales, simplemente haremos el estimador de parcela para cada uno de los totales.
+Cuando consideremos la estimación de parámetros medios (ratios de totales) o funciones de totales, simplemente haremos el estimador de parcela para cada uno de los totales que intervienen y después operaremos para estimar la cantidad deseada.
 
 ***Ejemplo 3:***
 
-Si el parámetro de interés es la altura media
+Consideraremos como parámetro de interés es la altura media
 
 $$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}$$
 
-La altura media es el ratio de dos totales por unidad de área, el total de las alturas $y_i\rightarrow h_i$ y $N$ (el total de una variable que vale 1 para todos los árboles. En este caso, simplemente haremos el estimador de parcela para el numerador y el estimador por parcela para el denominador y después haremos el ratio.
+La altura media es el ratio de dos totales (o totales por unidad de área), el total de las alturas $y_i\rightarrow h_i$ y $N$ (el total de una variable que vale 1 para todos los árboles). En este caso, simplemente haremos el estimador de parcela para el numerador y el estimador por parcela para el denominador y después haremos el ratio.
 
-$$\hat{\bar{h}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestra}1w_i}$$
+$$\hat{\bar{h}}=\frac{Total\:por\:unidad\:area(h)}{\hat{N}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestra}1w_i}$$
 
 ***Ejemplo 4:***
 
-Para estimar $d_g$ estimaremos $G$ y $N$ tal como se hace en los ejemplos 1 y 2, y después sustituiremos en la ecuación de $d_g$ para obtener el estimador de parcela.
+El diámetro cuadrático medio $d_g$ es una función de $G$ y $N$, $d_g = \sqrt{\frac{4G}{\pi N}}$. Por tanto, para estimar $d_g$ estimaremos $G$ y estimaremos $N$ tal como se hace en los ejemplos 1 y 2, y después sustituiremos en la ecuación de $d_g$ para obtener el estimador de parcela.
 
 $$\hat{d_g} = \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}$$
 
 #### Estimador de parcela para parámetros complejos (alturas y diámetros dominantes)
 
-Para alturas y diámetros dominantes, la estimación se hará construyendo análogos de parcela. En este caso, lo primero que haremos será ordenar la tabla de mediciones por diámetro en orden decreciente. Después, iremos sumando los factores de expansión hasta alcanzar 100 árboles por hectárea. Esto nos permitirá estimar el conjunto de árboles dominantes de la parcela. Una vez tengamos este conjunto $\hat{dominantes}$ simplemente calcularemos los valores medios como hemos hecho en el ejemplo 3, pero trabajando sobre el conjunto de los árboles dominantes.
+Para alturas y diámetros dominantes, la estimación se hará construyendo análogos de parcela. En este caso, lo primero que haremos será ordenar la tabla de mediciones por diámetro en orden decreciente. Después, iremos sumando los factores de expansión hasta alcanzar 100 árboles por hectárea. Esto nos permitirá estimar el conjunto de árboles dominantes de la parcela. Una vez tengamos este conjunto que indicamos como $\hat{dominantes}$ simplemente calcularemos los valores medios como hemos hecho en el ejemplo 3, **pero trabajando sobre el conjunto de los árboles dominantes**.
 
 $$\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}$$
 
@@ -141,7 +137,7 @@ y
 
 $$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i}{\sum\limits_{i\in \hat{dominantes}}w_i}$$
 
-Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol del conjunto de árboles dominantes podemos reducir el factor de expansión de forma que la suma de todos los factores de expansión sea 100 (podemos usar el símbolo $w_i^*$ para indicar que estos factores de expansión se han modificado para el último árbol dominante). La suma del denominador, en este caso se reduce a 100 árboles en una hectárea y los estimadores se expresan de la siguiente forma
+Si se quiere ser muy fiel a la definición de árboles dominantes de Assman, para el último árbol del conjunto de árboles dominantes podríamos reducir el factor de expansión de forma que la suma de todos los factores de expansión fuese 100 . Ppodemos usar el símbolo $w_i^*$ para indicar que estos factores de expansión se han modificado para el último árbol dominante. La suma del denominador, en este caso se reduce a 100 árboles en una hectárea y los estimadores se expresarían de una forma más sencilla
 
 $$\hat{h_o}= \frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{\sum\limits_{i\in \hat{dominantes}}w_i^*}\frac{\sum\limits_{i\in \hat{dominantes}}h_iw_i^*}{100}$$
 
@@ -163,33 +159,31 @@ $$\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}$$
 
 Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calcular el estimador, la media de esas infinitas estimaciones coincidiría con el valor a estimar. **Esta propiedad es muy fuerte pues se cumple sea cual sea la población y el tipo de parcela, lo único que debe ser despreciable son los efectos de borde, cosa que normalmente ocurre.**
 
-Hemos visto en teoría dos propiedades de los estimadores que son interesantes. El sesgo y la varianza. El sesgo nos dice cómo de cerca nos quedamos, en promedio, del parámetro que queremos estimar. La precisión, medida a través de la varianza o la desviación típica, nos informa sobre la variabilidad de los valores que podemos obtener al emplear un estimador.
+Hemos visto en teoría dos propiedades de los estimadores que son interesantes. La exactitud o ausencia sesgo y la precisión. El sesgo nos dice cómo de cerca nos quedamos, **en promedio**, del parámetro que queremos estimar. La precisión, medida a través de la varianza o la desviación típica, nos informa sobre la variabilidad de los valores que podemos obtener al emplear un estimador.
 
-Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda o a la derecha, pero si que sabemos que estamos en la fila de abajo.
+![Representación esquemática de los conceptos de sesgo y precisión](Precision_sesgo.png)
+
+Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela de Horvitz-Thompson no tiene sesgo (su valor esperado coincidirá con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda o a la derecha, pero si que sabemos que estaremos en la fila de abajo donde no hay sesgo.
 
 Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
 
 ***Varianza y desviación típica***
 
-Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la dispersión del mismo. Desafortunadamente, la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer, **por lo que sólo podremos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
+Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la precisión del mismo. Desafortunadamente, la varianza de los estimadores de parcela está directamente relacionada con las disposición espacial de los árboles y esto es imposible de conocer, **por lo que sólo podremos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.** Estas repeticiones nos permitirán determinar si estamos en la zona izquierda o derecha de la figura anterior, pero es algo que conoceremos a posteriori. Es decir, no ocurre cómo con el sesgo, que podemos saber que será nulo los efectos de borde son despreciables y estamos estimando totales o totales por unidad de área.
 
 #### Repetición del experimento de ubicar una parcela al azar (Panel derecho)
 
-Como puente al proceso más realista en el que se miden múltiples parcelas, podemos ver que ocurre si repetimos múltiples veces el proceso de seleccionar un punto, tomar la muestra de árboles y calcular los estimadores correspondientes.
+En la práctica nunca estimamos en base a una única parcela. Como puente al proceso más realista en el que se miden múltiples parcelas, podemos ver que ocurre si repetimos múltiples veces el proceso de seleccionar un punto, tomar la muestra de árboles y calcular los estimadores correspondientes.
 
-En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para seis variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical negra. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul.
+En la parte superior (en rojo) se puede ver como se van distribuyendo las estimaciones de parcela para seis variables a medida que repetimos el proceso de muestreo. El valor real del parámetro de interés, (que podemos conocer porque trabajamos con una población simulada) se marca con una linea vertical negra. El promedio de todas las estimaciones que vayamos realizando se indica con un punto grueso de color azul. Finalmente, a medida que añadamos parcelas podemos ver las distribuciones de frecuencias de los valores estimados (curva gris).
 
-Finalmente, a medida que añadamos parcelas podemos ver las distribuciones de frecuencias de los valores estimados (curva gris). Si pudiésemos repetir muchas veces la selección de muestras, la distribución de frecuencias que obtendríamos es lo que llamamos distribución muestral del estimador.
+Si pudiésemos repetir muchas veces la selección de muestras, la distribución de frecuencias que obtendríamos es lo que llamamos distribución muestral del estimador. La distribución muestral es la base del cálculo de la precisión y el sesgo. Gráficamente, si la distribución esta centrada en torno a la linea negra que marca el parámetro de interés, el sesgo será bajo, en caso contrario el sesgo será alto. Si la distribución es muy ancha la precisión será baja y si la distribución es muy estrecha la precisión será alta.
 
 **En este panel es importante observar dos cosas:**
 
-Para totales, a medida que hacemos más y más parcelas y tomamos la media, el punto azul se aproxima más y más al parámetro de interés. Esto es consecuencia directa de la ausencia de sesgo en los estimadores de parcela para totales y totales por unidad de área. En la introducción los hemos llamado estimadores tipo Horvitz-Thompson, vamos a retomar brevemente este nombre.
+Para totales, a medida que hacemos más y más parcelas y tomamos la media, el punto azul se aproxima más y más al parámetro de interés. Esto es consecuencia directa de la ausencia de sesgo en los estimadores de parcela para totales y totales por unidad de área. En la introducción los hemos llamado estimadores tipo Horvitz-Thompson, vamos a retomar brevemente este nombre. Puede demostrarse que los estimadores de tipo EHorvitz-Thompson carecen de sesgo para totales (o totales por unidad de área). Sin embargo, si el lado de tu población es pequeño, puede que ser que percibas cierta desviación sistemática o sesgo. Esto ocurre por los efectos de borde, ya que las probabilidades de inclusión o factores de expansión que tomamos no consideran que parte del área de inclusión puede quedar fuera del área a muestrear. En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de borde tienden a ser muy pequeños. Es to lo puedes observar esto aumentando el lado del área muestreada, simplemente prueba a generar poblaciones con un lado mayor.
 
-Si el lado de tu población es pequeño, puede que haya cierta desviación sistemática o sesgo ya que las probabilidades de inclusión o factores de expansión que tomamos no consideran efectos de bordes que se dan cuando el área de inclusión de un árbol corta los límites de la zona a muestrear. En aplicaciones prácticas las áreas a muestrear son grandes y estos efectos de borde tienden a ser pequeños puedes observar esto aumentando el lado del área muestreada, simplemente prueba a generar poblaciones con un lado mayor:
-
--   **En la pestaña** **Selección de muestra** verás que, proporcionalmente, las áreas de inclusión que cortan el área muestreada pierden importancia
-
--   **En esta pestaña** podrás ver como la media de estimaciones de totales por unidad de área se aproximan más y más al valor real, es decir, el sesgo para totales desaparece. Finalmente, a medida que añadimos más muestras, la media varia cada vez menos mientras que la variabilidad de las estimaciones de parcela se mantiene dentro de un rango más amplio. En las siguientes pestañas se puede ver la relación entre la variabilidad de la estimación por parcela y la variabilidad de una media de $n$ parcelas.
+**En el panel izquierdo de selección de muestra** verás que, proporcionalmente, las áreas de inclusión que cortan y salen fuera del área muestreada pierden importancia al aumentar el lado. **En esos casos, en el panel derecho,** podrás ver como la media de estimaciones de totales por unidad de área se aproximan más y más al valor real. Es decir, el sesgo desaparece. Finalmente, a medida que añadimos más muestras, la media (punto azul) varia cada vez menos mientras que la variabilidad de las estimaciones de parcela se mantiene dentro de un rango más amplio. En las siguientes pestañas se puede ver la relación entre la variabilidad de la estimación por parcela y la variabilidad de una media de $n$ parcelas.
 
 #### Uso del relascopio para estimar áreas basimétricas
 

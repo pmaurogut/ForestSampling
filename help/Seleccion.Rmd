@@ -5,15 +5,19 @@ output: html_document
 
 #### Introducción
 
-Vamos a considerar el experimento aleatorio de ubicar una parcela uniformemente al azar en la zona a maestrear. A partir de la ubicación de este punto se determinarán los árboles que formarán parte de la muestra. Como la ubicación del punto de muestreo es aleatoria, los árboles que formarán la muestra también lo serán. Podemos analizar el proceso de selección de muestras desde dos puntos de vista complementarios que nos permitirán deducir, de una forma sencilla y visual, probabilidades de inclusión en la muestra ($\pi_i$) y factores de expansión ($w_i$) que nos serán útiles en el proceso de estimación.
+Vamos a considerar el experimento aleatorio de ubicar una parcela uniformemente al azar en la zona a maestrear. A partir de la ubicación de este punto se determinarán los árboles que formarán parte de la muestra. Como la ubicación del punto de muestreo es aleatoria, los árboles que formarán la muestra también lo serán. Podemos analizar el proceso de selección de muestras desde dos puntos de vista complementarios que nos permitirán deducir, de una forma sencilla y visual, probabilidades de inclusión de árboles en la muestra ($\pi_i$) y factores de expansión ($w_i$) que nos serán útiles en el proceso de estimación. De forma genérica, el subíndice $i$ se utilizará para identificar árboles
 
-Antes de continuar vamos a ver con algo más de detalle ambas formas de visualizar el problema empleando parcelas de radio fijo. Un árbol se medirá cuando la distancia entre el árbol y el punto aleatorizado (centro de parcela) sea menor que una distancia determinada en función del tipo de parcela (radio o radios de parcela).
+Antes de continuar vamos a ver con algo más de detalle ambas formas de visualizar el problema empleando ejemplos gráficos con parcelas de radio fijo, en la aplicación puedes hacer comprobaciones similares para los tres tipos de parcelas.
 
-Al medir distancias es indiferente que punto consideramos como origen, la distancia del centro al árbol es la misma que del árbol al centro de parcela. Sin embargo, desde un punto de vista meramente visual, comprobar distancias posicionándonos en el árbol proporciona una visión alternativa a posicionarnos en el centro de parcela y ambas son interesantes.
+En general, un árbol se incluirá en la muestra y se medirá cuando la distancia entre el árbol y el punto aleatorizado (centro de parcela) sea menor que una distancia determinada en función del tipo de parcela (radio o radios de parcela) y el diámetro del árbol. Al medir distancias es indiferente que punto consideramos como origen, la distancia del centro al árbol es la misma que del árbol al centro de parcela. Sin embargo, desde un punto de vista meramente visual, comprobar distancias posicionándonos en el árbol proporciona una visión alternativa a posicionarnos en el centro de parcela y ambas son interesantes.
 
 #### Selección basada en áreas de inclusión centradas en los árboles
 
-La primera forma de ver cuando maestrearíamos un árbol seria centrarse en árbol. Comenzaremos trazando un círculo (del radio que corresponda en función del diámetro del árbol y tipo de parcela) en torno a cada árbol con. Llamaremos a estos círculos áreas de inclusión del árbol . La distancia entre el punto de medición y un árbol determinado será menor que el radio de parcela correspondiente, si el punto de medición cae dentro del área de inclusión o circulo trazado en torno al árbol. Es decir, los árboles a medir serán aquellos para los que el punto de medición ha caído dentro de su área de inclusión.
+La primera forma de ver cuando muestrearíamos un árbol se centra en los árboles. Trazando un círculo (del radio que corresponda en función del diámetro del árbol y tipo de parcela) en torno a cada árbol delimitamos lo que llamaremos áreas de inclusión del árbol . La distancia entre el punto de medición y un árbol determinado será menor que el radio de parcela correspondiente, si el punto de medición cae dentro del área de inclusión o circulo trazado en torno al árbol. Es decir, los árboles a medir serán aquellos para los que el punto de medición ha caído dentro de su área de inclusión. En la figura siguiente se muestran las áreas de inclusión para parcelas de radio fijo en torno a cuatro árboles. El punto de muestreo ha caído en el área de inclusión del árbol situado abajo a la izquierda (este árbol se medirá) pero fuera del área de inclusión del resto de árboles. Se incluye en color rojo y con linea discontinua la parcela de radio fijo asociada. Esto permite comprobar la equivalencia entre:
+
+1.  Centrarnos en el árbol y comprobar si el punto de muestreo ha caído en el área de inclusión y
+
+2.  Centrarnos en el punto de muestreo y comprobar si el árbol ha caido dentro de la parcela (método 2).
 
 ![Selección de muestra vista desde el árbol con áreas de inclusión](areas_inclusion_arbol.png)
 
@@ -27,7 +31,7 @@ $$
 
 #### Selección basada en áreas de inclusión centradas en los árboles
 
-La forma de seleccionar la muestra más parecida a lo que realizamos en campo es centrarnos en el punto de medición y hacer un circulo (o círculos para parcelas con radio variable y de relascopio) en torno al punto de medición o centro de parcela. Los árboles que formarán la muestra serán aquellos que estén dentro del círculo (o círculos) realizados en torno al centro de parcela.
+La forma de seleccionar la muestra más parecida a lo que realizamos en campo es centrarnos en el punto de medición y hacer un circulo (o círculos para parcelas con radio variable y de relascopio) en torno al punto de medición o centro de parcela. Los árboles que formarán la muestra serán aquellos que estén dentro del círculo (o círculos) realizados en torno al centro de parcela. Mientras que la representación anterior ilustra muy bien la probabilidad de inclusión de árboles, esta segunda representación ilustra muy bien (para parcelas de radio fijo) la relación entre área muestreada y área total.
 
 ![*Selección de muestra vista desde el centro de la parcela. El área de parcela se muestra resaltada. El área de inclusión (enfoque alternativo) del árbol seleccionado se indica con linea discontinua y en rojo.*](areas_inclusion_parcela.png)
 
