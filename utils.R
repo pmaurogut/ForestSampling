@@ -12,7 +12,7 @@ make_population <-function(N,L){
   
   res$ht <- round(5+(res$dn-5)*0.5,1)
   res$gi_m2 <- pi*(res$dn/200)^2
-  res$vcc <- res$ht*res$g*0.7
+  res$vcc <- res$ht*res$gi_m2*0.7
   
   res$r_fijo <- 15
   res$area_fijo <-  pi*(res$r_fijo^2)/10000
@@ -613,26 +613,26 @@ confint_plot<-function(estimates, var, par_int,conf){
 
 prepare_error_pol <- function(means_sd,conf_level=0.95){
   
-  variation_n <- expand.grid(parametro=unique(means_sd$parametro),n_samp=1:50,side=1:2)
+  n <- max(means_sd$n)
+  
+  variation_n <- expand.grid(parametro=unique(means_sd$parametro),n_samp=n:50,side=1:2)
   variation_n <- merge(means_sd,variation_n,by="parametro")
 
-  variation_n$q <- ifelse(variation_n$n_samp<2,
-                          -qt((1-conf_level)/2,1),
-                          -qt((1-conf_level)/2,variation_n$n_samp-1))
+  variation_n$q <- qt((1-conf_level)/2,n-1)
   
   variation_n$bound <- ifelse(variation_n$side==1,variation_n$q*variation_n$sd,
                               -variation_n$q*variation_n$sd)
   variation_n$bound <- variation_n$mean + variation_n$bound/sqrt(variation_n$n_samp)
   
   v1 <- filter(variation_n,side==1) |> group_by(parametro) |> 
-    arrange(desc(n_samp)) |> mutate(order=1:50)|> ungroup()
+    arrange(desc(n_samp)) |> mutate(order=n:50)|> ungroup()
   
   
   v2 <- filter(variation_n,side==2)|> group_by(parametro) |> 
-    arrange(n_samp) |> mutate(order=51:100)|> ungroup()
+    arrange(n_samp) |> mutate(order=(51:(100-(n-1))))|> ungroup()
   
   v3 <- v1[v1$order==1,]
-  v3$order <- 101
+  v3$order <- 100-(n-2)
   res <- rbind(v1,v2,v3)
   
   return(res[order(res$parametro,res$order),])
@@ -676,21 +676,25 @@ sample_alloc_plot <- function(piloto,conf_level=0.95,max_rel_error=0.1,current_n
   variation_n <- prepare_error_pol(means_sd,conf_level)
 
   
-  ggplot(variation_n) +
+  p<-ggplot(variation_n) +
     facet_wrap(.~parametro,scales="free_x") +
-    geom_rect(data=means_sd,aes(xmin=bound_min,xmax=bound_max,ymin=1,ymax=50),
+    geom_rect(data=means_sd,aes(xmin=bound_min,xmax=bound_max,ymin=0,ymax=50),
               col="black",fill="grey20",alpha=0.2)+
     geom_vline(data=means_sd,aes(xintercept=mean),col="black",linetype=2)+
     
     geom_polygon(aes(x=bound,y=n_samp),col="blue",fill="purple",alpha=0.1)+
     
-    geom_point(data=piloto,aes(x=estimacion),y=1,col="red",shape=20,alpha=0.8)+
+    geom_point(data=piloto,aes(x=estimacion),y=max_y+0.2,col="red",shape=20,alpha=0.8)+
     
     geom_point(data=means_sd,aes(x=mean),y=max_y,col="blue",shape=20,alpha=0.5,size=3)+
-    geom_linerange(data=means_sd,aes(xmin=(mean-error),xmax=(mean+error)),y=max_y,col="blue",alpha=0.5) + 
+    geom_linerange(data=means_sd,aes(xmin=(mean-error),xmax=(mean+error)),y=max_y,col="blue",alpha=0.5)
+  
+    if(current_n>=max_y){
+      p <- p + geom_point(data=means_sd,aes(x=mean),y=current_n,col="darkgreen",shape=20,alpha=0.5,size=3)+
+              geom_linerange(data=means_sd,aes(xmin=bound_min_curr,xmax=bound_max_curr),y=current_n,col="darkgreen",alpha=0.5)
+    }
     
-    geom_point(data=means_sd,aes(x=mean),y=current_n,col="darkgreen",shape=20,alpha=0.5,size=3)+
-    geom_linerange(data=means_sd,aes(xmin=bound_min_curr,xmax=bound_max_curr),y=current_n,col="darkgreen",alpha=0.5) + 
-    ylim(1,50)
+    p <- p +  ylim(0,50)
+    p
  
 }

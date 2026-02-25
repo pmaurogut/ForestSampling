@@ -5,143 +5,85 @@ output: html_document
 
 #### Introducción
 
-En la pestaña anterior nos hemos apoyado en simulaciones del proceso de muestreo para ver que ocurre con la distribución muestral del estimador final. Repetíamos cientos de veces el proceso de muestreo y cálculo del estimador final. En esta pestaña vamos a usar menos la simulación (simularemos pero solo unas pocas veces) y **vamos a ver cómo procederíamos para calcular intervalos de confianza y errores de muestreo para el estimador final.**
+En la pestaña anterior hemos visto cómo calcular intervalos de confianza y errores de muestreo (absolutos o relativos). En esta pestaña veremos cómo se procede para calcular el número de parcelas que hay que realizar para conseguir un error de muestreo determinado. Para hacer este cálculo no necesitamos nada nuevo, simplemente nos apoyaremos en un muestreo piloto y en las fórmula de la desviación típica del estimador final y del error relativo.
 
-Como resumen del procedimiento, podemos decir que el muestreo realmente implica dos problemas de estimación. El primer problema (obtener el estimador final) sabemos cómo se aborda, pero hay un segundo problema de estimación que se emplea para informar sobre la calidad del muestreo. En este segundo problema estaremos interesado en estimar la variabilidad del estimador final.
+$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}$$
 
-#### Notación simplificada
+$$\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}$$
 
-Para simplificar la notación vamos a usar el símbolo $\mu$ para el parámetro de interés (es un símbolo genérico), y recordamos que:
-
-1.  Usaremos el subíndice $p$ para indicar que estamos usando el estimador de la parcela $p$ y el subíndice $final$ para indicar que consideramos un estimador final, media de $n$ estimadores de parcela.
-
-2.  Las estimaciones de un parámetro de interés se indican poniendo un acento circunflejo sobre el símbolo del parámetro a estimar.
-
-En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parcela del parámetro $\mu$ en la parcela $p$, y que $\hat{\mu}_{final}=\sum_{p=1}^n\hat{\mu}_p$ sería el estimador final del parámetro de interés $\mu$ basado en $n$ parcelas.
-
-Cuando hagamos un inventario real mediremos $n$ parcelas y no podremos repetir ese proceso cientos de veces como hacíamos en la pestaña anterior. Entonces, **¿Cómo podemos obtener información sobre la distribución muestral del estimador final?**
-
-El análisis de la fiabilidad del inventario se apoyará en las relaciones que existe entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final prestando atención a la varianza y desviación típica de estas distribuciones.
-
-**Es importante tener en cuenta que al realizar nuestro inventario mediremos** $n$ **parcelas y haremos su media y sólo tendremos un valor del estimador final por lo que será imposible analizar su variabilidad sin hacer uso de las relaciones que hemos estudiado entre estimador final y estimador de parcela.**
-
-#### Relaciones entre las distribuciones muestrales del estimador de parcela y el estimador final.
-
-Hemos visto en pestañas anteriores que
-
-1.  La esperanza del estimador final es la esperanza del estimador de parcela.
+Si sustituimos la primera ecuación en la segunda, tendremos:
 
 $$
-E(\hat{\mu}_{final})=E(\hat{\mu}_p)
+\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})}{\hat{\mu}_{final}} \frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}
 $$
 
-2.  Si el parámetro de interés es un total o total por unidad de área y se pueden despreciar los efectos de borde:
+Operando, tenemos que para un nivel de probabilidad fiducial y error relativo determinado tendremos que:
 
 $$
-E(\hat{\mu}_{final})=E(\hat{\mu}_p)=\mu
+\frac{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)} = \frac{1}{\sqrt{n}} \rightarrow  \boxed{\boxed{n = {\left( \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)}{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}\right)}^2}}
 $$
 
-3.  Por la independencia en la aleatorización de las $n$ parcelas, la desviación típica (se indica con sd de standard deviation y mide la variabilidad) del estimador de final es la desviación típica del estimador de parcela dividida por la raíz cuadrada del número de parcelas que se promedian en el estimador final.
+Conocemos todos los términos de la fórmula anterior para $n$, pero para obtener $\hat{\mu}_{final}$ y $\hat{sd}(\hat{\mu}_p)$ necesitamos una muestra y ahí es donde entra en juego el muestreo piloto. Un muestreo piloto es un muestreo preliminar con un número relativamente reducido de parcelas que fijamos nosotros y que emplearemos para poder tener valores de $\hat{\mu}_{final}$ y $\hat{sd}(\hat{\mu}_p)$ de forma que podamos calcular un $n$ para el nivel de error requerido.
 
-$$
-sd(\hat{\mu}_{final})=\frac{sd(\hat{\mu}_p)}{\sqrt{n}}
-$$
+#### Cálculo práctico de n
 
-4.  Para $n$ grande (no podemos saber cómo de grande ha de ser $n$), se tiene que la distribución muestral del estimador final sera una normal
+Lo primero que haremos para determinar $n$ es el muestreo piloto. Una vez tenemos las parcelsa piloto, aplicaremos
 
-$$
-    \hat{\mu}_{final}\sim N(E(\hat{\mu}_p),\frac{sd(\hat{\mu}_p)²}{n})
-$$
-
-5.  Por la propiedad 2, si el parámetro de interés es un total o total por unidad de área y se pueden despreciar los efectos de borde, dicha distribución normal estará centrada en el parámetro de interés $\mu$:
-
-$$
-    \hat{\mu}_{final}\sim N(\mu,\frac{sd(\hat{\mu}_p)²}{n})
-$$
-
-#### Segundo problema de estimación
-
-El recordatorio de conceptos que acabamos de realizar nos pone en disposición de abordar el segundo problema de estimación. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final. Esta variabilidad la medimos con la desviación típica, por lo que el segundo problema de estimación consistirá en estimar $sd(\hat{\mu}_{final})$.
-
-Para estimar $sd(\hat{\mu}_{final})$ nos apoyaremos en la propiedad 3. De estadística conocemos que podemos obtener un estimador insesgado de la varianza de una variable aleatoria, la varianza es el cuadrado de sd, a partir de $n$ realizaciones independientes de dicha variable empleando la siguiente fórmula:
-
-$$\hat{V}(\hat{\mu}_p)=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}$$
-
-Podemos tomar raíces cuadradas para convertir varianzas estimadas en desviaciones típicas estimadas:
-
-$$\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}$$
-
-**IMPORTANTE:** Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
-
-Ya casi hemos terminado el segundo problema de estimación, en base a la última ecuación y a la propiedad 3, tendremos que:
-
-$$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}$$
-
-y para desviaciones típicas tendremos:
-
-$$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}=\frac{\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}}}{\sqrt{n}}=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$ 
-
-#### Intervalos de confianza
-
-Una vez que hemos visto el segundo problema de estimación (estimar la dispersión de la distribución muestral del estimador final a través de la varianza o desviación ), podemos ver como se hace el reporte de incertidumbres o control de calidad de un muestreo. Para ello, nos vamos a apoyar en los estimadores de la desviación típica que acabamos de ver y en la aplicación del teorema del límite central que veíamos en la pestaña anterior.
-
-Asumiendo que se ha conseguido la normalidad, la siguiente fórmula nos permite crear intervalos que contienen el valor esperado del estimador final con un $(1-\alpha)\%$ de probabilidad:
-
-$$Intervalo \: confianza=[\hat{\mu}_{final}-q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})\:,\:\hat{\mu}_{final}+q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})]$$
-
-A $(1-\alpha)\%$ se le llama nivel de confianza o probabilidad fiducial. Una forma alternativa y más concisa de expresar estos intervalos es
-
-$$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
-
-Distintos autores consideran distintos valores para $q(1-\frac{\alpha}{2})$:
-
-1.  Algunos autores, como por ejemplo Särndal (2003), hace que $q(1-\frac{\alpha}{2})$ sea igual al cuantil de probabilidad $1-\frac{\alpha}{2}$ de una distribución normal estándar
-
-2.  Otros autores se ponen del lado de la seguridad y usan $q(1-\frac{\alpha}{2})=t(1-\frac{\alpha}{2},n-1)$ , donde $t(1-\frac{\alpha}{2},n-1)$ es el cuantil de probabilidad $1-\frac{\alpha}{2}$ de una distribución tipo t-student con $n-1$ grados de libertad (recuerda que $n$ es el número de parcelas.
-
-La fórmula 2 se suele preferir por hacer intervalos un poco más anchos, pero desde el punto de vista teórico ambas son aproximaciones ya que nunca podremos asegurar cuando se consigue la convergencia a una distribución normal. En ámbos casos, para un nivel de confianza del 95%, $1-\alpha\%=95\%$, y con un número razonable de parcelas, tendremos que los valores de $q(1-\frac{\alpha}{2})$ serán cercanos a 2.
-
-**IMPORTANTE:** Cuando estimamos totales o totales por unidad de área, el valor esperado de $\hat{\mu}_{final}$ coincidirá con $\mu_{final}$ (ausencia de sesgo). En este caso, si fuésemos capaces de repetir muchas veces el proceso de muestreo, los intervalos de confianza construidos contendrían el valor que queremos estimar en un $1-\alpha\%$ de las ocasiones.
-
-En la práctica, el proceso de construcción de los intervalos de confianza se realiza de las siguiente manera.
-
-1.  Obtenemos el estimador final ($\hat{\mu}_{final}$) como promedio de los estimadores de parcela.
+1.  Obtenemos el estimador final $\hat{\mu}_{final}$ como promedio de los estimadores de parcela en las parcelas piloto. El número de parcelas piloto lo indicaremos con $n_{piloto}$ .
 2.  Estimamos la desviación típica de $\hat{\mu}_{final}$ usando:
 
-$$\hat{sd}(\hat{\mu}_{final})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}}$$
+$$\hat{sd}(\hat{\mu}_{final})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{n_{piloto}(n_{piloto}-1)}}$$
 
-3.  Construimos el intervalo de confianza como:
+3.  Obtenemos el valor de $q(1-\frac{\alpha}{2})$. Si usas $q(1-\frac{\alpha}{2})$ basado en una distribución t-student, el número de grados de libertad será $n_{piloto}-1$
 
-$$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
+Una vez que hemos calculado los tres valores anteriores, sólo tenemos que sustituir en la fórmula de $n$.
 
-#### Error de muestreo
+**Ejemplo 1:**
 
-Directamente relacionado con los intervalos de confianza tendremos la cantidad que llamamos error de muestreo. El error de muestreo para un nivel de probabilidad $1-\alpha\%$ es la cantidad que sustraemos o añadimos a $\hat{\mu}_{final}$ al construir el intervalo. Es decir, el error de muestreo es la mitad del ancho del intervalo de confianza.
+Nos solicitan estimar el volumen por hectárea en un monte y dar estimaciones con un error relativo inferior al 10% al 95% de probabilidad fiducial. Hacemos un muestreo piloto con $n_{piloto}=10$ parcelas. En base a nuestro muestreo piloto tenemos que:
 
-$$Error\: muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
+1.  El valor estimado del volumen en base a las 10 parcelas piloto es $\mu_{final}=315 m³/ha$
 
-Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo y los denotaremos con el símbolo $\hat{\varepsilon}_{(1-\alpha)\%}$ y los calcularemos, expresándolos en tanto por ciento, con la siguiente fórmula:
+2.  El valor estimado de la desviación típica del estimador de parcela de $sd(\hat{\mu_{final}})=80 m^3/ha$
 
-$$\hat{\varepsilon}_{(1-\alpha)\%} = 100\frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}$$
+3.  El valor que usaremos de $q(1-\frac{\alpha}{2})$ en base a una distribución t-student con $n_{piloto}-1$ grados de libertad es 2.26.
 
-Los términos que intervienen en el error de muestreo (en términos absolutos o relativos) implican los pasos 1 y 2 de la construcción de intervalos de confianza. Pondremos el acento circunflejo en el error de muestreo para indicar que es una magnitud estimada (Esto también se debería hacer con los intervalos pero la notación queda algo engorrosa)
+En base a estos valores tenemos que:
 
-**IMPORTANTE:** Es frecuente que se soliciten trabajos de muestreo donde se especifica una tolerancia máxima en términos de error relativo. Por ejemplo, nos podrían solicitar realizar un muestreo donde el volumen se estimase con un error relativo de muestreo inferior al 10% considerando un nivel de confianza del 95%. Ante esta situación podríamos ir midiendo más y más parcelas hasta que alcanzásemos el error deseado. **Esto** **NO es lo que se hace en la práctica!!** En la siguiente pestaña veremos como calcular el número de parcelas a medir para verificar este tipo de condiciones.
+$$
+n = {\left( \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)}{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}\right)}^2 \rightarrow n= \left( \frac{2.26*50}{0.1*315}\right)^2 = 32.94 \: parcelas
+$$
 
-#### Controles de la aplicación
+En este caso, para estar seguros redondearíamos hacia arriba por lo que deberíamos medir 33 parcelas.
 
-En esta pestaña, para el número de parcelas indicado, se repite el muestreo cinco veces. En el panel derecho, parte inferior, podemos ver en negro el valor teórico de $sd(\hat{\mu}_{final})$, en azul se mostrarán las 5 estimaciones de $\hat{sd}(\hat{\mu}_{final})$ . En el panel derecho, se muestran para cada una de las cinco replicaciones, $\hat{sd}(\hat{\mu}_{p})$, $\hat{sd}(\hat{\mu}_{final})$ (texto rojo y a la izquierda), el intervalo de confianza para $\hat{\mu}_{final}$ (en rojo y forma gráfica) y el error de muestreo (texto azul a la derecha). En rojo y con una ligera transparencia se muestra los $n$ valores de $\hat{\mu}_{p}$ para cada replica.
+**Ejemplo 2:**
 
-En el panel izquierdo tendremos los valores de los parámetros de interés a estimar, un control para aumentar o reducir el nivel de confianza $(1-\alpha)\%$ y un botón que dice **Remuestrea** y que al ser pulsado descartará las cinco replicas de $n$ parcelas y tomará otras cinco nuevas. En esta pestaña el botón **Muestrea** no hará nada pero los controles para el tipo de parcela, densidad, tamaño del área a muestrear y número de parcelas seguirán activos.
+Nos solicitan estimar el volumen por hectárea en un monte y dar estimaciones con un error en términos absolutos de 50 m³ por hectárea al 95% de probabilidad fiducial. Hacemos un muestreo piloto con $n_{piloto}=15$ parcelas. En base a nuestro muestreo piloto tenemos que:
 
-#### Referencias
+1.  El valor estimado del volumen en base a las 10 parcelas piloto es $\mu_{final}=400 m³/ha$
 
-Särndal, C.-E., Swensson, B., Wretman, J., 2003. Model Assisted Survey Sampling (Springer Series in Statistics).
----
-title: "Poblacion"
-output: html_document
----
+2.  El valor estimado de la desviación típica del estimador de parcela de $sd(\hat{\mu_{final}})=125 m^3/ha$
 
-Estás viendo la población que se ha simulado. Al hacer un inventrio, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valres de sus alturas y diámetros. Esto implica que no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo, conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés.
+3.  El valor que usaremos de $q(1-\frac{\alpha}{2})$ en base a una distribución t-student con $n_{piloto}-1$ grados de libertad es 2.15.
 
-Dado que con este
+Antes de aplicar los fórmula de $n$ vamos a calcular cuanto sería el error relativo que se corresponde con un error de 50 m³ . Para ellos simplemente tenemos que recurrir a que el error relativo es el error en términos absolutos dividido por el estimador final.
+
+$$
+\hat{\varepsilon}_{(1-\alpha)\%}=\frac{Error}{\hat{\mu}_{final}}
+$$
+
+En este caso el error relativo sería $\hat{\varepsilon}_{(1-\alpha)\%}=\frac{Error}{\mu_{final}}=\frac{50}{400}=0.125$ y ya podríamos calcular $n$
+
+$$
+n = {\left( \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)}{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}\right)}^2 \rightarrow n= \left( \frac{2.15*125}{0.125*400}\right)^2 = 28.62 \: parcelas
+$$
+
+Para estar seguros redondearíamos hacia arriba por lo que deberíamos medir 29 parcelas.
+
+#### Controles de la pestaña
+
+En esta pestaña puedes cambiar el tamaño de la muestra piloto, el nivel de error relativo y el nivel de confianza o probabilidad fiducial. Cada vez que pulses el botón remuestrea se tomará una muestra piloto y se hará el cálculo de $n$. Las estimaciones de parcela se mostrarán con puntos rojos en la base de la gráfica. El error relativo para el muestreo piloto se indicará con una línea azul. Por otro lado, se marca el valor del estimador final con una linea negra. En torno a esta linea se añade una banda gris cuyo semi-ancho es el error relativo. Finalmente, se marca una banda cuyo ancho disminuye al aumentar $n$ y cuyo ancho es el error que tendríamos para distintos valores de $n$. La banda fija de color gris y la banda malva de anchura variable se cortan para el valor de $n$ que daría el error relativo deseado.
+
+Se puede experimentar con el control del número de parcelas del panel de la izquierda, al mover $n$ se creará un intervalo de confianza en este caso de color verde. Puedes aumentar o reducir $n$ hasta encortar la intersección de las bandas y eso te dará el valor de $n$ que proporciona el error relativo buscado. Para valores de $n$ menores al tamaño de muestra del muestreo piloto no se mostará nada.
+
+#### Comentarios sobre el cálculo de $n$

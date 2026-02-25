@@ -15,7 +15,7 @@ Al medir distancias es indiferente que punto consideramos como origen, la distan
 
 La primera forma de ver cuando maestrearíamos un árbol seria centrarse en árbol. Comenzaremos trazando un círculo (del radio que corresponda en función del diámetro del árbol y tipo de parcela) en torno a cada árbol con. Llamaremos a estos círculos áreas de inclusión del árbol . La distancia entre el punto de medición y un árbol determinado será menor que el radio de parcela correspondiente, si el punto de medición cae dentro del área de inclusión o circulo trazado en torno al árbol. Es decir, los árboles a medir serán aquellos para los que el punto de medición ha caído dentro de su área de inclusión.
 
-![*Selección de muestra vista desde el árbol con áreas de inclusión. Solo se muestrea el árbol cuya área de inclusión aparece resaltada. Las áreas de inclusión de los árboles no muestreados se muestran en gris, el área que se emplearía en el enfoque de parcela se muestra en rojo.* ](areas_inclusion_arbol.png){alt="Selección de muestra vista desde el árbol con áreas de inclusión"}
+![Selección de muestra vista desde el árbol con áreas de inclusión](areas_inclusion_arbol.png)
 
 #### Probabilidades de inclusión en la muestra
 
@@ -29,7 +29,7 @@ $$
 
 La forma de seleccionar la muestra más parecida a lo que realizamos en campo es centrarnos en el punto de medición y hacer un circulo (o círculos para parcelas con radio variable y de relascopio) en torno al punto de medición o centro de parcela. Los árboles que formarán la muestra serán aquellos que estén dentro del círculo (o círculos) realizados en torno al centro de parcela.
 
-![*Selección de muestra vista desde el centro de la parcela. El área de parcela se muestra resaltada. El área de inclusión (enfoque alternativo) del árbol seleccionado se indica con linea discontinua y en rojo.* ](areas_inclusion_parcela.png)
+![*Selección de muestra vista desde el centro de la parcela. El área de parcela se muestra resaltada. El área de inclusión (enfoque alternativo) del árbol seleccionado se indica con linea discontinua y en rojo.*](areas_inclusion_parcela.png)
 
 #### Factores de expansión
 
@@ -39,7 +39,7 @@ Mientras que el punto de vista centrado en los árboles es muy gráfico a la hor
 
 Si sabemos que nuestra parcela es de $\frac{1}{3}$ hectáreas. En base a nuestras mediciones esperaríamos tener $3x4=12$ árboles en cada hectárea y 24 en la zona a muestrear. En realidad hay 23 árboles en la zona a muestrear y $N=12.5$, sin embargo, podemos ver que el inverso del área de la parcela $\frac{1}{a_{inclusion}(ha)}$ nos permite aproximarnos al valor total de árboles por unidad hectárea y al número de árboles total. **Básicamente extrapolamos lo que hemos medido en la parcela a una hectárea y de ahí al total de la superficie muestreada.**
 
-Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion,i}(ha)}$ y tiene una interpretación muy intuitiva. Si el área de inclusión de un árbol es $\frac{1}{k}$ ha, entonces, en una hectárea esperaremos encontrar $k$ árboles similares al árbol muestreado. Importante, en estos ejemplos hemos usado parcelas de radio fijo, y todas las áreas de  inclusión son iguales, cuando tenemos parcelas de radios anidados o de relascopio, el área de inclusión dependen del diámetro del árbol por eso incluimos en el el factor de expansión el subíndice $i$ que identifica al árbol.
+Al inverso del área de la parcela se le llama factor de expansión $w_i=\frac{1}{a_{inclusion,i}(ha)}$ y tiene una interpretación muy intuitiva. Si el área de inclusión de un árbol es $\frac{1}{k}$ ha, entonces, en una hectárea esperaremos encontrar $k$ árboles similares al árbol muestreado. Importante, en estos ejemplos hemos usado parcelas de radio fijo, y todas las áreas de inclusión son iguales, cuando tenemos parcelas de radios anidados o de relascopio, el área de inclusión dependen del diámetro del árbol por eso incluimos en el el factor de expansión el subíndice $i$ que identifica al árbol.
 
 **Ejemplo 1:**
 
@@ -123,4 +123,4 @@ En las parcelas de radios anidados solo hemos considerado dos clases de tamaño,
 
 #### Efectos de borde
 
-En las explicaciones y formulas anteriores no hemos considerado que pasa con los árboles cuya área de inclusión corta con los límites de área muestrear. Para estos árboles el área que tendríamos que considerar al determinar probabilidades de inclusión seria sólo la que esta dentro de la zona que muestreamos. En el resto de la asignatura simplemente consideraremos que estos efectos son despreciables. Aunque no vamos a hacer un tratamiento formal de estos efectos de borde, si que puedes comprobar gráficamente que estos tienden a hacerse muy pequeños si aumentas el lado del área a muestrear. 
+En las explicaciones y formulas anteriores no hemos considerado que pasa con los árboles cuya área de inclusión corta con los límites de área muestrear. Para estos árboles el área que tendríamos que considerar al determinar probabilidades de inclusión seria sólo la que esta dentro de la zona que muestreamos. En el resto de la asignatura simplemente consideraremos que estos efectos son despreciables. Aunque no vamos a hacer un tratamiento formal de estos efectos de borde, si que puedes comprobar gráficamente que estos tienden a hacerse muy pequeños si aumentas el lado del área a muestrear.
