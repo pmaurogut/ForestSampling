@@ -119,7 +119,7 @@ ui <- page_navbar(
         fluidRow({   
           card(
             card_header("Explicación",class="custom-header"),
-            withMathJax(htmltools::includeMarkdown("help/Poblacion.Rmd")),full_screen = TRUE#, height=200
+            withMathJax(htmltools::includeMarkdown("help/1_Poblacion.Rmd")),full_screen = TRUE#, height=200
           )
         })
     ),
@@ -138,7 +138,7 @@ ui <- page_navbar(
             fluidRow({
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/Seleccion.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/2_Seleccion.Rmd")),full_screen = TRUE#, height=200
               )
             })
     ),
@@ -167,7 +167,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/OnePlot.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/3_OnePlot.Rmd")),full_screen = TRUE#, height=200
               )
             )
               
@@ -197,7 +197,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/nPlots.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/4_nPlots.Rmd")),full_screen = TRUE#, height=200
               )
             )
               
@@ -223,7 +223,7 @@ ui <- page_navbar(
           fluidRow(
             card(
               card_header("Explicación",class="custom-header"),
-              withMathJax(htmltools::includeMarkdown("help/Samp_dist.Rmd")),full_screen = TRUE#, height=200
+              withMathJax(htmltools::includeMarkdown("help/5_Samp_dist.Rmd")),full_screen = TRUE#, height=200
             )
           )
           
@@ -257,7 +257,7 @@ ui <- page_navbar(
             fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/Interval_error.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/6_Interval_error.Rmd")),full_screen = TRUE#, height=200
               )
             )
             
@@ -304,7 +304,7 @@ ui <- page_navbar(
         fluidRow(
               card(
                 card_header("Explicación",class="custom-header"),
-                withMathJax(htmltools::includeMarkdown("help/Samp_aloc.Rmd")),full_screen = TRUE#, height=200
+                withMathJax(htmltools::includeMarkdown("help/7_Samp_aloc.Rmd")),full_screen = TRUE#, height=200
               )
         )
             
