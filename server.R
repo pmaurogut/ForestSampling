@@ -102,7 +102,7 @@ server <- function(input, output, session) {
   observeEvent(input$samp_dist2,{
     new_val <- isolate(input$n)
     new_val <- new_val-1
-    new_val <- ifelse(new_val<1,1,new_val)
+    new_val <- ifelse(new_val<50,1,new_val)
     updateSelectInput(inputId = "n",selected = new_val)
   })
   
@@ -125,8 +125,8 @@ server <- function(input, output, session) {
     p <- base_plot()
     if(input$add_hd){
       p <- p +
-        geom_label(aes(x=x,y=y-3,label=paste("d: ",dn)),size=4,fill="darkgreen",alpha=0.3)+
-        geom_label(aes(x=x,y=y-8,label=paste("h: ",dn)),size=4,fill="blue",alpha=0.3)
+        geom_label(aes(x=x,y=y-3,label=paste("d: ",dn_cm)),size=4,fill="darkgreen",alpha=0.3)+
+        geom_label(aes(x=x,y=y-8,label=paste("h: ",ht_m)),size=4,fill="blue",alpha=0.3)
     }
     p + ggtitle("Población")
   })

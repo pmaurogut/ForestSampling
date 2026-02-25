@@ -7,22 +7,22 @@ make_population <-function(N,L){
     id = 1:Npop,
     x=runif(Npop,0,L),
     y=runif(Npop,0,L),
-    dn = round(runif(Npop,5,40),1)
+    dn_cm = round(runif(Npop,5,40),1)
   )
   
-  res$ht <- round(5+(res$dn-5)*0.5,1)
-  res$gi_m2 <- pi*(res$dn/200)^2
-  res$vcc <- res$ht*res$gi_m2*0.7
+  res$ht_m <- round(5+(res$dn_cm-5)*0.5,1)
+  res$gi_m2 <- pi*(res$dn_cm/200)^2
+  res$vcc_m3 <- res$ht_m*res$gi_m2*0.7
   
   res$r_fijo <- 15
   res$area_fijo <-  pi*(res$r_fijo^2)/10000
   res$fac_exp_fijo<- 1/res$area_fijo
   
-  res$r_variable <- ifelse(res$dn<15,10,20)
+  res$r_variable <- ifelse(res$dn_cm<15,10,20)
   res$area_variable <-  pi*(res$r_variable^2)/10000
   res$fac_exp_variable <- 1/res$area_variable
   
-  res$r_relascopio <- res$dn/2
+  res$r_relascopio <- res$dn_cm/2
   res$area_relascopio <-  pi*(res$r_relascopio^2)/10000
   res$fac_exp_relascopio <- 1/res$area_relascopio
   return(res)
@@ -33,24 +33,24 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
   res<-data.frame(
     Area_ha = A,
     Total_N = length(poblacion[[1]]),
-    Total_G = (1/10000)*sum(pi*poblacion$dn^2)/4,
-    Total_h = sum(poblacion$ht),
-    Total_V = sum(poblacion$vcc)
+    Total_G = (1/10000)*sum(pi*poblacion$dn_cm^2)/4,
+    Total_h = sum(poblacion$ht_m),
+    Total_V = sum(poblacion$vcc_m3)
   )
   res$N <- res$Total_N/A
   res$G <- res$Total_G/A
   res$V <-res$Total_V/A
   
-  res$h_media <- mean(poblacion$ht)
+  res$h_media <- mean(poblacion$ht_m)
    
-  res$dg <- sqrt(mean(poblacion$dn^2))
-  poblacion <- poblacion[order(poblacion$dn,decreasing=TRUE),]
+  res$dg <- sqrt(mean(poblacion$dn_cm^2))
+  poblacion <- poblacion[order(poblacion$dn_cm,decreasing=TRUE),]
   
   if(res$N<=100){
-    res$ho<-mean(poblacion$ht)
+    res$ho<-mean(poblacion$ht_m)
   }else{
     k <-round(100*A)
-    res$ho<-mean(poblacion[1:k,"ht"])
+    res$ho<-mean(poblacion[1:k,"ht_m"])
   }
   if(rotate){
     names<- colnames(res)
@@ -75,7 +75,7 @@ get_trees <- function(population,point,type){
     return(data.frame(
       Type=type,
       Parc=point$Parc,xp=point$xp,yp=point$yp,x=NA,y=NA,
-      dn=NA,ht=NA,gi_m2=NA,vcc=NA,radio_sel_m=NA,A_parc_ha=NA,EXP_FAC=NA))
+      dn_cm=NA,ht_m=NA,gi_m2=NA,vcc_m3=NA,radio_sel_m=NA,A_parc_ha=NA,EXP_FAC=NA))
   }else{
     
     res<-population[pick, ]
@@ -84,13 +84,13 @@ get_trees <- function(population,point,type){
     res$xp <- point$xp
     res$yp <- point$yp
     
-    res$gi_m2 <- (pi/4)*(res$dn/100)^2
+    res$gi_m2 <- (pi/4)*(res$dn_cm/100)^2
     res$radio_sel_m <- res[,type]
     res$A_parc_ha<-(pi*res[,type]^2)/10000
     res$EXP_FAC <- 1/res$A_parc_ha
-    res<-res[order(res$dn,decreasing = TRUE),]
+    res<-res[order(res$dn_cm,decreasing = TRUE),]
     res<-res[,c("Type","Parc","xp","yp",
-                "x","y","dn","ht","gi_m2","vcc",
+                "x","y","dn_cm","ht_m","gi_m2","vcc_m3",
                 "radio_sel_m","A_parc_ha","EXP_FAC")]
     colnames(res)<-gsub("area_","A_",colnames(res))
     return(res)
@@ -119,14 +119,14 @@ estimacion <- function(sample,lado,rotate=TRUE){
   res <- data.frame(Type=sample$Type[1],Parc=sample$Parc[1],
                     xp=sample$xp[1],yp=sample$yp[1],
                     Total_N=0,Total_G=0,Total_V=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,ho=NA)
-  if(!is.na(sample$dn[1])){
+  if(!is.na(sample$dn_cm[1])){
 
-    sample <- sample[order(sample$dn,decreasing = TRUE),]
+    sample <- sample[order(sample$dn_cm,decreasing = TRUE),]
     sample$cum_sum<-cumsum(sample$EXP_FAC)
     res$Total_N <- sum(sample$EXP_FAC)*A
     res$Total_G <- sum(sample$EXP_FAC*sample$gi_m2)*A
-    res$Total_h <- sum(sample$EXP_FAC*sample$ht)*A
-    res$Total_V <- sum(sample$EXP_FAC*sample$vcc)*A
+    res$Total_h <- sum(sample$EXP_FAC*sample$ht_m)*A
+    res$Total_V <- sum(sample$EXP_FAC*sample$vcc_m3)*A
     res$N <- res$Total_N/A
     res$G<- res$Total_G/A
     res$V <- res$Total_V/A
@@ -137,10 +137,10 @@ estimacion <- function(sample,lado,rotate=TRUE){
       last <- which(sample$cum_sum>100)[1]
       s2 <- sample[1:last,]
       s2[last,"EXP_FAC"]<-s2[last,]$cum_sum-100
-      res$ho<-sum(s2$EXP_FAC*s2$ht)/sum(s2$EXP_FAC)
+      res$ho<-sum(s2$EXP_FAC*s2$ht_m)/sum(s2$EXP_FAC)
       
     }else{
-      res$ho <- sum(sample$EXP_FAC*sample$ht)/sum(sample$EXP_FAC)
+      res$ho <- sum(sample$EXP_FAC*sample$ht_m)/sum(sample$EXP_FAC)
     }
   }
   
@@ -169,7 +169,7 @@ pop_plot <- function(forest_data,lado){
   rect <- data.frame(x=c(0,0,lado,lado,0),y=c(0,lado,lado,0,0))
   ggplot(forest_data) +
     geom_polygon(data=rect,aes(x=x,y=y),col="red",fill="darkgreen",alpha=0.1)+
-    geom_circle(aes(x0=x,y0=y,r=dn/20),col="black",fill="burlywood4")+
+    geom_circle(aes(x0=x,y0=y,r=dn_cm/20),col="black",fill="burlywood4")+
     xlim(c(-20,lado+20)) + ylim(c(-20,lado+20))+
     coord_fixed(ratio = 1) +
     labs(x="x(m)",y="y(m)") +
@@ -191,8 +191,8 @@ plot_selection <- function(p,trees,tree_center=TRUE,all=FALSE,add_hd=FALSE){
   
   if(add_hd){
     p <- p +
-      geom_label(aes(x=x,y=y-3,label=paste("d: ",dn)),size=4,fill="darkgreen",alpha=0.3)+
-      geom_label(aes(x=x,y=y-8,label=paste("h: ",dn)),size=4,fill="blue",alpha=0.3)
+      geom_label(aes(x=x,y=y-3,label=paste("d: ",dn_cm)),size=4,fill="darkgreen",alpha=0.3)+
+      geom_label(aes(x=x,y=y-8,label=paste("h: ",dn_cm)),size=4,fill="blue",alpha=0.3)
   }
   
   if(all){
@@ -204,14 +204,14 @@ plot_selection <- function(p,trees,tree_center=TRUE,all=FALSE,add_hd=FALSE){
     
   }
   
-  if(!is.na(trees$dn[1])){
+  if(!is.na(trees$dn_cm[1])){
     if(tree_center){
       p <- p  + geom_circle(data=trees,aes(x0=x,y0=y,r=radio_sel_m),fill="purple",alpha=0.2)
     }else{
       trees2 <- trees |> group_by(radio_sel_m) |> filter(row_number()==1) |> ungroup()
       p <- p  + geom_circle(data=trees2,aes(x0=xp,y0=yp,r=radio_sel_m),fill="purple",alpha=0.2)  
     }
-    p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=dn/20),col="green",fill="darkgreen",lwd=0.5)
+    p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=dn_cm/20),col="green",fill="darkgreen",lwd=0.5)
   }
   p <- p + geom_point(data=trees[1,],aes(x=xp,y=yp),shape=13,col="red",size=4)
   p <- p + guides(fill=FALSE)+ggtitle(title)
@@ -233,14 +233,14 @@ plot_n_selections <- function(p,trees,tree_center=TRUE,all=FALSE){
     p <- p + geom_circle(aes(x0=x,y0=y,r=radio_sel_m), fill="grey50",alpha=0.2)
   }
 
-  if(!all(is.na(trees$dn))){
+  if(!all(is.na(trees$dn_cm))){
     if(tree_center){
       p <- p  + geom_circle(data=trees,aes(x0=x,y0=y,r=radio_sel_m,fill=Parc),alpha=0.2)
     }else{
       trees2 <- trees |> group_by(Parc, radio_sel_m) |> filter(row_number()==1) |> ungroup()
       p <- p  + geom_circle(data=trees2,aes(x0=xp,y0=yp,r=radio_sel_m,fill=Parc),alpha=0.2)  
     }
-    p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=dn/20,fill=Parc))
+    p <- p + geom_circle(data=trees,aes(x0=x,y0=y,r=dn_cm/20,fill=Parc))
   }
   p <- p + geom_point(data=points,aes(x=xp,y=yp,col=Parc),shape=13,size=4)
   p <- p + guides(fill=FALSE,color=FALSE)+ggtitle(title)
