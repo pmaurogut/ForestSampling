@@ -1,6 +1,7 @@
 ---
 title: "Estimación con una parcela ubicada uniformemente al azar"
-output: html_document
+output:
+  html_document: default
 ---
 
 #### Introducción
@@ -19,7 +20,7 @@ Antes de continuar, se recomienda pulsar el botón **Regenera población** para 
 
 #### Parámetros de interés
 
-Vamos a hacer un pequeño recordatorio de los tipos de parámetros de interés que vimos en la pestaña 1 Población. Es importante tener en cuenta que estos valores nunca los conoceremos en casos reales y que nuestro objetivo es estimarlos.
+Vamos a hacer un pequeño recordatorio de los tipos de parámetros de interés que vimos en la pestaña 1 **Población**. Es importante tener en cuenta que estos valores nunca los conoceremos en casos reales y que nuestro objetivo es estimarlos.
 
 ***Totales***
 
@@ -81,7 +82,7 @@ $$\hat{Total\:por\:unidad\:area(y)}=\begin{cases}
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
 
-Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área, el área a muestrear $A$, aparece dividiendo al total, pero también aparece de forma implícita en las $\pi_i$ . Estas áreas se cancelan y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés $y_i$ de cada árbol seleccionado dividido por su área de parcela correspondiente $a_{parcela,i}$ o lo que es lo mismo, sumar el valor de la variable de interés de cada árbol seleccionado $y_i$ multiplicadao por su factor de expansión.
+Es importante mencionar dos cuestiones. Primero, ambos estimadores son igual a cero si la muestra está vacía (es decir si no se ha seleccionado ningún árbol). Por otro lado, para totales por unidad de área, el área a muestrear $A$, aparece dividiendo al total, pero también aparece de forma implícita en las $\pi_i$ . Estas áreas se cancelan y el estimador tiene una forma sumamente sencilla donde lo único que hay que hacer es sumar, para todos los árboles de la parcela, el valor de la variable de interés $y_i$ de cada árbol seleccionado dividido por su área de parcela correspondiente $a_{parcela,i}$ o lo que es lo mismo, sumar el valor de la variable de interés de cada árbol seleccionado $y_i$ multiplicado por su factor de expansión.
 
 $$\hat{Total \: por \: unidad\:area(y)}=\begin{cases}\sum\limits_{i\in muestra}\frac{y_i}{a_{parcela,i}}= 
 \sum\limits_{i\in muestra}y_iw_i  , & \text{si se ha seleccionado algún árbol} \\
@@ -165,9 +166,9 @@ Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calc
 
 Hemos visto en teoría dos propiedades de los estimadores que son interesantes. El sesgo y la varianza. El sesgo nos dice cómo de cerca nos quedamos, en promedio, del parámetro que queremos estimar. La precisión, medida a través de la varianza o la desviación típica, nos informa sobre la variabilidad de los valores que podemos obtener al emplear un estimador.
 
-![Precision y sesgo de un estimador](Precision_sesgo.png)
+![Precisión y sesgo de un estimador](Precision_sesgo.png)
 
-Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda o a la derecha, pero si que sabemos que estamos en la fila de abajo.
+Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda o a la derecha, pero sí que sabemos que estamos en la fila de abajo.
 
 Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
 
@@ -203,7 +204,7 @@ $$\hat{G}_{HT}=\begin{cases}
 0, & \text{si no se ha seleccionado ningún árbol}
 \end{cases}$$
 
-Operando para expresar el área basimétrica en $m²/ha$ tedríamos que:
+Operando para expresar el área basimétrica en $m²/ha$ tendríamos que:
 
 $$\hat{G}_{HT}=\sum_{i \in muestra}\frac{\pi dn_i²}{4*10000}w_i$$ donde $dn_i$ es el diámetro normal del árbol $i$ en cm y el 10000 en el denominador aparece al transformar los diámetros normales en centímetro a metros. El factor de expansión $w_i$ para parcelas se puede obtener recordando que diámetro (o radio) del área de inclusión será veces $k$ veces el diámetro normal (o radio) del árbol y que este área de inclusión se calculará en hectáreas. Es decir:
 
@@ -233,4 +234,4 @@ Sin duda, algo muy interesante de esta explicación es el orden temporal en que 
 
 Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicaron su artículo en 1952. Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores al diseño del relascopio.
 
-Por otro lado, es muy importante destacar la impoartancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues mostraba que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales aveces sin darnos cuenta, carece de sesgo independientemente de cual sea el diseño de muestreo y la población con la que trabajamos.
+Por otro lado, es muy importante destacar la importancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues mostraba que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales aveces sin darnos cuenta, carece de sesgo independientemente de cual sea el diseño de muestreo y la población con la que trabajamos.

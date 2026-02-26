@@ -29,18 +29,18 @@ samp_size <- sliderInput("n","Número de Parcelas",value = 1,min = 1,max = 50)
 
 reps <-sliderInput("r","Repeticiones",value = 100,min = 1,max = 200)
 
-reset_population <- actionButton("reset_pop", "Regenera poblacion")
+reset_population <- actionButton("reset_pop", "Regenera población")
 
 muestra <- actionButton("muestra", "Muestrea",color="darkgreen",alpha=0.4)
 
 n_muestras <- actionButton("n_muestras", "Toma n muestras",color="blue",alpha=0.4)
 
-areas_inclusion <- checkboxInput("all_trees","Todas las areas de inclusion",value = FALSE)
+areas_inclusion <- checkboxInput("all_trees","Todas las areas de inclusión",value = FALSE)
 add_hd<- checkboxInput("add_hd","Añade altura y diámetro",value = FALSE)
 
 samp_dist <- actionButton("samp_dist", "Aumenta n")
 samp_dist2 <- actionButton("samp_dist2", "Reduce n")
-reps <- sliderInput("reps","Replicas",value = 3,min = 1,max = 5,step=1)
+reps <- sliderInput("reps","Réplicas",value = 3,min = 1,max = 5,step=1)
 
 controls <- list(lado,pop_size,samp_size,plot_type,space,
                  centrado_arbol,areas_inclusion,add_hd,space,
@@ -144,7 +144,7 @@ ui <- page_navbar(
             })
     ),
   #### One plot ####
-    nav_panel("3. Estimacion 1 parcela",
+    nav_panel("3. Estimación 1 parcela",
             fluidRow(
               layout_columns(col_widths=c(5,7),height = 800,
                              card(card_header("Parámetros de interés y muestra"),
@@ -213,7 +213,7 @@ ui <- page_navbar(
                                                     tableOutput('tabla_interes4'),
                                                     plotOutput("plot_selected3")
                                 ),height=400),
-                                card(card_header("Cambio en la desviación típìca al aumentar n"),
+                                card(card_header("Cambio en la desviación típica al aumentar n"),
                                      plotOutput("var_n")
                                 )),
                            card(card_header("Aproximación a una normal"),
@@ -246,7 +246,7 @@ ui <- page_navbar(
                                ),
                              
                                card(
-                                 card_header("Cambio en la desviación típìca aumentar n"),
+                                 card_header("Cambio en la desviación típica aumentar n"),
                                  plotOutput("var_n2")
                                )
                               ),
@@ -264,10 +264,10 @@ ui <- page_navbar(
             
   ),
   #### Sample alloc ####
-  nav_panel("7. tamaño muestra",
+  nav_panel("7. Tamaño muestra",
             fluidRow({
               layout_columns(col_widths=c(5,7),height = 900,
-                          card(card_header("Paráemtro de interés y muestra piloto"),
+                          card(card_header("Parámetro de interés y muestra piloto"),
                             card(
                               layout_columns(
                                 col_widths = c(5,7),

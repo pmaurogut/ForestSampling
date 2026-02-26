@@ -1,11 +1,12 @@
 ---
 title: "Estimación con n parcelas ubicadas uniformemente al azar y de forma independiente"
-output: html_document
+output:
+  html_document: default
 ---
 
 #### Introducción
 
-En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña Población) cuando se repite $n$ veces y de forma independiente el experimento aleatorio de:
+En esta pestaña se explica cómo se hace la estimación de un parámetro de interés (ver pestaña **Población**) cuando se repite $n$ veces y de forma independiente el experimento aleatorio de:
 
 1.  Seleccionar $n$ ubicaciones al azar en la zona a muestrear
 
@@ -49,7 +50,7 @@ $$\boxed{\boxed{ E(estimador final) = E(estimador \ parcela)=Parámetro\:interé
 
 -   Para ratios, funciones de totales y parámetros complejos, el valor esperado no coincidirá con el parámetro a estimar, es decir, los estimadores de parcela pueden tener un sesgo y este lo heredará el estimador final.
 
-#### Varianza\\desiviación típica del estimador final
+#### Varianza\\desviación típica del estimador final
 
 Para obtener la varianza del estimador final nos apoyaremos en:
 
@@ -65,13 +66,13 @@ Como todos los estimadores de parcela son el resultado de repetir el mismo exper
 
 $$\boxed{\boxed{ V(estimador final) = \frac{nV(estimador \ parcela)}{n²}=\frac{V(estimador \ parcela)}{n}}}$$
 
-La varianza del estimador será igual a $\frac{1}{n}$ por la varianza del estimador de parcela. Sin el lugar de a las varianzas miramos desviaciones típica, $sd=\sqrt{V}$, al tomar raices cuadradas tendremos que la desviación típica del estimador final será $\frac{1}{\sqrt{n}}$ por la desviación típica del estimador de parcela.
+La varianza del estimador será igual a $\frac{1}{n}$ por la varianza del estimador de parcela. Sin el lugar de a las varianzas miramos desviaciones típica, $sd=\sqrt{V}$, al tomar raíces cuadradas tendremos que la desviación típica del estimador final será $\frac{1}{\sqrt{n}}$ por la desviación típica del estimador de parcela.
 
 $$\boxed{\boxed{ sd(estimador final) = \sqrt{\frac{nV(estimador \ parcela)}{n²}}=\sqrt{\frac{V(estimador \ parcela)}{n}}=\frac{sd(estimador \ parcela)}{\sqrt{n}}}}$$
 
 #### Estimación de la varianza del estimador final
 
-Los problemas de muestreo implican dos problemas de estiamación. El primero es obtener el valor del estimador final. El segundo es estimar cuanto puede variar dicho estimador. Este segundo problema implica estimar la varianza (o desviación típica del estimador final)
+Los problemas de muestreo implican dos problemas de estimación. El primero es obtener el valor del estimador final. El segundo es estimar cuanto puede variar dicho estimador. Este segundo problema implica estimar la varianza (o desviación típica del estimador final)
 
 Es importante recordar que la varianza de los estimadores de parcela están directamente relacionados con las disposición espacial de los árboles y esto es imposible de conocer. Además, solo tenemos un valor del estimador final y no podemos ver su variabilidad. Por suerte, hemos visto que la distribución del estimador de parcela y la distribución del estimador final están relacionadas. por lo que podremos:
 
@@ -91,7 +92,7 @@ En resumen, primero obtenemos la varianza de las estimaciones de parcela y despu
 
 #### **Panel izquierdo, Población, muestras y estimaciones**
 
-Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores. Además en esta pestaña es posible aumentar el número de parcelas que se miden empleando el control para el **Número de parcelas** o los boones de **Aumenta n** y **Reduce n**.
+Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores. Además en esta pestaña es posible aumentar el número de parcelas que se miden empleando el control para el **Número de parcelas** o los botones de **Aumenta n** y **Reduce n**.
 
 Para un número de parcelas dado, cada vez que se pulsa el botón **Muestrea** se tonan $n$ parcelas y se calculan sus estimadores de parcela. Finalmente, se obtiene el estimador final promediando las $n$ estimaciones de parcela.
 

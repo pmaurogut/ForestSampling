@@ -1,29 +1,30 @@
 ---
-title: "Poblacion"
-output: html_document
+title: "Población"
+output:
+  html_document: default
 ---
 
 #### Introducción
 
-**Estás viendo la población simulada**. Al hacer un inventario, no conocemos la población, no sabemos cuantos individuos hay ni cuales son los valores de sus alturas y diámetros. Esto implica que en aplicaciones reales no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo en unas condiciones en las que si que conocemos todos los individuos en el área a maestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.
+**Estás viendo la población simulada**. Al hacer un inventario, no conocemos la población, no sabemos cuántos individuos hay ni cuáles son los valores de sus alturas y diámetros. Esto implica que en aplicaciones reales no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo en unas condiciones en las que sí que conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.
 
 #### Parámetros de interés (General)
 
-A continuación veremos tipos de parámetros de interés. Es importante que sepas diferenciar los tres tipos de parámetro que se presentan a continuación.
+A continuación, veremos tipos de parámetros de interés. Es importante que sepas diferenciar los tres tipos de parámetro que se presentan a continuación.
 
 **Totales y totales por unidad de área**
 
-De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir un total por el área muestreada $A$ que en general será conocida. Si usamos el símbolo $\cal{N}$ (N de bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido) tenemos que totales y totales por unidad de área se expresan como:
+De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todos los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir un total por el área muestreada $A$ que en general será conocida. Si usamos el símbolo $\cal{N}$ (N de bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido) tenemos que totales y totales por unidad de área se expresan como:
 
 $$
-Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total ~ por ~ unidad ~ area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i
+Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total ~ por ~ unidad ~ área(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i
 $$
 
 Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (N con bordes rectos), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
 
 **Ratios y funciones de totales**
 
-Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales, pero si que son funciones que implican a más de un total. En este sentido destacan los valores medios. Suma de la variable de interés para todos los individuos de la población dividido por el número de individuos, $\cal{N}$. Pero $\cal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, tenemos que los valores medios son ratios de totales o de totales por unidad de área ya que $\frac{1}{A}$ se cancela.
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios, muchas variables dasométricas que querremos estimar no son totales, pero sí que son funciones que implican a más de un total. En este sentido destacan los valores medios. Suma de la variable de interés para todos los individuos de la población dividido por el número de individuos, $\cal{N}$. Pero $\cal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, tenemos que los valores medios son ratios de totales o de totales por unidad de área ya que $\frac{1}{A}$ se cancela.
 
 $$
 Media(y)=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i}{\frac{1}{A}\cal{N}}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\sum_{i=1}^{\cal{N}}1}
@@ -47,7 +48,7 @@ $$
 d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
-Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos tendremos que decidir como aproximarnos a dichos problemas.
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos y tendremos que decidir como aproximarnos a dichos problemas.
 
 #### Parámetros de interés (Ejemplos)
 

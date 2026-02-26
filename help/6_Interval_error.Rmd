@@ -1,13 +1,14 @@
 ---
 title: "Intervalos de confianza y error"
-output: html_document
+output:
+  html_document: default
 ---
 
 #### Introducción
 
-En la pestaña anterior nos hemos apoyado en simulaciones del proceso de muestreo para ver que ocurre con la distribución muestral del estimador final. Repetíamos cientos de veces el proceso de muestreo y cálculo del estimador final. En esta pestaña vamos a usar menos la simulación (simularemos pero solo unas pocas veces) y **vamos a ver cómo procederíamos para calcular intervalos de confianza y errores de muestreo para el estimador final.**
+En la pestaña anterior nos hemos apoyado en simulaciones del proceso de muestreo para ver qué ocurre con la distribución muestral del estimador final. Repetíamos cientos de veces el proceso de muestreo y cálculo del estimador final. En esta pestaña vamos a usar menos la simulación (simularemos pero solo unas pocas veces) y **vamos a ver cómo procederíamos para calcular intervalos de confianza y errores de muestreo para el estimador final.**
 
-Es importante en esta pestaña, que el muestreo realmente implica dos problemas de estimación. El primer problema, obtener el estimador final, ya sabemos cómo se aborda. Pero hay un segundo problema de estimación que se emplea para informar sobre la calidad del muestreo. En este segundo problema estaremos interesado en estimar la variabilidad del estimador final.
+Es importante en esta pestaña, que el muestreo realmente implica dos problemas de estimación. El primer problema, obtener el estimador final, ya sabemos cómo se aborda. Pero hay un segundo problema de estimación que se emplea para informar sobre la calidad del muestreo. En este segundo problema estaremos interesados en estimar la variabilidad del estimador final.
 
 #### Notación simplificada
 
@@ -21,7 +22,7 @@ En base a estas reglas tenemos que, $\hat{\mu_{p}}$ sería la estimador de parce
 
 Cuando hagamos un inventario real mediremos solo $n$ parcelas y no podremos repetir ese proceso muestreo cientos de veces como hacíamos en la pestaña anterior. Entonces, **¿Cómo podemos obtener información sobre la distribución muestral del estimador final con un único valor?**
 
-El análisis de la fiabilidad del inventario se apoyará en las relaciones que existen entre la distibución muestral del estimador de parcela y la distribución muestral del estimador final, prestando especial atención a la varianza y desviación típica de estas distribuciones. Estas relaciones se han visto en las dos pestañas anteriores.
+El análisis de la fiabilidad del inventario se apoyará en las relaciones que existen entre la distribución muestral del estimador de parcela y la distribución muestral del estimador final, prestando especial atención a la varianza y desviación típica de estas distribuciones. Estas relaciones se han visto en las dos pestañas anteriores.
 
 #### Relaciones entre las distribuciones muestrales del estimador de parcela y el estimador final.
 
@@ -71,7 +72,7 @@ $$\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^
 
 **IMPORTANTE:** Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
 
-Ya casi hemos terminado el segundo problema de estimación, en base a estas ecuaciones estimamos la varianza o desviación típica del estimador de parcela para el que tenemos $n$ repeticiones, basandonos en la propiedad 3 convertiremos, tendremos que:
+Ya casi hemos terminado el segundo problema de estimación, en base a estas ecuaciones estimamos la varianza o desviación típica del estimador de parcela para el que tenemos $n$ repeticiones, basándonos en la propiedad 3 convertiremos, tendremos que:
 
 $$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}$$
 
@@ -93,7 +94,7 @@ Una forma alternativa y más concisa de expresar estos intervalos es
 
 $$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
-**IMPORTANTE:** Cuando estimamos totales o totales por unidad de área, el valor esperado de $\hat{\mu}_{final}$ coincidirá con $\mu_{final}$ (ausencia de sesgo). En este caso, si fuésemos capaces de repetir muchas veces el proceso de muestreo, los intervalos de confianza construidos contendrían el valor que queremos estimar en un $1-\alpha\%$ de las ocasiones. Para otros parámetros, el valor esperado de $\hat{\mu}_{final}$ no tiene porqué coincidir con $\mu$ por lo que los intervalos no tienen porque contener el parámetro de interés un $1-\alpha\%$ de las veces.
+**IMPORTANTE:** Cuando estimamos totales o totales por unidad de área, el valor esperado de $\hat{\mu}_{final}$ coincidirá con $\mu_{final}$ (ausencia de sesgo). En este caso, si fuésemos capaces de repetir muchas veces el proceso de muestreo, los intervalos de confianza construidos contendrían el valor que queremos estimar en un $1-\alpha\%$ de las ocasiones. Para otros parámetros, el valor esperado de $\hat{\mu}_{final}$ no tiene por qué coincidir con $\mu$ por lo que los intervalos no tienen por qué contener el parámetro de interés un $1-\alpha\%$ de las veces.
 
 #### Cálculo de los intervalos
 
