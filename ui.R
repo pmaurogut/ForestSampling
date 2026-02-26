@@ -184,7 +184,7 @@ ui <- page_navbar(
                                   ), min_height=350),
                                   card(card_header("Muestras"),
                                        list(
-                                         downloadButton("download1Samp", "Descarga muestra"),
+                                         downloadButton("downloadnSamp", "Descarga muestra"),
                                          tableOutput("n_estimaciones")
                                        )
                                     ),
