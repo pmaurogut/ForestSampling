@@ -251,7 +251,7 @@ server <- function(input, output, session) {
       paste('n_muestras-', Sys.Date(), '.csv', sep='')
     },
     content = function(con) {
-      selected <- table() |> filter(Rep==max(Rep))
+      selected <- table()
       selected_list <- group_split(selected,Rep,Parc)
       forest_all <- forest()
       type <- input$plot_type1
