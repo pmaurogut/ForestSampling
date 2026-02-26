@@ -24,7 +24,7 @@ Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basim
 
 **Ratios y funciones de totales**
 
-Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios, muchas variables dasométricas que querremos estimar no son totales, pero sí que son funciones que implican a más de un total. En este sentido destacan los valores medios. Suma de la variable de interés para todos los individuos de la población dividido por el número de individuos, $\mathcal{N}$. Pero $\mathcal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, tenemos que los valores medios son ratios de totales o de totales por unidad de área ya que $\frac{1}{A}$ se cancela.
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de vista de los inventarios, muchas variables dasométricas que querremos estimar no son totales, pero sí que son funciones que implican a más de un total. En este sentido destacan los valores medios. Suma de la variable de interés para todos los individuos de la población dividido por el número de individuos, $\mathcal{N}$. Pero $\mathcal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, tenemos que los valores medios son ratios de totales o de totales por unidad de área ya que $\frac{1}{A}$ se cancela.
 
 $$
 Media(y)=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\mathcal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}y_i}{\frac{1}{A}\mathcal{N}}=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\sum_{i=1}^{\mathcal{N}}1}

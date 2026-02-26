@@ -154,7 +154,7 @@ $$\hat{d_o}= \frac{\sum\limits_{i\in \hat{dominantes}}d_iw_i^*}{\sum\limits_{i\i
 
 #### Propiedades del estimador de parcela
 
-***Valor esperado***
+***Valor esperado, exactitud y sesgo***
 
 Cuando consideramos totales o totales por unidad de área, es posible demostrar que el estimador de parcela que hemos empleado no tendrá sesgo si los efectos de borde no son importantes. Es decir, si los efectos de borde se pueden despreciar, tenemos que, para totales, el valor esperado del estimador coincide con el valor que queremos estimar.
 
@@ -166,17 +166,13 @@ $$\boxed{\boxed{ E(\hat{\frac{Total(y)}{A}}) = \frac{Total(y)}{A}}}$$
 
 Si pudiésemos repetir infinitas veces el proceso de seleccionar muestras y calcular el estimador, la media de esas infinitas estimaciones coincidiría con el valor a estimar. **Esta propiedad es muy fuerte pues se cumple sea cual sea la población y el tipo de parcela, lo único que debe ser despreciable son los efectos de borde, cosa que normalmente ocurre.**
 
-Hemos visto en teoría dos propiedades de los estimadores que son interesantes. El sesgo y la varianza. El sesgo nos dice cómo de cerca nos quedamos, en promedio, del parámetro que queremos estimar. La precisión, medida a través de la varianza o la desviación típica, nos informa sobre la variabilidad de los valores que podemos obtener al emplear un estimador.
+Hemos visto en teoría dos propiedades de los estimadores que son interesantes. El sesgo y la varianza. El sesgo nos dice cómo de cerca nos quedamos, en promedio, del parámetro que queremos estimar. Cuando un estimador tiene bajo sesgo se dice que tiene alta exactitud. La precisión, medida a través de la varianza o la desviación típica, nos informa sobre la variabilidad de los valores que podemos obtener al emplear un estimador. Un estimador preciso tendrá una varianza baja, un estimador poco preciso será muy cambiante, tendrá una varianza alta.
 
 ![Precisión y sesgo de un estimador](Precision_sesgo.png)
 
 Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela para totales o totales por unidad de área no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda (precisión baja = varianza alta) o a la derecha (precisión alta = varianza baja), pero sí que sabemos que estamos en la fila de abajo.
 
-Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.**
-
-***Varianza y desviación típica***
-
-Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la precisión del mismo. Desafortunadamente, la varianza de los estimadores de parcela está directamente relacionada con las disposición espacial de los árboles y esta es imposible de conocer, **por lo que sólo podremos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
+Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.** Hemos visto como funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la precisión del mismo. Desafortunadamente, la varianza de los estimadores de parcela está directamente relacionada con las disposición espacial de los árboles y esta es imposible de conocer, **por lo que sólo podremos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
 
 #### Repetición del experimento de ubicar una parcela al azar (Panel derecho)
 
@@ -229,7 +225,7 @@ $$\frac{10000}{k^2}=1\rightarrow k=100$$
 
 Es decir, un BAF igual a 1, equivale a que el diámetro del área de inclusión de los árboles tenga un diámetro igual a 100 veces el diámetro normal en cm. Es decir, si un árbol tiene un diámetro normal de 13 cm, el diámetro del área de inclusión será 100 veces mayor o lo que es lo mismo 13 m. Esta forma de proceder, basada en igualar la receta del relascopio con el estimador de Horvitz-Thompson, nos permite deducir el factor de multiplicación $k$ para un BAF arbitrario y viceversa.
 
-Finalmente, es importante darse cuenta, que al estimar $G$ con un relascopio, no tenemos que medir nada, solo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ se cancela, pues este factor también aparece en $w_i$.
+Finalmente, es importante darse cuenta, que al estimar $G$ con un relascopio, no tenemos que medir nada, solo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ también aparece en $w_i$ por lo que ambos valores se cancelan. 
 
 En esta explicación, hemos visto el fundamento de algo que cuando se ve la primera vez resulta hasta misterioso. ¿Cómo puede ser que estimemos áreas contando árboles? La explicación está en el uso de factores de expansión inversamente proporcionales a la variable de la que estimamos el total por unidad de área. O lo que es lo mismo, el conteo aparece porque hacemos probabilidades de inclusión proporcionales a la variable cuyo total queremos estimar, en este caso el área basimétrica. El caso del relascopio no es el único caso de método de muestreo forestal que emplea probabilidades de inclusión proporcionales a la variable de interés. En muestreos por transectos, esto también ocurre aunque ese tipo de muestreo no se contempla en la asignatura.
 
