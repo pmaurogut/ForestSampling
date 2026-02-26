@@ -24,10 +24,10 @@ Vamos a hacer un pequeño recordatorio de los tipos de parámetros de interés q
 
 ***Totales***
 
-De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada. Si usamos el símbolo $\cal{N}$ (**N de bordes redondeados**) para representar el número de árboles en la zona a muestrear (**parámetro desconocido**) tenemos que totales y totales por unidad de área se expresan como:
+De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todo los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir el total por el área muestreada. Si usamos el símbolo $\mathcal{N}$ (**N de bordes redondeados**) para representar el número de árboles en la zona a muestrear (**parámetro desconocido**) tenemos que totales y totales por unidad de área se expresan como:
 
 $$
-Total(y)=\sum_{i=1}^{\cal{N}}y_i \qquad \qquad Total\:por\:unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i
+Total(y)=\sum_{i=1}^{\mathcal{N}}y_i \qquad \qquad Total\:por\:unidad\:area(y)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}y_i
 $$
 
 Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (**N con bordes rectos**), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
@@ -37,10 +37,10 @@ Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basim
 Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
 
 $$
-Media(y)=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\sum_{i=1}^{\cal{N}}1}
+Media(y)=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\mathcal{N}}=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\sum_{i=1}^{\mathcal{N}}1}
 $$
 
-Pero $\cal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, de forma que **los valores medios son ratios de totales**.
+Pero $\mathcal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, de forma que **los valores medios son ratios de totales**.
 
 Otro ejemplo de parámetro de interés que se expresa como función de totales es el diámetro cuadrático medio $d_g$. Partiendo de la propia definición de $d_g$ o diámetro del árbol de sección normal media. Vemos que $d_g$ es una función de dos totales $G$ y $N$
 
@@ -53,11 +53,11 @@ $$
 Hay variables dasométricas que no son totales o funciones o ratios de totales. En este apartado destacan las alturas y diámetros dominantes, que suelen definirse como alturas o diámetros medios del conjunto de árboles dominantes.
 
 $$
-h_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}h_i
+h_o= \frac{1}{\mathcal{N_{dominantes}}}\sum\limits_{i\in dominantes}h_i
 $$
 
 $$
-d_o= \frac{1}{\cal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
+d_o= \frac{1}{\mathcal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
 Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea.
@@ -120,7 +120,7 @@ Cuando consideremos la estimación de parámetros medios (ratios de totales) o f
 
 Si el parámetro de interés es la altura media
 
-$$\bar{h}=\frac{\sum_{i=1}^{\cal{N}}y_i}{\cal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\cal{N}}y_i}{\frac{1}{A}\sum_{i=1}^{\cal{N}}1}$$
+$$\bar{h}=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\mathcal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}y_i}{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}1}$$
 
 La altura media es el ratio de dos totales por unidad de área, el total de las alturas $y_i\rightarrow h_i$ y $N$ (el total de una variable que vale 1 para todos los árboles. En este caso, simplemente haremos el estimador de parcela para el numerador y el estimador por parcela para el denominador y después haremos el ratio.
 

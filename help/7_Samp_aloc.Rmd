@@ -12,7 +12,7 @@ $$\hat{sd}(\hat{\mu}_{final})=\frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}$$
 
 $$\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})}{\hat{\mu}_{final}}$$
 
-En la segunda ecuación igualamos el error en función de $n$ los requisitos de error que nos han dado. Si sustituimos la primera ecuación en la segunda, tendremos:
+En la segunda ecuación igualamos el error en función de $n$ y de los requisitos de error que nos han dado. Si sustituimos la primera ecuación en la segunda, tendremos:
 
 $$
 \hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})}{\hat{\mu}_{final}} \frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}
@@ -28,10 +28,10 @@ Sabemos como obtener todos los términos de la fórmula anterior para $n$, pero 
 
 #### Cálculo práctico de n
 
-Lo primero que haremos para determinar $n$ es el muestreo piloto. Una vez tenemos las parcelas piloto, aplicaremos
+Lo primero que haremos para determinar $n$ es el muestreo piloto. Una vez tenemos las parcelas piloto, aplicaremos:
 
 1.  Obtenemos el estimador final $\hat{\mu}_{final}$ como promedio de los estimadores de parcela en las parcelas piloto. El número de parcelas piloto lo indicaremos con $n_{piloto}$ .
-2.  Estimamos la desviación típica de $\hat{\mu}_{final}$ usando:
+2.  Estimamos la desviación típica del estimador de parcela $\hat{\mu}_{final}$ usando:
 
 $$\hat{sd}(\hat{\mu}_{p})=\sqrt{\frac{\sum_{i=1}^p(\hat{\mu}_p-\hat{\mu}_{final})^2}{(n_{piloto}-1)}}$$
 

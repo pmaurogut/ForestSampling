@@ -19,7 +19,7 @@ Los resultados que se ven en esta pestaña están basados en simulaciones del pr
 
 3.  Obtener $n$ estimadores de parcela y promediarlos obteniendo un valor del estimador final en cada una de las repeticiones.
 
-Una diferencia importante entre esta pestaña y la pestaña anterior es que en esta pestaña se repite cientos de veces la toma de muestras y cálculo de estimadores de parcela y fina que hacíamos en la pestaña anterior pulsando el botón **Muestrea**. Cada vez que cambiamos el número de parcelas, es como si pulsásemos el botón **Muestrea** de la pestaña anterior cientos de veces por lo que obtendremos valores que aproximan muy bien las distribuciones muestrales de los estimadores finales.
+Una diferencia importante entre esta pestaña y la pestaña anterior es que en esta pestaña se repite cientos de veces la toma de muestras y cálculo de estimadores de parcela y final que hacíamos en la pestaña anterior pulsando el botón **Muestrea**. Cada vez que cambiamos el número de parcelas, es como si pulsásemos el botón **Muestrea** de la pestaña anterior cientos de veces por lo que obtendremos valores que aproximan muy bien las distribuciones muestrales de los estimadores de parcela y finales.
 
 Igual que en la pestaña anterior, antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores.
 
@@ -47,7 +47,7 @@ Por lo que la distribución muestral del estimador final verificará que estará
 
 $$
 \boxed{\boxed{
-estimador \: final \sim N(Parámetro \: interés,\frac{sd(estimador \: parcela)}{\sqrt{n}})
+estimador \: final \sim N(Parámetro \: interés,\frac{V(estimador \: parcela)}{n})
 }}
 $$
 
