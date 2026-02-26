@@ -47,7 +47,7 @@ Por lo que la distribución muestral del estimador final verificará que estará
 
 $$
 \boxed{\boxed{
-estimador \: final \sim N(Parámetro \: interés,\frac{V(estimador \: parcela)}{n})
+estimador \: final \sim N(Parámetro~interés,\frac{V(estimador~parcela)}{n})
 }}
 $$
 
