@@ -14,15 +14,11 @@ $$\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\m
 
 En la segunda ecuación igualamos el error en función de $n$ y de los requisitos de error que nos han dado. Si sustituimos la primera ecuación en la segunda, tendremos:
 
-$$
-\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})}{\hat{\mu}_{final}} \frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}
-$$
+$$\hat{\varepsilon}_{(1-\alpha)\%} = \frac{q(1-\frac{\alpha}{2})}{\hat{\mu}_{final}} \frac{\hat{sd}(\hat{\mu}_p)}{\sqrt{n}}$$
 
 Operando, tenemos que para un nivel de probabilidad fiducial y error relativo determinado tendremos que:
 
-$$
-\frac{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)} = \frac{1}{\sqrt{n}} \rightarrow  \boxed{\boxed{n = {\left( \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)}{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}\right)}^2}}
-$$
+$$\frac{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)} = \frac{1}{\sqrt{n}} \rightarrow  \boxed{\boxed{n = {\left( \frac{q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_p)}{\hat{\varepsilon}_{(1-\alpha)\%}\hat{\mu}_{final}}\right)}^2}}$$
 
 Sabemos como obtener todos los términos de la fórmula anterior para $n$, pero para obtener $\hat{\mu}_{final}$ y $\hat{sd}(\hat{\mu}_p)$ necesitamos una muestra y ahí es donde entra en juego el muestreo piloto. Un muestreo piloto es un muestreo preliminar con un número relativamente reducido de parcelas que fijamos nosotros y que emplearemos para poder tener valores de $\hat{\mu}_{final}$ y $\hat{sd}(\hat{\mu}_p)$ de forma que podamos calcular un $n$ para el nivel de error requerido.
 
