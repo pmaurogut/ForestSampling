@@ -58,15 +58,15 @@ En este caso hemos considerado los siguientes parámetros de interés donde $A$ 
 
 -   Total de individuos
 
-$$Total\:individuos= \sum_{i=1}^{\mathcal{N}}1$$
+$$Total~individuos= \sum_{i=1}^{\mathcal{N}}1$$
 
 -   Total secciones normales
 
-$$Total\:secciones\:normales(m²)=\sum_{i=1}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2$$
+$$Total~secciones~normales(m²)=\sum_{i=1}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2$$
 
 -   Total de volumen con corteza
 
-$$Total\:volumen\:con\:corteza(m³)=\sum_{i=1}^{\mathcal{N}}vcc_i$$
+$$Total~volumen~con~corteza(m³)=\sum_{i=1}^{\mathcal{N}}vcc_i$$
 
 **Totales por unidad de área**
 
@@ -76,9 +76,9 @@ $$N(individuos/ha)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}1$$
 
 -   Área basimétrica (Total por unidad de área)
 
-$$G(m²/ha)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2$$ 
+$$G(m²/ha)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2$$
 
-- Volumen con corteza por unidad de área (Volumen con corteza por ha)
+-   Volumen con corteza por unidad de área (Volumen con corteza por ha)
 
 $$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}vcc_i$$
 
@@ -96,6 +96,6 @@ $$\bar{h}(m)=\frac{\sum_{i=1}^{\mathcal{N}}h_i}{\sum_{i=1}^{\mathcal{N}}1}$$
 
 -   Altura dominante (otros parámetros complejos)
 
-$$h_o(m) =\sum_{i \in \mathcal{D}}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i² \:\: ,donde \: \mathcal{D} \text{ es el conjunto de árboles dominantes}$$
+$$h_o(m) =\sum_{i \in \mathcal{D}}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i² ~~ ,donde ~ \mathcal{D} \text{ es el conjunto de árboles dominantes}$$
 
 Bajo el criterio de Assman $\mathcal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea

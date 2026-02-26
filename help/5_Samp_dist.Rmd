@@ -30,24 +30,24 @@ Para observar el efecto de modificar $n$, solo es necesario cambiar el control *
 En el panel izquierdo, gráfica inferior, puedes ver como cambia la desviación típica del estimador final al aumentar el número de parcelas, $n$. El tamaño de muestra seleccionado se resalta en rojo. Esta variación es una consecuencia directa de la propiedad vista en la pestaña anterior donde obtuvimos que:
 
 $$
-\boxed{\boxed{ sd(estimador final) = \frac{sd(estimador \ parcela)}{\sqrt{n}}}}
+\boxed{\boxed{ sd(estimador final) = \frac{sd(estimador ~parcela)}{\sqrt{n}}}}
 $$
 
 #### **Panel derecho aproximación de la distribución del estimador final a una distribución normal.**
 
-En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se hacen cada vez más estrechas, ya que su desviación típica decrece a un ritmo proporcional a $\frac{1}{\sqrt{n}}$ . La varianza, el cuadrado de la desviación típica, decrece a un ritmo proporcional a $\frac{1}{n}$. Pero además ver como al aumentar $n$ la distribución muestral se hace más estrecha podemos ver algo muy importante: **al aumentar** $n$ **las distribuciones se aproximan cada vez más a una distribución normal. Esto es una aplicación directa del teorema del límite central que has escuchado en la asignatura de estadística.**. 
+En el panel derecho se puede ver como al aumentar $n$, las distribuciones de valores del estimador final se hacen cada vez más estrechas, ya que su desviación típica decrece a un ritmo proporcional a $\frac{1}{\sqrt{n}}$ . La varianza, el cuadrado de la desviación típica, decrece a un ritmo proporcional a $\frac{1}{n}$. Pero además ver como al aumentar $n$ la distribución muestral se hace más estrecha podemos ver algo muy importante: **al aumentar** $n$ **las distribuciones se aproximan cada vez más a una distribución normal. Esto es una aplicación directa del teorema del límite central que has escuchado en la asignatura de estadística.**.
 
 Cuando los efectos de borde son pequeños, tenemos además que para totales o totales por unidad de área se puede demostrar que:
 
 $$
-\boxed{\boxed{ E(estimador final) = E(estimador \: parcela)=Parámetro \: interés}}
+\boxed{\boxed{ E(estimador final) = E(estimador ~ parcela)=Parámetro ~ interés}}
 $$
 
 Por lo que la distribución muestral del estimador final verificará que estará centrada en torno al parámetro de interés y además, se aproximará a una distribución normal. Es decir, al aumentar $n$ el estimador final tenderá a distribuirse como una distribución normal (curva azul) centrada en el parámetro de interés.
 
 $$
 \boxed{\boxed{
-estimador \: final \sim N(Parámetro~interés,\frac{V(estimador~parcela)}{n})
+estimador ~ final \sim N(Parámetro~interés,\frac{V(estimador~parcela)}{n})
 }}
 $$
 

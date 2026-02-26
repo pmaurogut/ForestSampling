@@ -72,7 +72,7 @@ $$\hat{sd}(\hat{\mu}_p)=\sqrt{\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^
 
 **IMPORTANTE:** Las varianzas y desviaciones típicas de las dos fórmulas anteriores son estimadas, por eso llevan un acento circunflejo.
 
-Ya casi hemos terminado el segundo problema de estimación, en base a estas ecuaciones estimamos la varianza o desviación típica del estimador de parcela para el que tenemos $n$ repeticiones, basándonos en la propiedad 3 pasaremos de varianzas o desviaciones típicas del estimador de parcela a varianzas o desviaciones típicas del estimador final. Por lo visto en la pestaña 5  tendremos que:
+Ya casi hemos terminado el segundo problema de estimación, en base a estas ecuaciones estimamos la varianza o desviación típica del estimador de parcela para el que tenemos $n$ repeticiones, basándonos en la propiedad 3 pasaremos de varianzas o desviaciones típicas del estimador de parcela a varianzas o desviaciones típicas del estimador final. Por lo visto en la pestaña 5 tendremos que:
 
 $$\hat{V}(\hat{\mu}_{final})=\frac{\hat{V}(\hat{\mu}_p)}{n}=\frac{1}{n}\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^2}{n-1}=\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{final})^2}{n(n-1)}$$
 
@@ -86,13 +86,13 @@ Una vez que hemos visto el segundo problema de estimación (estimar la dispersi�
 
 Asumiendo que se ha conseguido la normalidad, la siguiente fórmula nos permite crear intervalos que contienen el valor esperado del estimador final con un $(1-\alpha)\%$ de probabilidad:
 
-$$Intervalo \: confianza=[\hat{\mu}_{final}-q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})\:,\:\hat{\mu}_{final}+q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})]$$
+$$Intervalo ~ confianza=[\hat{\mu}_{final}-q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})~,~\hat{\mu}_{final}+q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})]$$
 
 A $(1-\alpha)\%$ se le llama nivel de confianza o probabilidad fiducial y normalmente se establece en un 95% es decir $\alpha=0.05$.
 
 Una forma alternativa y más concisa de expresar estos intervalos es
 
-$$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
+$$Intervalo ~ confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
 **IMPORTANTE:** Cuando estimamos totales o totales por unidad de área, el valor esperado de $\hat{\mu}_{final}$ coincidirá con $\mu_{final}$ (ausencia de sesgo). En este caso, si fuésemos capaces de repetir muchas veces el proceso de muestreo, los intervalos de confianza construidos contendrían el valor que queremos estimar en un $1-\alpha\%$ de las ocasiones. Para otros parámetros, el valor esperado de $\hat{\mu}_{final}$ no tiene por qué coincidir con $\mu$ por lo que los intervalos no tienen por qué contener el parámetro de interés un $1-\alpha\%$ de las veces.
 
@@ -115,13 +115,13 @@ $$\hat{sd}(\hat{\mu}_{final})=\sqrt{\frac{\sum_{p=1}^n(\hat{\mu}_p-\hat{\mu}_{fi
 
 3.  Elegimos una opción para q y construimos el intervalo de confianza como:
 
-$$Intervalo \: confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
+$$Intervalo ~ confianza=\hat{\mu}_{final}\pm q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
 #### Error de muestreo
 
 Directamente relacionado con los intervalos de confianza tendremos la cantidad que llamamos error de muestreo. El error de muestreo para un nivel de probabilidad $1-\alpha\%$ es la cantidad que sustraemos o añadimos a $\hat{\mu}_{final}$ al construir el intervalo. Es decir, el error de muestreo es la mitad del ancho del intervalo de confianza.
 
-$$Error\: muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
+$$Error~ muestreo_{(1-\alpha)\%} = q(1-\frac{\alpha}{2})\hat{sd}(\hat{\mu}_{final})$$
 
 Normalmente los errores de muestreo no se expresan en términos absolutos si no que los referiremos a la magnitud a estimar. Como esta magnitud no la conocemos, la sustituiremos por $\hat{\mu}_{final}$ . A estos errores los llamamos errores relativos de muestreo. Los errores relativos los denotaremos con el símbolo $\hat{\varepsilon}_{(1-\alpha)\%}$ y los calcularemos expresándolos en tanto por uno con la siguiente fórmula:
 

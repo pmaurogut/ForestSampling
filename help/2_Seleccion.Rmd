@@ -52,7 +52,6 @@ Si tenemos parcelas de radio variable donde los árboles menores de 7.5 cm se mu
 
 -   Por cada árbol mayor, esperaremos encontrar 10 árboles similares por hectárea.
 
-
 #### Áreas de inclusión y factores de expansión
 
 Los factores de expansión están directamente relacionado con las probabilidades de inclusión.
@@ -62,7 +61,7 @@ Los factores de expansión están directamente relacionado con las probabilidade
 Dado que normalmente el área a muestrear $A$ es conocida, operando podemos relacionar factores de expansión y probabilidades de inclusión de la siguiente manera:
 
 $$
-w_i = \frac{1}{a_{inclusión,i}}(ha)\: and \: \: \pi_i=\frac{a_{inclusion,i}(ha)}{A(ha)}\rightarrow\pi_i=\frac{1}{A(ha)w_i}
+w_i = \frac{1}{a_{inclusión,i}}(ha)~ and ~ ~ \pi_i=\frac{a_{inclusion,i}(ha)}{A(ha)}\rightarrow\pi_i=\frac{1}{A(ha)w_i}
 $$
 
 También podemos usar esta ecuación para establecer el factor de expansión como
