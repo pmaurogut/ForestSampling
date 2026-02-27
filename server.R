@@ -60,7 +60,9 @@ server <- function(input, output, session) {
     tabla$Parc <- rep(n:1,each=reps)
     tabla$Rep <- rep(reps:1,times=n)
     
-    tabla[,c(cols,"Rep")]
+    cols1 <- c("Type","Rep","Parc")
+    cols <- c(cols1, setdiff(colnames(tabla),cols1))
+    tabla[,cols]
   })
   par_int <- reactive({
     parametros_interes(forest(),input$lado,TRUE)
@@ -272,7 +274,7 @@ server <- function(input, output, session) {
   })
   
   output$plot_res2<- renderPlot({
-    add_samples_n_plots(par_int(),table(),variation())
+    add_samples_n_plots(par_int(),table(),variation(),input$n)
   })
   
   # ##### samp dist #####

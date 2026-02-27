@@ -371,7 +371,7 @@ prepare_long_n <- function(data){
   return(list(all=all,variation=variation))
 }
 
-add_samples_n_plots<-function(p_int,all,variation){
+add_samples_n_plots<-function(p_int,all,variation,n){
   
   p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","ho"),]
   p_int2 <- p_int
@@ -383,12 +383,14 @@ add_samples_n_plots<-function(p_int,all,variation){
 
   
   variation <- variation[variation$Type==all$Type[1],]
-  variation$x_min <- variation$mean-3*variation$sd
-  variation$x_max <- variation$mean+3*variation$sd
+  variation$x_min <- variation$mean-2*variation$sd
+  variation$x_max <- variation$mean+2*variation$sd
   variation$type_est <- "1-parcela"
   
   variation2 <- variation
   variation2$type_est <- "n-parcelas"
+  variation2$x_min <- variation$mean-2*variation$sd/sqrt(n)
+  variation2$x_max <- variation$mean+2*variation$sd/sqrt(n)
   
   variation <- rbind(variation,variation2)
   variation$type_est <- factor(variation$type_est,levels=c("1-parcela","n-parcelas"),ordered=TRUE)
@@ -396,6 +398,7 @@ add_samples_n_plots<-function(p_int,all,variation){
   to_plot <- prepare_long_n(all)
   
   to_plot$all <- ungroup(to_plot$all)
+  print("to_plot")
   print(to_plot)
   
   ggplot(variation) +
