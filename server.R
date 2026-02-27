@@ -181,7 +181,7 @@ server <- function(input, output, session) {
     content = function(con) {
       samp<-get_trees(forest(),table()[1,],input$plot_type1)
       samp$Parc <- max(table()$Parc)
-      write.csv2(samp[,1:10], con,row.names = FALSE, na="")
+      write.csv2(samp, con,row.names = FALSE, na="")
     }
   )
   output$muestra <- renderTable({
@@ -263,7 +263,7 @@ server <- function(input, output, session) {
         res$Rep <- x$Rep[1]
         res
       },population=forest_all,type=type)
-      write.csv2(selected_trees[,1:10], con,row.names = FALSE, na="")
+      write.csv2(selected_trees, con,row.names = FALSE, na="")
     }
   )
   
@@ -351,7 +351,7 @@ server <- function(input, output, session) {
         res
       },population=forest_all,type=type)
       
-      write.csv2(selected_trees[,1:10], con,row.names = FALSE, na="")
+      write.csv2(selected_trees, con,row.names = FALSE, na="")
     }
   )
   

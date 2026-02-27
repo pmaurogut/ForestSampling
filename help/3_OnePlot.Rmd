@@ -77,7 +77,7 @@ $$\hat{Total(y)}=\begin{cases}
 \end{cases}$$
 
 $$\hat{Total~por~unidad~area(y)}=\begin{cases}
-\frac{1}{A}\sum\limits_{i\in muestra}\frac{y_i}{\pi_i} = \sum\limits_{i\in muestra}\frac{y_i}{A\frac{a_{parcela}}{A}} = \sum\limits_{i\in muestra}y_iw_i , & \text{si se ha seleccionado algún árbol} \\
+\frac{1}{A}\sum\limits_{i\in muestra}\frac{y_i}{\pi_i} = \sum\limits_{i\in muestra}\frac{y_i}{A\frac{a_{parcela,i}}{A}} = \sum\limits_{i\in muestra}y_iw_i , & \text{si se ha seleccionado algún árbol} \\
  & \\
 0, & \text{si la no se ha seleccionado ningún árbol}
 \end{cases}$$
