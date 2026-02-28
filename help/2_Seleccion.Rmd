@@ -18,7 +18,7 @@ La primera forma de ver cuando muestrearíamos un árbol sería centrarse en el 
 
 #### Probabilidades de inclusión en la muestra
 
-En esta representación es muy sencillo inferir las probabilidades de inclusión de árboles (salvo para árboles en el borde). La probabilidad de que un determinado árbol este incluido en la muestra es la probabilidad de caer en su área de inclusión. Como los puntos de muestreo se determinan uniformemente al azar, tenemos que para el árbol $i$ esta probabilidad de inclusión $\pi_i$ será el ratio entre el área del área de selección (area de la parcela en función del diametro del arbol), $a_{inclusion,i}$ y el área a muestrear $A$, con ambas áreas en las mismas unidades. Es decir:
+En esta representación es muy sencillo inferir las probabilidades de inclusión de árboles (salvo para árboles en el borde). La probabilidad de que un determinado árbol este incluido en la muestra es la probabilidad de caer en su área de inclusión. Como los puntos de muestreo se determinan uniformemente al azar, tenemos que para el árbol $i$ esta probabilidad de inclusión $\pi_i$ será el ratio entre el área del área de selección (área de la parcela en función del diámetro del arbol), $a_{inclusion,i}$ y el área a muestrear $A$, con ambas áreas en las mismas unidades. Es decir:
 
 $$
 \pi_i = \frac{a_{inclusion,i}}{A}
@@ -110,9 +110,7 @@ El último tipo de parcela considerado en la aplicación es el de parcelas de re
 
 $$\pi_i = \frac{\pi dn_i^2}{4*10000}*\frac{1}{A}$$ El factor de expansión en este caso es igual a
 
-$$
-w_i=\frac{1}{\frac{\pi dn_i^2}{4*10000}}
-$$
+$$w_i=\frac{1}{\frac{\pi dn_i^2}{4*10000}}$$
 
 En las parcelas de radios anidados solo hemos considerado dos clases de tamaño, pero esto no tiene porqué ser así siempre, podrían considerarse tantas clases como quisiésemos. En este sentido, el relascopio es una generalización de las parcelas de radios anidados donde hay infinitos posibles tamaños de parcela, uno por cada posible diámetro normal. Es decir, cada árbol tiene un radio o diámetro de parcela propio y proporcional su diámetro normal.
 
