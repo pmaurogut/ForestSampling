@@ -6,31 +6,31 @@ output:
 
 #### Introducción
 
-**Estás viendo la población simulada**. Al hacer un inventario, no conocemos $\mathcal{N}$ la población, no sabemos cuántos individuos hay ni cuáles son los valores de sus alturas y diámetros. Esto implica que en aplicaciones reales no conoceremos los valores de los parámetros de interés que querremos estimar. Sin embargo, las simulaciones son útiles para acercarnos al problema del muestreo en unas condiciones en las que sí que conocemos todos los individuos en el área a muestrear (cuadrado rojo), y podemos calcular todos los parámetros de interés para posteriormente analizar distintas configuraciones del muestreo.
+**Estás viendo la población simulada**. En un inventario, no conocemos el tamaño de la población $\mathcal{N}$ ; es decir, no sabemos cuántos individuos existen ni cuáles son los valores de sus variables (por ejemplo, alturas y diámetros). Esto implica que, en aplicaciones reales, tampoco conocemos los valores verdaderos de los parámetros de interés que queremos estimar. Sin embargo, las simulaciones nos permiten aproximarnos al problema del muestreo en un contexto controlado en el que sí conocemos todos los individuos dentro del área de estudio (cuadrado rojo). En estas condiciones podemos calcular los valores reales de los parámetros poblacionales de interés y, a partir de ellos, analizar y comparar distintas configuraciones del muestreo, evaluando su comportamiento y su precisión.
 
 #### Parámetros de interés (General)
 
-A continuación, veremos tipos de parámetros de interés. Es importante que sepas diferenciar los tres tipos de parámetro que se presentan a continuación.
+A continuación, analizaremos los tres tipos de parámetros de interés más comunes: totales, ratios y otros parámetros.
 
 **Totales y totales por unidad de área**
 
-De forma genérica, un total se define como la suma de una variable de interés $y_i$ para todos los árboles $i$ de la zona a muestrear. Un total por unidad de área simplemente consiste en dividir un total por el área muestreada $A$ que en general será conocida. Si usamos el símbolo $\mathcal{N}$ (N de bordes redondeados) para representar el número de árboles en la zona a muestrear (parámetro desconocido) tenemos que totales y totales por unidad de área se expresan como:
+De forma general, el total poblacional de una variable de interés $y_i$ se define como la suma de dicha variable para todos los árboles $i$ presentes en la zona objeto de muestreo. El total por unidad de área se obtiene dividiendo el total poblacional entre el área muestreada $A$, que en la práctica suele ser conocida. Si utilizamos el símbolo $\mathcal{N}$ (**N de bordes redondeados**) para representar el número total de árboles en la zona de estudio (parámetro desconocido), los totales y totales por unidad de área pueden expresarse como:
 
 $$
 Total(y)=\sum_{i=1}^{\mathcal{N}}y_i \qquad \qquad Total ~ por ~ unidad ~ área(y)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}y_i
 $$
 
-Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basimétrica $G$. Para la densidad, $N$ (N con bordes rectos), $y_i$ es igual a 1 para todos los árboles, para $G$, $y_i$ es la sección normal (en metros cuadrados) de cada árbol.
+Dos ejemplos de totales por unidad de área son la densidad $N$ (**N con bordes rectos**)y el área basimétrica $G$. En el caso de la densidad $N$ , la variable $y_i$ toma el valor 1 para todos los árboles, ya que simplemente estamos contabilizando individuos por unidad de superficie, para $G$, $y_i$ corresponde a la sección normal de cada árbol (expresada en metros cuadrados), es decir, al área de su sección transversal a la altura normal.
 
 **Ratios y funciones de totales**
 
-Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de vista de los inventarios, muchas variables dasométricas que querremos estimar no son totales, pero sí que son funciones que implican a más de un total. En este sentido destacan los valores medios. Suma de la variable de interés para todos los individuos de la población dividido por el número de individuos, $\mathcal{N}$. Pero $\mathcal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles, tenemos que los valores medios son ratios de totales o de totales por unidad de área ya que $\frac{1}{A}$ se cancela.
+Aunque los totales son, casi con seguridad, los parámetros de interés más importantes de los inventarios forestales, muchas variables dasométricas que queremos estimar no son totales, sino que son funciones que dependen de más de un total. Entre estas funciones destacan los valores medios. Un valor medio se define como la suma de la variable de interés para todos los individuos de la población dividida por el número total de individuos, $\mathcal{N}$. Ahora bien, el propio $\mathcal{N}$ en sí mismo un total particular en el que $y_i=1$ es uno para todos los árboles. Por tanto, los valores medios pueden interpretarse como cocientes de totales (o como cocientes de totales por unidad de área, ya que el factor $\frac{1}{A}$ se cancela).
 
 $$
 Media(y)=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\mathcal{N}}=\frac{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}y_i}{\frac{1}{A}\mathcal{N}}=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\sum_{i=1}^{\mathcal{N}}1}
 $$
 
-Otro ejemplo de parámetro de interés que se expresa como función de totales es el diámetro cuadrático medio $d_g$. Partiendo de la propia definición de $d_g$ o diámetro del árbol de sección normal media. Vemos que $d_g$ es una función de dos totales $G$ y $N$
+Otro ejemplo de parámetro de interés que puede expresarse como función de totales es el **diámetro cuadrático medio** $d_g$. Partiendo de su propia definición (el diámetro correspondiente al árbol de sección normal media) se observa que $d_g$ es una función de dos totales por unidad de área $G$ y $N$
 
 $$
 \frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g = \sqrt{\frac{4G}{\pi N}}
@@ -38,7 +38,7 @@ $$
 
 **Otros parámetros complejos**
 
-Hay variables dasométricas que no son totales o funciones o ratios de totales. En este apartado destacan las alturas y diámetros dominantes, que suelen definirse como alturas o diámetros medios del conjunto de árboles dominantes.
+Existen variables dasométricas que no pueden expresarse como totales ni como funciones o ratios de totales. En este grupo destacan la altura dominante y el diámetro dominante, que suelen definirse como los valores medios de altura o diámetro del conjunto de árboles dominantes.
 
 $$
 h_o= \frac{1}{\mathcal{N_{dominantes}}}\sum\limits_{i\in dominantes}h_i
@@ -48,7 +48,7 @@ $$
 d_o= \frac{1}{\mathcal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
-Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. Estos parámetros, cuya definición es aparentemente sencilla, implican trabajar con un conjunto de árboles (el conjunto de los árboles dominantes) que es desconocido y la propia definición puede ser confusa. Por ejemplo, ¿Cómo establecemos la altura dominante de una masa de 1 ha de superficie donde hay 50 árboles?. En principio, no vamos a preocuparnos de estos detalles, pero es importante saber que existen y que en algún momento los encontraremos y tendremos que decidir como aproximarnos a dichos problemas.
+Si se sigue el criterio de Assman, el conjunto de árboles dominantes está formado por los 100 individuos de mayor diámetro de la hectárea. Aunque la definición de estos parámetros parece sencilla, en la práctica implica trabajar con un subconjunto de árboles (el conjunto de los dominantes) que no es conocido a priori. Además, su propia definición puede generar situaciones conceptualmente delicadas. Por ejemplo, ¿cómo determinamos la altura dominante en una masa de 1 ha en la que solo existen 50 árboles?. Por el momento no profundizaremos en estas cuestiones, pero es importante ser conscientes de que existen. Más adelante será necesario decidir cómo abordar este tipo de problemas y qué criterios adoptar en cada caso.
 
 #### Parámetros de interés (Ejemplos)
 
@@ -98,4 +98,4 @@ $$\bar{h}(m)=\frac{\sum_{i=1}^{\mathcal{N}}h_i}{\sum_{i=1}^{\mathcal{N}}1}$$
 
 $$h_o(m) =\sum_{i \in \mathcal{D}}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i² ~~ ,donde ~ \mathcal{D} \text{ es el conjunto de árboles dominantes}$$
 
-Bajo el criterio de Assman $\mathcal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea
+Según el criterio de Assman $\mathcal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea
