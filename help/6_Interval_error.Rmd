@@ -30,33 +30,23 @@ Hemos visto en pestañas anteriores que
 
 1.  La esperanza del estimador final es la esperanza del estimador de parcela.
 
-$$
-E(\hat{\mu}_{final})=E(\hat{\mu}_p)
-$$
+$$E(\hat{\mu}_{final})=E(\hat{\mu}_p)$$
 
 2.  Si el parámetro de interés es un total o total por unidad de área y se pueden despreciar los efectos de borde esta esperanza coincide además con el parámetro a estimar, es decir no hay sesgo:
 
-$$
-E(\hat{\mu}_{final})=E(\hat{\mu}_p)=\mu
-$$
+$$E(\hat{\mu}_{final})=E(\hat{\mu}_p)=\mu$$
 
 3.  Por la independencia en la aleatorización de la ubicación de las $n$ parcelas, la desviación típica (se indica con sd de standard deviation) del estimador final es la desviación típica del estimador de parcela dividida por la raíz cuadrada del número de parcelas $n$ que se promedian en el estimador final.
 
-$$
-sd(\hat{\mu}_{final})=\frac{sd(\hat{\mu}_p)}{\sqrt{n}}
-$$
+$$sd(\hat{\mu}_{final})=\frac{sd(\hat{\mu}_p)}{\sqrt{n}}$$
 
 4.  Para $n$ grande (no podemos saber cómo de grande ha de ser $n$), se tiene que la distribución muestral del estimador final será una normal
 
-$$
-    \hat{\mu}_{final}\sim N(E(\hat{\mu}_p),\frac{sd(\hat{\mu}_p)²}{n})
-$$
+$$\hat{\mu}_{final}\sim N(E(\hat{\mu}_p),\frac{sd(\hat{\mu}_p)²}{n})$$
 
 5.  Por la propiedad 2, si el parámetro de interés es un total o total por unidad de área y se pueden despreciar los efectos de borde, dicha distribución normal estará, además, centrada en el parámetro de interés $\mu$:
 
-$$
-    \hat{\mu}_{final}\sim N(\mu,\frac{sd(\hat{\mu}_p)²}{n})
-$$
+$$\hat{\mu}_{final}\sim N(\mu,\frac{sd(\hat{\mu}_p)²}{n})$$
 
 #### Segundo problema de estimación
 

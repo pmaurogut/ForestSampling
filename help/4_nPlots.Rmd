@@ -70,7 +70,6 @@ La varianza del estimador será igual a $\frac{1}{n}$ por la varianza del estima
 
 $$\boxed{\boxed{ sd(estimador final) =\sqrt{\frac{V(estimador~parcela)}{n}}=\frac{sd(estimador~parcela)}{\sqrt{n}}}}$$
 
-
 #### **Panel izquierdo, Población, muestras y estimaciones**
 
 Antes de continuar, se recomienda pulsar el botón **Regenera población** para no acumular muestras de las pruebas realizadas en pestañas anteriores. Además, en esta pestaña es posible aumentar el número de parcelas que se miden empleando el control para el **Número de parcelas** o los botones de **Aumenta n** y **Reduce n**.
