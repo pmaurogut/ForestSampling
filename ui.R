@@ -176,12 +176,12 @@ ui <- page_navbar(
   #### n plots ####
     nav_panel("4. Estimación con n parcelas",
             fluidRow({
-              layout_columns(col_widths=c(5,7),height = 800,
+              layout_columns(col_widths=c(5,7),min_height = 800,row_heights = 800,
                              card(card_header("Parámetros de interés y muestra"),
                                   card(layout_columns(col_widths=c(5,7),
                                                       tableOutput('tabla_interes3'),
-                                                      plotOutput("plot_selected2")
-                                  ), min_height=350),
+                                                      plotOutput("plot_selected2",width=400,height=400)
+                                  )),
                                   card(card_header("Muestras"),
                                        list(
                                          downloadButton("downloadnSamp", "Descarga muestra"),
