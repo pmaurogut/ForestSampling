@@ -9,11 +9,9 @@ make_population <-function(N,L){
   
   A<-(L*L)/10000
   Npop<-round(N*A)
-  cluster <-sample(0:1,prob=c(0.6,0.4))
-  type1 <- sample(c(1,0),Npop,replace=TRUE)
   x<-runif(Npop,0,L)
   y<-runif(Npop,0,L)
-  cluster <- 1
+  cluster <- pmax(0.5,pmin(10,rexp(1000,1)*2.5))
   
   if(cluster==0){
     mean <- sin(2*pi*L/100)
@@ -25,8 +23,8 @@ make_population <-function(N,L){
     
     
     alpha<-ff(clust)(x,y)
-    d1 <- pmax(5,rnorm(Npop,10,2.5))
-    d2 <- max(0,pmin(90,rnorm(Npop,70,2.5)))
+    d1 <- pmax(5,rnorm(Npop,10,cluster))
+    d2 <- max(0,pmin(90,rnorm(Npop,70,cluster)))
     dn_cm <- (alpha)*d1+(1-alpha)*d2
   }
   
