@@ -9,6 +9,7 @@ library(DT)
 library(thematic)
 library(htmltools)
 library(markdown)
+library(spatstat)
 
 plot_type<- radioButtons("plot_type1" , "Tipo de parcela:",
                          c("R fijo 15 m" = "r_fijo",

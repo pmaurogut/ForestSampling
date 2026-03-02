@@ -1,5 +1,61 @@
-
+ff <- function(clust){
+  clust <- clust
+  function(x,y){
+    0.25*(2+sin(2*pi*(x/100))+cos(2*pi*(y/100)))
+  }
+  
+}
 make_population <-function(N,L){
+  
+  A<-(L*L)/10000
+  Npop<-round(N*A)
+  cluster <-sample(0:1,prob=c(0.6,0.4))
+  type1 <- sample(c(1,0),Npop,replace=TRUE)
+  x<-runif(Npop,0,L)
+  y<-runif(Npop,0,L)
+  cluster <- 1
+  
+  if(cluster==0){
+    mean <- sin(2*pi*L/100)
+    
+    dn_cm <- round(
+      ifelse(type,pmax(5,rnorm(Npop,10,10)),
+             pmin(80,rnorm(Npop,50,20))),1)
+  }else{
+    
+    
+    alpha<-ff(clust)(x,y)
+    d1 <- pmax(5,rnorm(Npop,10,2.5))
+    d2 <- max(0,pmin(90,rnorm(Npop,70,2.5)))
+    dn_cm <- (alpha)*d1+(1-alpha)*d2
+  }
+  
+  res <-data.frame(
+    id = 1:Npop,
+    x=x,
+    y=y,
+    dn_cm = dn_cm
+  )
+  
+  res$ht_m <- round(5+(res$dn_cm-5)*0.5,1)
+  res$gi_m2 <- pi*(res$dn_cm/200)^2
+  res$vcc_m3 <- res$ht_m*res$gi_m2*0.7
+  
+  res$r_fijo <- 15
+  res$area_fijo <-  pi*(res$r_fijo^2)/10000
+  res$fac_exp_fijo<- 1/res$area_fijo
+  
+  res$r_variable <- ifelse(res$dn_cm<15,10,20)
+  res$area_variable <-  pi*(res$r_variable^2)/10000
+  res$fac_exp_variable <- 1/res$area_variable
+  
+  res$r_relascopio <- res$dn_cm/2
+  res$area_relascopio <-  pi*(res$r_relascopio^2)/10000
+  res$fac_exp_relascopio <- 1/res$area_relascopio
+  return(res)
+}
+
+make_population_old<-function(N,L){
   
   A<-(L*L)/10000
   Npop<-round(N*A)
