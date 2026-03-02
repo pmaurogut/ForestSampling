@@ -11,7 +11,7 @@ make_population <-function(N,L){
   Npop<-round(N*A)
   x<-runif(Npop,0,L)
   y<-runif(Npop,0,L)
-  cluster <- pmax(0.5,pmin(10,rnorm(1000,3,1)))
+  cluster <- runif(1,min=0.25,max=1)
   
   # if(cluster==0){
   #   mean <- sin(2*pi*L/100)
@@ -28,9 +28,9 @@ make_population <-function(N,L){
   #   dn_cm <- (alpha)*d1+(1-alpha)*d2
   # }
   alpha<-ff(clust)(x,y)
-  d1 <- pmax(5,rnorm(Npop,10,cluster))
-  d2 <- max(0,pmin(90,rnorm(Npop,70,cluster)))
-  dn_cm <- (alpha)*d1+(1-alpha)*d2
+  d1 <- pmax(5,rnorm(Npop,10,1.5))
+  d2 <- max(0,pmin(90,rnorm(Npop,60,1.5)))
+  dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ runif(Npop,5,90)*(1-cluster)
   
   res <-data.frame(
     id = 1:Npop,
