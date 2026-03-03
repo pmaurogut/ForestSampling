@@ -26,7 +26,7 @@ make_population <-function(N,L){
   alpha<-ff(x,y)
   d1 <- pmax(5,rnorm(Npop,10,1.5))
   d2 <- max(0,pmin(90,rnorm(Npop,60,1.5)))
-  dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ runif(Npop,5,90)*(1-cluster)
+  dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ runif(Npop,5,60)*(1-cluster)
   print(cluster)
   res <-data.frame(
     id = 1:Npop,
@@ -225,7 +225,9 @@ pop_plot <- function(forest_data,lado){
     geom_polygon(data=rect,aes(x=x,y=y),col="red",fill="darkgreen",alpha=0.1)+
     geom_circle(aes(x0=x,y0=y,r=dn_cm/20),col="black",fill="burlywood4")+
     xlim(c(-20,lado+20)) + ylim(c(-20,lado+20))+
-    coord_fixed(ratio = 1) +
+    coord_cartesian(ratio = 1,clip="off") +
+    # scale_x_continuous(oob=scales::oob_keep(-20,lado+20))+
+    # scale_y_continuous(oob=scales::oob_keep(-20,lado+20))+
     labs(x="x(m)",y="y(m)") +
     theme_bw(base_size = 16) +
     theme(axis.title = element_blank())
