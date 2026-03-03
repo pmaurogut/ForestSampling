@@ -16,7 +16,7 @@ La interfaz se divide en cuatro áreas principales (Figura 1).
 
 **El tamaño de visualización puede ajustarse utilizando la combinación de la tecla Ctrl y la rueda del ratón**, lo que permite ampliar o reducir la escala de los elementos. Nota: actualmente la aplicación está en un servicio gratuito de hosting que no es muy rápido, las poblaciones tardan un entre uno y cinco segundos en regenerarse, no hay que impacientarse.
 
-![](help/UIGeneral.png){width="718"}
+![](help/UIGeneral.png)
 
 Figura 1. Secciones de la aplicación Muestreo forestal.
 
