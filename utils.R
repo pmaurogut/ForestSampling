@@ -1,9 +1,5 @@
-ff <- function(clust){
-  clust <- clust
-  function(x,y){
+ff <- function(x,y){
     0.25*(2+sin(2*pi*(x/100))+cos(2*pi*(y/100)))
-  }
-  
 }
 make_population <-function(N,L){
   
@@ -27,7 +23,7 @@ make_population <-function(N,L){
   #   d2 <- max(0,pmin(90,rnorm(Npop,70,cluster)))
   #   dn_cm <- (alpha)*d1+(1-alpha)*d2
   # }
-  alpha<-ff(clust)(x,y)
+  alpha<-ff(x,y)
   d1 <- pmax(5,rnorm(Npop,10,1.5))
   d2 <- max(0,pmin(90,rnorm(Npop,60,1.5)))
   dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ runif(Npop,5,90)*(1-cluster)
