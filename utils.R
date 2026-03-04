@@ -33,7 +33,7 @@ make_population <-function(N,L){
     id = 1:Npop,
     x=x,
     y=y,
-    dn_cm = dn_cm
+    dn_cm = round(dn_cm,1)
   )
   
   res$ht_m <- round(5+(res$dn_cm-5)*0.5,1)
