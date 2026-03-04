@@ -24,9 +24,10 @@ make_population <-function(N,L){
   #   dn_cm <- (alpha)*d1+(1-alpha)*d2
   # }
   alpha<-ff(x,y)
-  d1 <- pmax(5,rnorm(Npop,10,1.5))
+  d1 <- pmax(5,rnorm(Npop,5,1.5))
   d2 <- max(0,pmin(90,rnorm(Npop,60,1.5)))
-  dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ runif(Npop,5,60)*(1-cluster)
+  dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ (rweibull(Npop,1,1.5)*5)*(1-cluster)
+  dn_cm <- pmin(60,pmax(5,dn_cm))
   print(cluster)
   res <-data.frame(
     id = 1:Npop,
@@ -391,6 +392,7 @@ add_samples_plot<-function(p_int,first,variation){
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
     guides(fill=NULL,color=NULL)+
+    labs(fill="Tipo de estimador")+labs(color="Tipo de estimador")+
     theme(legend.position = "bottom")+
     theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
   
@@ -466,6 +468,7 @@ add_samples_n_plots<-function(p_int,all,variation,n){
     scale_fill_manual(values=c("1-parcela"="red","n-parcelas"="blue"))+
     scale_color_manual(values=c("1-parcela"="red","n-parcelas"="blue")) +
     guides(fill=NULL,color=NULL)+
+    labs(fill="Tipo de estimador")+labs(color="Tipo de estimador")+
     theme(legend.position = "bottom")+
     theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
 
@@ -520,7 +523,7 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
     geom_line(data=norm,aes(x=x,y = y),col="blue") + 
     geom_point(data=estimates,aes(x=estimacion,y=0),shape=20,col="red")+
     geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2)+
-    geom_vline(data=p_int,aes(xintercept=target),colour = "red")+
+    geom_vline(data=p_int,aes(xintercept=target),colour = "black")+
     geom_point(data=limits,aes(x=value,y=0),colour = "red",alpha=0)+
     ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")+
     theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())

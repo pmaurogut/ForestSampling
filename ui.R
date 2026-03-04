@@ -147,7 +147,7 @@ ui <- page_navbar(
   #### One plot ####
     nav_panel("3. Estimación 1 parcela",
             fluidRow(
-              layout_columns(col_widths=c(5,7),height = 800,
+              layout_columns(col_widths=c(5,7),height = 900,
                              card(card_header("Parámetros de interés y muestra"),
                                   card(layout_columns(col_widths=c(5,7),row_heights = 800,
                                                       tableOutput('tabla_interes2'),
@@ -177,7 +177,7 @@ ui <- page_navbar(
   #### n plots ####
     nav_panel("4. Estimación con n parcelas",
             fluidRow({
-              layout_columns(col_widths=c(5,7),min_height = 800,row_heights = 800,
+              layout_columns(col_widths=c(5,7),min_height = 800,row_heights = 800,height=900,
                              card(card_header("Parámetros de interés y muestra"),
                                   card(layout_columns(col_widths=c(5,7),
                                                       tableOutput('tabla_interes3'),
