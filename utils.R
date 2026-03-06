@@ -1,13 +1,13 @@
 ff <- function(x,y){
     0.25*(2+sin(2*pi*(x/100))+cos(2*pi*(y/100)))
 }
-make_population <-function(N,L){
+make_population_new <-function(N,L){
   
   A<-(L*L)/10000
   Npop<-round(N*A)
   x<-runif(Npop,0,L)
   y<-runif(Npop,0,L)
-  cluster <- runif(1,min=0.25,max=0.7)
+  cluster <- runif(1,min=0.5,max=0.7)
   
   # if(cluster==0){
   #   mean <- sin(2*pi*L/100)
@@ -24,8 +24,8 @@ make_population <-function(N,L){
   #   dn_cm <- (alpha)*d1+(1-alpha)*d2
   # }
   alpha<-ff(x,y)
-  d1 <- pmax(5,rnorm(Npop,5,1.5))
-  d2 <- max(0,pmin(90,rnorm(Npop,60,1.5)))
+  d1 <- pmax(5,rnorm(Npop,5,2.5))
+  d2 <- max(0,pmin(60,rnorm(Npop,50,5.5)))
   dn_cm <-cluster*((alpha)*d1+(1-alpha)*d2)+ (rweibull(Npop,1,1.5)*5)*(1-cluster)
   dn_cm <- pmin(60,pmax(5,dn_cm))
   print(cluster)
@@ -54,7 +54,7 @@ make_population <-function(N,L){
   return(res)
 }
 
-make_population_old<-function(N,L){
+make_population<-function(N,L){
   
   A<-(L*L)/10000
   Npop<-round(N*A)
