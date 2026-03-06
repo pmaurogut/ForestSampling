@@ -32,7 +32,7 @@ Dos ejemplos de totales por unidad de área son la densidad $N$ y el área basim
 
 ***Funciones de totales***
 
-Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios. 
+Si bien los totales son, seguramente, los parámetros de interés más importantes desde el punto de los inventarios. Muchas variables dasométricas que querremos estimar no son totales si no funciones que implican más de un total. En este sentido destacan los valores medios.
 
 $$Media(y)=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\mathcal{N}}=\frac{\sum_{i=1}^{\mathcal{N}}y_i}{\sum_{i=1}^{\mathcal{N}}1}$$
 
@@ -40,7 +40,7 @@ Pero $\mathcal{N}$ es en sí un total donde $y_i$ es uno para todos los árboles
 
 Otro ejemplo de parámetro de interés que se expresa como función de totales es el diámetro cuadrático medio $d_g$. Partiendo de la propia definición de $d_g$ o diámetro del árbol de sección normal media. Vemos que $d_g$ es una función de dos totales $G$ y $N$
 
-$$\frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g = \sqrt{\frac{4G}{\pi N}}$$
+$$\frac{\pi d_g^2(m)}{4}=\frac{AG}{AN} \rightarrow d_g(m) = \sqrt{\frac{4G}{\pi N}}\rightarrow d_g(cm)=100*d_g(m)$$
 
 ***Otros parámetros complejos***
 
@@ -50,13 +50,13 @@ $$h_o= \frac{1}{\mathcal{N_{D}}}\sum\limits_{i\in D}h_i$$
 
 $$d_o= \frac{1}{\mathcal{N_{D}}}\sum\limits_{i\in D}d_i$$
 
-Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea. 
+Bajo el criterio de Assman, el conjunto de árboles dominantes es el conjunto de los 100 individuos con mayor diámetro de la hectárea.
 
 #### Estimador de Horvitz-Thompson de parcela para totales o totales por unidad de área.
 
 En esta sección se explica cómo se obtienen estimaciones de parcela (panel central y medio) a partir de las mediciones de árboles (panel izquierdo).
 
-Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área. 
+Cuando nuestro objetivo es estimar un total o un total por unidad de área emplearemos el estimador de parcela de Horvitz-Thompson aunque a partir de ahora simplemente nos referiremos a este estimador como estimador de parcela para totales o totales por unidad de área.
 
 Para indicar estimaciones, añadiremos el acento circunflejo \^ sobre el parámetro de interés. A continuación se indica cómo se calcula el estimador de parcela para un total y para un total por unidad:
 
@@ -120,7 +120,7 @@ $$\hat{\bar{h}}=\frac{\sum\limits_{i\in muestra}h_iw_i}{\sum\limits_{i\in muestr
 
 Para estimar $d_g$ estimaremos $G$ y $N$ tal como se hace en los ejemplos 1 y 2, y después sustituiremos en la ecuación de $d_g$ para obtener el estimador de parcela.
 
-$$\hat{d_g} = \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}$$
+$$\hat{d_g}(cm) = 100 \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}$$
 
 #### Estimador de parcela para parámetros complejos (alturas y diámetros dominantes)
 
@@ -160,7 +160,7 @@ Hemos visto en teoría dos propiedades de los estimadores que son interesantes. 
 
 ![Precisión y sesgo de un estimador](Precision_sesgo.png)
 
-Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela para totales o totales por unidad de área no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda (precisión baja = varianza alta) o a la derecha (precisión alta = varianza baja), pero sí que sabemos que estamos en la fila de abajo. 
+Cuando los efectos de borde son pequeños se puede demostrar que el estimador de parcela para totales o totales por unidad de área no tiene sesgo (su valor esperado coincide con el valor a estimar). Es decir, para totales y totales por unidad de área (con efectos de borde despreciables) podemos estar seguros de que estaremos en la fila inferior de la figura anterior. No sabemos si a la izquierda (precisión baja = varianza alta) o a la derecha (precisión alta = varianza baja), pero sí que sabemos que estamos en la fila de abajo.
 
 Desafortunadamente, esta propiedad solo aplica a los estimadores de totales y totales por unidad de área cuando los efectos de borde son despreciables. **Para ratios y funciones de totales y parámetros complejos, no podemos asegurar la ausencia de sesgo.** Hemos visto cómo funcionan los estimadores de parcela en términos de sesgo. Sin embargo, el sesgo no es lo único que nos interesa. La varianza o desviación típica del estimador nos dan una idea de la precisión de este. Desafortunadamente, la varianza de los estimadores de parcela está directamente relacionada con la disposición espacial de los árboles y esta es imposible de conocer, **por lo que sólo podremos aspirar a estimar estas varianzas repitiendo múltiples veces el experimento de seleccionar una parcela al azar.**
 
@@ -214,13 +214,12 @@ $$\frac{10000}{k^2}=1\rightarrow k=100$$
 
 Es decir, un BAF igual a 1, equivale a que el diámetro del área de inclusión de los árboles tenga un diámetro igual a 100 veces el diámetro normal en cm. Es decir, si un árbol tiene un diámetro normal de 13 cm, el diámetro del área de inclusión será 100 veces mayor o lo que es lo mismo 13 m. Esta forma de proceder, basada en igualar la receta del relascopio con el estimador de Horvitz-Thompson, nos permite deducir el factor de multiplicación $k$ para un BAF arbitrario y viceversa.
 
-Finalmente, es importante darse cuenta, que al estimar $G$ con parcelas de relascopio, no tenemos que medir nada y sólo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ aparece en el factor de expansión y ambas se cancelan.
-En esta explicación, hemos visto el fundamento de algo que cuando se ve la primera vez resulta hasta misterioso. ¿Cómo puede ser que estimemos áreas contando árboles? La explicación está en el uso de factores de expansión inversamente proporcionales a la variable de la que estimamos el total por unidad de área. O lo que es lo mismo, el conteo aparece porque hacemos probabilidades de inclusión proporcionales a la variable cuyo total queremos estimar, en este caso el área basimétrica. El caso del relascopio no es el único caso de método de muestreo forestal que emplea probabilidades de inclusión proporcionales a la variable de interés. En muestreos por transectos, esto también ocurre, aunque ese tipo de muestreo no se contempla en la asignatura. 
+Finalmente, es importante darse cuenta, que al estimar $G$ con parcelas de relascopio, no tenemos que medir nada y sólo tenemos que contar los árboles seleccionados ya que la variable de interés, en este caso $g_i=\pi \frac{dn_i²}{4}$ aparece en el factor de expansión y ambas se cancelan. En esta explicación, hemos visto el fundamento de algo que cuando se ve la primera vez resulta hasta misterioso. ¿Cómo puede ser que estimemos áreas contando árboles? La explicación está en el uso de factores de expansión inversamente proporcionales a la variable de la que estimamos el total por unidad de área. O lo que es lo mismo, el conteo aparece porque hacemos probabilidades de inclusión proporcionales a la variable cuyo total queremos estimar, en este caso el área basimétrica. El caso del relascopio no es el único caso de método de muestreo forestal que emplea probabilidades de inclusión proporcionales a la variable de interés. En muestreos por transectos, esto también ocurre, aunque ese tipo de muestreo no se contempla en la asignatura.
 
 #### Nota histórica
 
-Sin duda, algo muy interesante de esta explicación es el orden temporal en que aparecieron el relascopio y el estimador de Horvitz-Thompson (o estimador de parcelas para totales). Uno podría pensar que el relascopio se desarrolló una vez se conocía la formulación del estimador de Horvitz-Thompson, sin embargo, ¡¡¡el orden fue el contrario!!! 
+Sin duda, algo muy interesante de esta explicación es el orden temporal en que aparecieron el relascopio y el estimador de Horvitz-Thompson (o estimador de parcelas para totales). Uno podría pensar que el relascopio se desarrolló una vez se conocía la formulación del estimador de Horvitz-Thompson, sin embargo, ¡¡¡el orden fue el contrario!!!
 
-Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicaron su artículo en 1952. Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores al diseño del relascopio. 
+Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras que Horvitz y Thompson publicaron su artículo en 1952. Esto muestra la gran intuición de Bitterlich ya que los aspectos formales de teoría de muestreo publicados por Horvitz y Thompson son cuatro años posteriores al diseño del relascopio.
 
-Por otro lado, es muy importante destacar la importancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues demuestra que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales a veces sin darnos cuenta, carece de sesgo independientemente de cuál sea el diseño de muestreo y la población con la que trabajamos. El estimador de Horvitz y Thompson no tiene por qué ser óptimo en todos los sentidos, podría tener una varianza elevada y ser poco preciso, pero sí que nos permite estar seguros de que nuestros resultados carecerán de sesgo. 
+Por otro lado, es muy importante destacar la importancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues demuestra que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales a veces sin darnos cuenta, carece de sesgo independientemente de cuál sea el diseño de muestreo y la población con la que trabajamos. El estimador de Horvitz y Thompson no tiene por qué ser óptimo en todos los sentidos, podría tener una varianza elevada y ser poco preciso, pero sí que nos permite estar seguros de que nuestros resultados carecerán de sesgo.

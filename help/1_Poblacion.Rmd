@@ -32,13 +32,11 @@ $$
 
 Otro ejemplo de parámetro de interés que puede expresarse como función de totales es el **diámetro cuadrático medio** $d_g$. Partiendo de su propia definición (el diámetro correspondiente al árbol de sección normal media) se observa que $d_g$ depende directamente de dos totales poblacionales: el área basimétrica $G$ y el número de árboles $N$. Por tanto, el diámetro cuadrático medio puede interpretarse como una función de ambos totales.
 
-$$
-\frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g = \sqrt{\frac{4G}{\pi N}}
-$$
+$$\frac{\pi d_g^2}{4}=\frac{AG}{AN} \rightarrow d_g(m) = \sqrt{\frac{4G}{\pi N}}\rightarrow d_g(cm)=100 d_g(m)$$
 
 **Otros parámetros complejos**
 
-Existen variables dasométricas que no pueden expresarse como totales ni como funciones o ratios de totales. En este grupo destacan la **altura dominante** y el **diámetro dominante**, que suelen definirse como los valores medios de altura o diámetro del conjunto de árboles dominantes. 
+Existen variables dasométricas que no pueden expresarse como totales ni como funciones o ratios de totales. En este grupo destacan la **altura dominante** y el **diámetro dominante**, que suelen definirse como los valores medios de altura o diámetro del conjunto de árboles dominantes.
 
 $$
 h_o= \frac{1}{\mathcal{N_{dominantes}}}\sum\limits_{i\in dominantes}h_i
@@ -86,7 +84,9 @@ $$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}vcc_i$$
 
 -   Diámetro cuadrático medio (función de totales)
 
-$$dg(cm)=\sqrt{\frac{G}{N}\frac{4}{\pi}}=\sqrt{\frac{\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}1}\frac{4}{\pi}}$$
+$$dg(m)=\sqrt{\frac{\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}1}\frac{4}{\pi}}=\sqrt{\frac{G}{N}\frac{4}{\pi}}$$
+
+$$dg(cm)=100 * dg(cm)$$
 
 -   Altura media (ratio de totales)
 
@@ -96,6 +96,6 @@ $$\bar{h}(m)=\frac{\sum_{i=1}^{\mathcal{N}}h_i}{\sum_{i=1}^{\mathcal{N}}1}$$
 
 -   Altura dominante (otros parámetros complejos)
 
-$$h_o(m) =\sum_{i \in \mathcal{D}}^{\mathcal{N}}g_i=\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i² ~~ ,donde ~ \mathcal{D} \text{ es el conjunto de árboles dominantes}$$
+$$h_o(m) =\sum_{i \in \mathcal{D}}g_i=\sum_{i \in \mathcal{D}}\frac{\pi}{4}dn_i² ~~ ,donde ~ \mathcal{D} \text{ es el conjunto de árboles dominantes}$$
 
 Según el criterio de Assman $\mathcal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea.
