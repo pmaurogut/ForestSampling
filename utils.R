@@ -66,8 +66,8 @@ make_population<-function(N,L){
   )
   
   res$ht_m <- round(5+(res$dn_cm-5)*0.5,1)
-  res$gi_m2 <- pi*(res$dn_cm/200)^2
-  res$vcc_m3 <- res$ht_m*res$gi_m2*0.7
+  res$gi_m2 <- round(pi*(res$dn_cm/200)^2,3)
+  res$vcc_m3 <- round(res$ht_m*res$gi_m2*0.7,3)
   
   res$r_fijo <- 15
   res$area_fijo <-  pi*(res$r_fijo^2)/10000

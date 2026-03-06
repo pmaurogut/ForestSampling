@@ -183,6 +183,7 @@ server <- function(input, output, session) {
     content = function(con) {
       samp<-get_trees(forest(),table()[1,],input$plot_type1)
       samp$Parc <- max(table()$Parc)
+      samp<- samp[,-c(3:6)]
       write.csv2(samp, con,row.names = FALSE, na="")
     }
   )
