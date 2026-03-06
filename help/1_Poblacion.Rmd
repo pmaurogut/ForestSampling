@@ -46,7 +46,7 @@ $$
 d_o= \frac{1}{\mathcal{N_{dominantes}}}\sum\limits_{i\in dominantes}d_i
 $$
 
-Siguiendo el criterio de Assman, el conjunto de árboles dominantes está formado por los 100 individuos de mayor diámetro de la hectárea. Aunque la definición de estos parámetros parece sencilla, en la práctica implica trabajar con un subconjunto de árboles (el conjunto de los dominantes) que no es conocido a priori. Además, su propia definición puede generar situaciones conceptualmente delicadas. Por ejemplo, ¿cómo determinamos la altura dominante en una masa de 1 ha en la que solo existen 50 árboles? Por el momento no profundizaremos en estas cuestiones, pero es importante ser conscientes de que existen. Más adelante será necesario decidir cómo abordar este tipo de problemas y qué criterios adoptar en cada caso.
+Siguiendo el criterio de Assmann, el conjunto de árboles dominantes está formado por los 100 individuos de mayor diámetro de la hectárea. Aunque la definición de estos parámetros parece sencilla, en la práctica implica trabajar con un subconjunto de árboles (el conjunto de los dominantes) que no es conocido a priori. Además, su propia definición puede generar situaciones conceptualmente delicadas. Por ejemplo, ¿cómo determinamos la altura dominante en una masa de 1 ha en la que solo existen 50 árboles? Por el momento no profundizaremos en estas cuestiones, pero es importante ser conscientes de que existen. Más adelante será necesario decidir cómo abordar este tipo de problemas y qué criterios adoptar en cada caso.
 
 #### Ejemplos de Parámetros de interés
 
@@ -98,4 +98,4 @@ $$\bar{h}(m)=\frac{\sum_{i=1}^{\mathcal{N}}h_i}{\sum_{i=1}^{\mathcal{N}}1}$$
 
 $$h_o(m) =\sum_{i \in \mathcal{D}}g_i=\sum_{i \in \mathcal{D}}\frac{\pi}{4}dn_i² ~~ ,donde ~ \mathcal{D} \text{ es el conjunto de árboles dominantes}$$
 
-Según el criterio de Assman $\mathcal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea.
+Según el criterio de Assmann $\mathcal{D}$ es el conjunto de los 100 árboles más gruesos por hectárea.
