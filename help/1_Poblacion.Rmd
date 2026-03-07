@@ -86,7 +86,7 @@ $$VCC(m³/ha)=\frac{1}{A}\sum_{i=1}^{\mathcal{N}}vcc_i$$
 
 $$dg(m)=\sqrt{\frac{\sum_{i=1}^{\mathcal{N}}\frac{\pi}{4}dn_i^2}{\frac{1}{A}\sum_{i=1}^{\mathcal{N}}1}\frac{4}{\pi}}=\sqrt{\frac{G}{N}\frac{4}{\pi}}$$
 
-$$dg(cm)=100 * dg(cm)$$
+$$dg(cm)=100 * dg(m)$$
 
 -   Altura media (ratio de totales)
 
