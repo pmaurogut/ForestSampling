@@ -557,7 +557,7 @@ standard_dev2<- function(var,n,samples=NULL){
   var <- merge(var,a)
   
   var$sd_n <- var$sd/sqrt(var$n)
-  var$color <- ifelse(var$n==n,"red","black")
+  var$color <- ifelse(var$n==n,"red","grey30")
   
   red <- var[var$color=="red",]
   col <- ifelse(red$n==1,"red","blue")
@@ -565,7 +565,7 @@ standard_dev2<- function(var,n,samples=NULL){
   p <- ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
     geom_point(aes(y=1.5*sd_n),alpha=0)+
     geom_point(aes(color=color))+geom_path() + 
-    geom_point(data=red,aes(color=color),pch=20,size=3)
+    geom_point(data=red,color=col,pch=20,size=3)
   if(!is.null(samples)){
     samples <- samples |> group_by(Rep,parametro)|> summarise(sd_n=sd(estimacion)/sqrt(n())) |> ungroup()
     samples$n <- n
