@@ -575,6 +575,7 @@ standard_dev2<- function(var,n,samples=NULL){
     xlab("Desiviación tipica del estimador final")+
     scale_color_manual(values=c("red"=col,"black"="black"))+
     guides(color="none")+
+    ylab("sd(estimador final)")
     ggtitle("Cambio en la desviación típica al aumentar n")
   p
 }
