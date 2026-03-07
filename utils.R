@@ -702,7 +702,7 @@ prepare_error_pol <- function(means_sd,conf_level=0.95){
 
 sample_alloc_plot <- function(piloto,conf_level=0.95,max_rel_error=0.1,current_n){
   
-  piloto<-pivot_longer(piloto[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
+  piloto<-pivot_longer(piloto[,c("Rep","Parc","N","G","VCC","h_media","dg","ho")],
                cols = c("N","G","VCC","h_media","dg","ho"),
                names_to = "parametro",values_to = "estimacion")
   
