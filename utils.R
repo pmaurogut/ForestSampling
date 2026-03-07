@@ -173,7 +173,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
   A <- (lado*lado)/10000
   res <- data.frame(Type=sample$Type[1],Parc=sample$Parc[1],
                     xp=sample$xp[1],yp=sample$yp[1],
-                    Total_N=0,Total_G=0,Total_VCC=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,ho=NA)
+                    Total_N=0,Total_G=0,Total_VCC=0,Total_h=0,N=0,G=0,VCC=0,h_media=NA,dg=NA,ho=NA)
   if(!is.na(sample$dn_cm[1])){
 
     sample <- sample[order(sample$dn_cm,decreasing = TRUE),]
