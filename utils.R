@@ -90,11 +90,11 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
     Total_N = length(poblacion[[1]]),
     Total_G = (1/10000)*sum(pi*poblacion$dn_cm^2)/4,
     Total_h = sum(poblacion$ht_m),
-    Total_V = sum(poblacion$vcc_m3)
+    Total_VCC = sum(poblacion$vcc_m3)
   )
   res$N <- res$Total_N/A
   res$G <- res$Total_G/A
-  res$V <-res$Total_V/A
+  res$V <-res$Total_VCC/A
   
   res$h_media <- mean(poblacion$ht_m)
    
@@ -173,7 +173,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
   A <- (lado*lado)/10000
   res <- data.frame(Type=sample$Type[1],Parc=sample$Parc[1],
                     xp=sample$xp[1],yp=sample$yp[1],
-                    Total_N=0,Total_G=0,Total_V=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,ho=NA)
+                    Total_N=0,Total_G=0,Total_VCC=0,Total_h=0,N=0,G=0,V=0,h_media=NA,dg=NA,ho=NA)
   if(!is.na(sample$dn_cm[1])){
 
     sample <- sample[order(sample$dn_cm,decreasing = TRUE),]
@@ -181,10 +181,10 @@ estimacion <- function(sample,lado,rotate=TRUE){
     res$Total_N <- sum(sample$EXP_FAC)*A
     res$Total_G <- sum(sample$EXP_FAC*sample$gi_m2)*A
     res$Total_h <- sum(sample$EXP_FAC*sample$ht_m)*A
-    res$Total_V <- sum(sample$EXP_FAC*sample$vcc_m3)*A
+    res$Total_VCC <- sum(sample$EXP_FAC*sample$vcc_m3)*A
     res$N <- res$Total_N/A
     res$G<- res$Total_G/A
-    res$V <- res$Total_V/A
+    res$V <- res$Total_VCC/A
     res$h_media<- res$Total_h/res$Total_N
     res$dg<-sqrt((res$G/res$N)*(4/pi))*100
     
@@ -500,8 +500,8 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
                                        names_to = "type",values_to = "value")
   
   
-  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
-                             cols = c("N","G","V","h_media","dg","ho"),
+  estimates <-  pivot_longer(estimates[,c("Rep","Parc","N","G","VCC","h_media","dg","ho")],
+                             cols = c("N","G","VCC","h_media","dg","ho"),
                              names_to = "parametro",values_to = "estimacion")
   estimates <- group_by(estimates,parametro,Rep)|>summarize(estimacion=mean(estimacion,na.rm=TRUE))|>ungroup()
 
@@ -585,8 +585,8 @@ get_estimatesIC <- function(estimates,type,n,K,reps){
   estimates$Parc <- rep(1:n,reps)
   estimates$Rep <- rep(1:reps,each=n)
   
-  estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
-                            cols = c("N","G","V","h_media","dg","ho"),
+  estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","VCC","h_media","dg","ho")],
+                            cols = c("N","G","VCC","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
   
   return(estimates)
@@ -602,8 +602,8 @@ get_pilot <- function(estimates,type,n_pilot,K,wide=FALSE){
   if(wide){
     return(estimates)
   }else{
-    estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
-                              cols = c("N","G","V","h_media","dg","ho"),
+    estimates <- pivot_longer(estimates[,c("Rep","Parc","N","G","VCC","h_media","dg","ho")],
+                              cols = c("N","G","VCC","h_media","dg","ho"),
                               names_to = "parametro",values_to = "estimacion")
     
     return(estimates)
@@ -703,7 +703,7 @@ prepare_error_pol <- function(means_sd,conf_level=0.95){
 sample_alloc_plot <- function(piloto,conf_level=0.95,max_rel_error=0.1,current_n){
   
   piloto<-pivot_longer(piloto[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
-               cols = c("N","G","V","h_media","dg","ho"),
+               cols = c("N","G","VCC","h_media","dg","ho"),
                names_to = "parametro",values_to = "estimacion")
   
   means_sd <- group_by(piloto,parametro)|> 

@@ -36,7 +36,7 @@ server <- function(input, output, session) {
   })
   
   variation<-reactive({
-    data_long <- pivot_longer(est()[,c("Type","N","G","V","h_media","dg","ho")],
+    data_long <- pivot_longer(est()[,c("Type","N","G","VCC","h_media","dg","ho")],
                               cols = c("N","G","V","h_media","dg","ho"),
                               names_to = "parametro",values_to = "estimacion")
     
