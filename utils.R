@@ -184,7 +184,7 @@ estimacion <- function(sample,lado,rotate=TRUE){
     res$Total_VCC <- sum(sample$EXP_FAC*sample$vcc_m3)*A
     res$N <- res$Total_N/A
     res$G<- res$Total_G/A
-    res$V <- res$Total_VCC/A
+    res$VCC <- res$Total_VCC/A
     res$h_media<- res$Total_h/res$Total_N
     res$dg<-sqrt((res$G/res$N)*(4/pi))*100
     
