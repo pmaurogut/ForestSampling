@@ -94,7 +94,7 @@ parametros_interes <- function(poblacion, lado,rotate=TRUE){
   )
   res$N <- res$Total_N/A
   res$G <- res$Total_G/A
-  res$V <-res$Total_VCC/A
+  res$VCC <-res$Total_VCC/A
   
   res$h_media <- mean(poblacion$ht_m)
    
