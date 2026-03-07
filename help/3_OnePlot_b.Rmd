@@ -224,15 +224,13 @@ Walter Bitterlich, el inventor del relascopio publicó su idea en 1948, mientras
 
 Por otro lado, es muy importante destacar la importancia de la publicación de Horvitz y Thompson. Esta publicación también supuso un hito muy importante pues demuestra que el estimador que ahora lleva su nombre, y que usamos en inventarios forestales a veces sin darnos cuenta, carece de sesgo independientemente de cuál sea el diseño de muestreo y la población con la que trabajamos. El estimador de Horvitz y Thompson no tiene por qué ser óptimo en todos los sentidos, podría tener una varianza elevada y ser poco preciso, pero sí que nos permite estar seguros de que nuestros resultados carecerán de sesgo.
 
-
 #### Ausencia de sesgo estimadores HT
 
-A continuación, se esboza una demostración de la ausencia de sesgo en el estimador de Horvitz-Thompson (HT). Esta demostración requiere recordar que el valor esperado de un estimador es el valor medio que obtendríamos si pudiésemos repetir infinitas veces el proceso de muestreo. No vamos a hacer una prueba formal, pero si que mostraremos un argumento con una población de juguete y que es fácil de generalizar para cual quier población. Vamos a considerar como parámetro de interés el total por unidad de área de la variable $y$ Nuestra pequeña población se muestra en la siguiente figura. Alrededor de cada árbol se indica su área de inclusión para el caso de un muestreo con relascopio con BAF=1, pero para otros tipos de parcela los argumentos serían los mismo.
+A continuación, se esboza una demostración de la ausencia de sesgo en el estimador de Horvitz-Thompson (HT). Esta demostración requiere recordar que el valor esperado de un estimador es el valor medio que obtendríamos si pudiésemos repetir infinitas veces el proceso de muestreo. No vamos a hacer una prueba formal, pero si que mostraremos un argumento con una población de juguete y que es fácil de generalizar para cual quier población. Vamos a considerar como parámetro de interés el total por unidad de área de la variable $y$ Nuestra pequeña población se muestra en la siguiente figura. Alrededor de cada árbol se indica su área de inclusión para el caso de un muestreo con relascopio, pero para otros tipos de parcela los argumentos serían los mismo.
 
 ![](Sesgo_HT1.png){width="500"}
 
-El valor a estimar, nuestro parámetro de interés, es el total por unidad de área de la variable $y$
-$$Total~por~unidad~area(y)=\frac{y_1+y_2+y_3+y_4+y_5}{A}$$
+El valor a estimar, nuestro parámetro de interés, es el total por unidad de área de la variable y $$Total~por~unidad~area(y)=\frac{y_1+y_2+y_3+y_4+y_5}{A}$$
 
 Vamos a considerar la primera versión del estimador para totales por unidad de área que vimos en esta lección,
 
@@ -244,9 +242,11 @@ $$\hat{Total~por~unidad~area(y)}=\begin{cases}
 
 Por otro lado, una vez que sabemos que el cero es un caso válido, podemos escribir el estimador de una forma ligeramente diferente:
 
-$$\hat{Total~por~unidad~area(y)}=\frac{1}{A}(\frac{y_1}{\pi_1}I_1 + \frac{y_2}{\pi_2}I_2 +\frac{y_3}{\pi_3}I_3 +\frac{y_4}{\pi_4}I_4+\frac{y_5}{\pi_5}I_5)$$
+$$
+\hat{Total~por~unidad~area(y)}=\frac{1}{A}(\frac{y_1}{\pi_1}I_1 + \frac{y_2}{\pi_2}I_2 +\frac{y_3}{\pi_3}I_3 +\frac{y_4}{\pi_4}I_4+\frac{y_5}{\pi_5}I_5)
+$$
 
-Donde $I_1$ vale 1 si el árbol 1 está en la muestra y cero en caso contrario, $I_2$ vale 1 si el árbol 2 está en la muestra y cero en caso contrario, etc...Al multiplicar los $\frac{y_i}{\pi_i}$ por sus correspondientes $I_i$ tenemos que para los árboles que no estén en la muestra $\frac{y_i}{\pi_i}I_i=0$ porque $I_i$ es cero y solo serán distintos de cero los que debemos considerar. A continuación se muestran como ejemplo cuatro posibles muestras, fíjate para los árboles que no están incluidos en una determinada muestra tenemos un valor de cero, y si el árbol está incluido tenemos el valor $\frac{y_i}{\pi_i}$:
+Donde $I_1$ vale 1 si el árbol 1 está en la muestra y cero en caso contrario, $I_2$ vale 1 si el árbol 2 está en la muestra y cero en caso contrario, etc...Al multiplicar los$\frac{y_i}{\pi_i}$ por sus correspondientes $I_i$ tenemos que para los árboles que no estén en la muestra $\frac{y_i}{\pi_i}I_i=0$ porque $I_i$ es cero. A continuación se muestran como ejemplo cuatro posibles muestras, fíjate para los árboles que no están incluidos en una determinada muestra tenemos un valor de cero, y si el árbol está incluido tenemos el valor $\frac{y_i}{\pi_i}$:
 
 ![](Sesgo_HT2.png){width="700"}
 
@@ -300,24 +300,23 @@ $$Valor~esperado=\frac{1}{R}\begin{pmatrix}
      & & + & & \\
     \vdots \\
     \frac{y_1}{\pi_1} +&0 +& \frac{y_3}{\pi_3} +& 0 +& 0
-\end{pmatrix}$$ 
-Si al hacer el valor medio sumamos por columnas y sacamos factor común a $\frac{y_1}{\pi_1}$, $\frac{y_2}{\pi_2}$ tendremos que: 
-$$Valor~esperado=\frac{1}{AR}\begin{pmatrix}
+\end{pmatrix}$$ Si al hacer el valor medio sumamos por columnas y sacamos factor común a $\frac{y_1}{\pi_1}$, $\frac{y_2}{\pi_2}$ tendremos que: $$
+Valor~esperado=\frac{1}{AR}\begin{pmatrix}
     n_1\frac{y_1}{\pi_1}+& n_2\frac{y_2}{\pi_2} +& n_3\frac{y_3}{\pi_3}+& n_4\frac{y_4}{\pi_4}+& n_5\frac{y_5}{\pi_5}
-\end{pmatrix}$$
-Donde $n_1$ es el número de veces que aparece el árbol 1 en las $R$ muestras , $n_2$ es el número de veces que aparece el árbol 1 en las $R$ muestras ,etc... En base a esto podemos escribir el valor esperado como:
-
-$$Valor~esperado=\frac{1}{A}\begin{pmatrix}
+\end{pmatrix}$$ Donde $n_1$ es el número de veces que aparece el árbol 1 en las $R$ muestras , $n_2$ es el número de veces que aparece el árbol 1 en las $R$ muestras ,etc... En base a esto podemos escribir el valor esperado como: $$
+Valor~esperado=\frac{1}{A}\begin{pmatrix}
     \frac{n_1}{R}\frac{y_1}{\pi_1} + \frac{n_2}{R}\frac{y_2}{\pi_2} +& \frac{n_3}{R}\frac{y_3}{\pi_3}+& \frac{n_4}{R}\frac{y_4}{\pi_4}+& \frac{n_5}{R}\frac{y_5}{\pi_5}
 \end{pmatrix}$$
 
 Pero $\frac{n_1}{R}$ es la proporción de puntos que han caído en el área de inclusión del árbol 1, por lo que si $R$ es grande $\frac{n_1}{R}\approx \frac{a_{parcela_1}}{A}$ y tendremos una igualdad cuando $R$ tienda a infinito, $\frac{n_2}{R}$ es la proporción de puntos que han caído en el área de inclusión del árbol 2, por lo que si $R$ es grande $\frac{n_2}{R}\approx \frac{a_{parcela_2}}{A}$ y tendremos una igualdad cuando $R$ tienda a infinito, etc... Pero $\pi_i=\frac{a_{parcela_1}}{A}$, por lo que $\frac{n_1}{R}\approx\pi_1$, $\frac{n_1}{R}\approx\pi_2$ etc. Sustituyendo en la expresión anterior y cancelando los $pi_i$ tenemos:
 
-$$Valor~esperado=\frac{1}{A}\begin{pmatrix}
+$$
+Valor~esperado=\frac{1}{A}\begin{pmatrix}
     \pi_1\frac{y_1}{\pi_1} + \pi_2\frac{y_2}{\pi_2} +& \pi_3\frac{y_3}{\pi_3}+& \pi_4\frac{y_4}{\pi_4}+& \pi_5\frac{y_5}{\pi_5}
-\end{pmatrix}=\frac{y_1 +y_2+ y_3+ y_4+y_5}{A}=Parametro~de~interés$$
+\end{pmatrix}=\frac{1}{A}\begin{pmatrix}
+    y_1 +&y_2+& y_3+& y_4+&y_5
+\end{pmatrix}=Parametro~de~interés$$
 
 Es decir, el valor esperado coincide con el valor que queremos estimar, por lo qué, en este caso, no tenemos sesgo.
 
-Hemos hecho este razonamiento con una población de cinco elementos pero el razonamiento de escribir el estimador por filas, poniendo ceros en las posiciones de los árboles que no aparecen se puede generalizar para cualquier tamaño de población, con más árboles,  las sumas serán más largas, pero el procedimiento será idéntico. Por otro lado independientemente del tamaño de la población, si el número de repeticiones es grande se cumplirá que $\frac{n_i}{R}\approx\pi_i$
-
+Hemos hecho este razonamiento con una población de cinco elementos pero el razonamiento de escribir el estimador por filas, poniendo ceros en las posiciones de los árboles que no aparecen se puede generalizar, simplemente serán sumas más largas. Por otro lado independientemente del tamaño de la población, si el número de repeticiones es grande se cumplirá que $\frac{n_i}{R}\approx\pi_i$
