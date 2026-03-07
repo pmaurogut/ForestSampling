@@ -518,14 +518,16 @@ normal_approx <- function(estimates,p_int,n,type,variation,K){
             y = dnorm(x, mean = mean(target,na.rm=TRUE), sd = mean(sd_n,na.rm=TRUE) )) 
   print(norm)
 
+  col <- ifelse(n==1,"red","blue")
+  title <- paste("Aproximación a una distribución normal al aumentar n (100 repeticiones), n=",n,"parcelas")
   ggplot(data=norm) +
     facet_wrap(.~ parametro,scales="free") +
-    geom_line(data=norm,aes(x=x,y = y),col="blue") + 
-    geom_point(data=estimates,aes(x=estimacion,y=0),shape=20,col="red")+
-    geom_density(data=estimates,aes(x=estimacion),fill="red",colour = "red",alpha=0.2)+
+    geom_line(data=norm,aes(x=x,y = y),col="black") + 
+    geom_point(data=estimates,aes(x=estimacion,y=0),shape=20,col=col)+
+    geom_density(data=estimates,aes(x=estimacion),fill=col,colour = col,alpha=0.2)+
     geom_vline(data=p_int,aes(xintercept=target),colour = "black")+
-    geom_point(data=limits,aes(x=value,y=0),colour = "red",alpha=0)+
-    ggtitle("Aproximación a una distribución normal al aumentar n (100 repeticiones)")+
+    geom_point(data=limits,aes(x=value,y=0),colour = col,alpha=0)+
+    ggtitle(title)+
     theme(axis.text.y=element_blank(),axis.ticks.y=element_blank())
   
 }
@@ -537,12 +539,13 @@ standard_dev<- function(var,n){
   var$color <- ifelse(var$n==n,"red","black")
   
   red <- var[var$color=="red",]
+  col <- ifelse(red$n==1,"red","blue")
   
   ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
-    geom_point(aes(color=color))+geom_path() + 
-    geom_point(data=red,aes(color=color),pch=20,size=3)+
+    geom_point(color="black")+geom_path() + 
+    geom_point(data=red,color=col,pch=20,size=3)+
     xlab("Desiviación tipica del estimador final")+
-    scale_color_manual(values=c("red"="red","black"="black"))+
+    scale_color_manual(values=c("red"=col,"black"="black"))+
     guides(color="none")+
     ggtitle("Cambio en la desviación típica al aumentar n")
 }
@@ -557,7 +560,7 @@ standard_dev2<- function(var,n,samples=NULL){
   var$color <- ifelse(var$n==n,"red","black")
   
   red <- var[var$color=="red",]
-
+  col <- ifelse(red$n==1,"red","blue")
   
   p <- ggplot(var,aes(x=n,y=sd_n))+facet_wrap(.~parametro,scales="free_y")+
     geom_point(aes(y=1.5*sd_n),alpha=0)+
@@ -570,7 +573,7 @@ standard_dev2<- function(var,n,samples=NULL){
   }
   p <- p + 
     xlab("Desiviación tipica del estimador final")+
-    scale_color_manual(values=c("red"="red","black"="black"))+
+    scale_color_manual(values=c("red"=col,"black"="black"))+
     guides(color="none")+
     ggtitle("Cambio en la desviación típica al aumentar n")
   p
