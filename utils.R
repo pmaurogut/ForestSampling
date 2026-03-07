@@ -306,8 +306,8 @@ plot_n_selections <- function(p,trees,tree_center=TRUE,all=FALSE){
 
 prepare_long1 <- function(data){
 
-  data_long <- pivot_longer(data[,c("Parc","N","G","V","h_media","dg","ho")],
-                            cols = c("N","G","V","h_media","dg","ho"),
+  data_long <- pivot_longer(data[,c("Parc","N","G","VCC","h_media","dg","ho")],
+                            cols = c("N","G","VCC","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
   means <- data_long|> group_by(parametro)|> summarise_all(mean,na.rm=TRUE)
   
@@ -330,7 +330,7 @@ prepare_long1 <- function(data){
 
 add_samples_plot<-function(p_int,first,variation){
   
-  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","ho"),]
+  p_int <- p_int[p_int$parametro%in%c("N","G","VCC","h_media","dg","ho"),]
   p_int2 <- p_int
   p_int$type_est <- "1-parcela"
   p_int2$type_est <- "n-parcelas"
@@ -401,8 +401,8 @@ add_samples_plot<-function(p_int,first,variation){
 
 prepare_long_n <- function(data){
 
-  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","V","h_media","dg","ho")],
-                            cols = c("N","G","V","h_media","dg","ho"),
+  data_long <- pivot_longer(data[,c("Rep","Parc","N","G","VCC","h_media","dg","ho")],
+                            cols = c("N","G","VCC","h_media","dg","ho"),
                             names_to = "parametro",values_to = "estimacion")
   
   means <- data_long|> group_by(Rep,parametro)|> summarise_all(mean,na.rm=TRUE)
@@ -431,7 +431,7 @@ prepare_long_n <- function(data){
 
 add_samples_n_plots<-function(p_int,all,variation,n){
   
-  p_int <- p_int[p_int$parametro%in%c("N","G","V","h_media","dg","ho"),]
+  p_int <- p_int[p_int$parametro%in%c("N","G","VCC","h_media","dg","ho"),]
   p_int2 <- p_int
   p_int$type_est <- "1-parcela"
   p_int2$type_est <- "n-parcelas"
