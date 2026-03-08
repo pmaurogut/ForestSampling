@@ -122,6 +122,8 @@ Para estimar $d_g$ estimaremos $G$ y $N$ tal como se hace en los ejemplos 1 y 2,
 
 $$\hat{d_g}(cm) = 100 \sqrt{\frac{4\hat{G}}{\pi \hat{N}}}$$
 
+Para parámetros de interés de este tipo, es posible tener indeterminaciones tipo 0/0, en dichos casos no se tiene información y no se puede estimar.
+
 #### Estimador de parcela para parámetros complejos (alturas y diámetros dominantes)
 
 Para alturas y diámetros dominantes, la estimación se hará construyendo análogos de parcela. En este caso, lo primero que haremos será ordenar la tabla de mediciones por diámetro en orden decreciente. Después, iremos sumando los factores de expansión hasta alcanzar 100 árboles por hectárea. Esto nos permitirá estimar el conjunto de árboles dominantes de la parcela. Una vez tengamos este conjunto $\hat{dominantes}$ simplemente calcularemos los valores medios como hemos hecho en el ejemplo 3, pero trabajando sobre el conjunto de los árboles dominantes.

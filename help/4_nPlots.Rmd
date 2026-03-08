@@ -20,6 +20,11 @@ Cuando medimos múltiples parcelas ubicadas al azar y de forma independiente, co
 
 $$\boxed{\boxed{ estimador final = \frac{1}{n}\sum_{p=1}^n (estimador~parcela)_p}}$$
 
+Para ratios de totales es posible tener indeterminaciones tipo 0/0. En estos casos, en lugar de descartar las parcelas donde esto ocurre y hacer medias con las restantes, podríamos operar con los estimadores finales de los totales que intervengan. Este procedimiento tiene ventajas, es muy raro tener indeterminaciones 0/0, pero no lo vamos a considerar en las siguientes explicaciones teóricas pues su tratamiento es más complejo.
+
+$$\hat{dg}_{final}=\frac{1}{n}\sum_{p=1}^n\hat{dg}_p  \leftarrow \rightarrow \hat{dg}_{alternativo}=100 \sqrt{\frac{4\hat{G}_{final}}{\pi \hat{N}_{final}}}$$
+
+
 Para conocer las propiedades del estimador final debemos tener en cuenta las siguientes ideas:
 
 1.  Los estimadores de parcela son variables aleatorias (heredan la aleatoriedad de la ubicación del punto de muestreo) y todas proceden del mismo experimento y por tanto tienen la misma distribución.
